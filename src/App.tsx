@@ -10,11 +10,11 @@ function App() {
   return (
  <Router>
   <Routes>
+
     <Route path="/mydash" element={<MyDash/>}></Route>
     <Route path="/leads" element={<Leads/>}></Route>
     <Route path="/today" element={<Today/>}></Route>
     <Route path="/myscripts" element={<MyScripts/>}></Route>
-
 
       {/* Navigate / to mydash */}
     <Route path="/" element={<Navigate to="/mydash"/>}></Route>
