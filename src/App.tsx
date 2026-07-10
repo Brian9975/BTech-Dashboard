@@ -3,12 +3,13 @@ import MyDash from "./pages/MyDash"
 import Leads from "./pages/Leads"
 import Today from "./pages/Today"
 import MyScripts from "./pages/MyScripts"
-
+import Layout from "./layout/Layout"
 function App() {
   
   
   return (
  <Router>
+  <Layout>
   <Routes>
 
     <Route path="/mydash" element={<MyDash/>}></Route>
@@ -22,6 +23,7 @@ function App() {
     {/* Navigate uknown routes to mydash */}
     <Route path="*" element={<Navigate to="/mydash"/>}></Route>
   </Routes>
+  </Layout>
  </Router>
   )
 
