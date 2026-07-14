@@ -4,11 +4,13 @@ import Leads from "./pages/Leads"
 import Today from "./pages/Today"
 import MyScripts from "./pages/MyScripts"
 import Layout from "./layout/Layout"
+import LeadContextProvider from "./context/LeadContext"
 function App() {
   
   
   return (
  <Router>
+  <LeadContextProvider>
   <Layout>
   <Routes>
 
@@ -24,6 +26,7 @@ function App() {
     <Route path="*" element={<Navigate to="/mydash"/>}></Route>
   </Routes>
   </Layout>
+  </LeadContextProvider>
  </Router>
   )
 
