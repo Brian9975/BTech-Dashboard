@@ -1,11 +1,42 @@
 import { useLead } from "../context/LeadContext"
 import useModal from "../hooks/useModal"
-
+interface LeadStageInterface {
+  id: number,
+  name: string
+}
+interface BCategory {
+ id: number,
+ name:string
+}
+interface PlanInterface {
+  id: number,
+  name: string,
+  amount?: number
+}
 export default function Leads() {
 const {modalIsOpen, openDialog, closeDialog} = useModal()
 const {businessName, setBusinessName, businessCategory, setBusinessCategory, 
-    contactNo, setContactNo, stage, setStage, lastContacted, setLastContacted} = useLead()
-const bCategoryOption = [{
+     setContactNo, setLastContacted, stage, setStage, clientPlan, setClientPlan, leads} = useLead()
+     
+
+console.log(leads)
+const plan:PlanInterface[] = [
+  {
+    id: 1,
+    name: "Care Plan",
+    amount: 2000
+  },
+   {
+    id: 2,
+    name: "Growth Plan",
+    amount: 3000
+  },
+  {
+    id: 3,
+    name: "None"
+  } 
+]
+const bCategoryOption:BCategory[] = [{
   id: 1,
   name: "pharmacy"
 }, {
@@ -13,7 +44,7 @@ const bCategoryOption = [{
   name: "restaurant"
 }]
 
-const leadStage = [
+const leadStage:LeadStageInterface[]  = [
   {
     id: 1.1,
     name: "New"
@@ -56,19 +87,27 @@ const leadStage = [
   },
   {
      id: 2.1,
-    name: "Payment Complete"
+    name: "Payment Complete + Pitch Care Plan"
   },
   {
-     id: 2.2,
+    id: 2.2,
+    name: "Closed + On Plan"
+  },
+  {
+    id:2.3,
+    name: "Closed + Off Plan"
+  },
+  {
+     id: 2.3,
     name: "Dead"
   },
   {
-    id: 2.3,
+    id: 2.4,
     name: "Not Interested"
   }
 ]
 
-console.log(lastContacted)
+
   return (
     <div>
       <div className="text-center">
@@ -93,9 +132,9 @@ console.log(lastContacted)
            <div className="pb-5">
             <label htmlFor="bCategory">Business Category :</label>
             <div>
-            <select value={businessCategory} onChange={e => setBusinessCategory(e.target.value)} id="bCategory" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" required>
-              <option  className="bg-slate-950" disabled>Choose Business Category</option>
-            {bCategoryOption.map(category => (<option key={category.id} className="bg-slate-950 text-blue-600" value={category.id}>{category.name}</option>))}
+            <select value={businessCategory} onChange={e => setBusinessCategory(e.target.value)} id="bCategory" className={`border ${businessCategory  ? "text-blue-600" : businessCategory == "" ? "text-slate-700" : ""} w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg`} required>
+              <option value="" className="bg-slate-950" disabled>Choose Business Category</option>
+            {bCategoryOption.map(category => (<option key={category.id} className="bg-slate-950 text-slate-50" value={category.name}>{category.name}</option>))}
             </select>
             </div>
            </div>
@@ -110,17 +149,27 @@ console.log(lastContacted)
             <label htmlFor="stage">Lead Stage :</label>
             <div>
             <select value={stage} onChange={e => setStage(e.target.value)} id="stage" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" required>
-              <option  className="bg-slate-950" disabled>Select Stage</option>
-            {leadStage.map(stage => (<option key={stage.id} className={`bg-slate-950 ${stage.id === 1.1 ? "" : stage.id === 1.2 ? "" : stage.id === 1.3 ? "" : stage.id === 1.4 ? "" : stage.id === 1.5 ? "" : stage.id === 1.6 ? "" : stage.id === 1.7 ? "" : stage.id === 1.8 ? "" : stage.id === 1.9 ? "" : stage.id === 2.0 ? "" : stage.id === 2.1 ? "" : stage.id === 2.2 ? "" : stage.id === 2.3 ? "" : ""}`} value={stage.id}>{stage.name}</option>))}
+              <option value=""  className="bg-slate-950" disabled>Select Stage</option>
+            {leadStage.map(stage => (<option key={stage.id} className={`bg-slate-950 ${stage.id === 1.1 ? "" : stage.id === 1.2 ? "" : stage.id === 1.3 ? "" : stage.id === 1.4 ? "" : stage.id === 1.5 ? "" : stage.id === 1.6 ? "" : stage.id === 1.7 ? "" : stage.id === 1.8 ? "" : stage.id === 1.9 ? "" : stage.id === 2.0 ? "" : stage.id === 2.1 ? "" : stage.id === 2.2 ? "" : stage.id === 2.3 ? "" : ""}`} value={stage.name}>{stage.name}</option>))}
             </select>
             </div>
            </div>
 
 
             <div className="pb-5">
+            <label htmlFor="stage">Client's Plan :</label>
+            <div>
+            <select value={clientPlan}  onChange={e => setClientPlan(e.target.value)} id="stage" className={`border w-full border-slate-600 ${clientPlan == "Growth Plan" ? "text-green-600" : clientPlan == "Care Plan" ? "text-amber-600" : clientPlan == "None" ? "text-gray-500" : "text-slate-700"} p-2 outline-0 placeholder-slate-700  rounded-lg`} required>
+              <option value="" className="bg-slate-950" disabled>Clients Plan</option>
+            {plan.map(p => <option className="bg-slate-950 text-slate-50" key={p.id} value={p.name}>{p.name}</option>)}
+            </select>
+            </div>
+           </div>
+
+            <div className="pb-5">
             <label htmlFor="lastContactDate">Last Contact Date :</label>
             <div>
-            <input onChange={(e) => setLastContacted(e.target.value)} id="lastContactDate" type="date" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" required/>
+            <input disabled={stage == "New"} onChange={(e) => setLastContacted(e.target.value)} id="lastContactDate" type="date" className={`border ${stage == "New" ? "text-slate-700" : ""} w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg `} required/>
             </div>
            </div>
 
