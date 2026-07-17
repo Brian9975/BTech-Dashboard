@@ -1,4 +1,5 @@
 import { useLead } from "../context/LeadContext"
+import useAddLead from "../hooks/useAddLead"
 import useModal from "../hooks/useModal"
 interface LeadStageInterface {
   id: number,
@@ -17,7 +18,7 @@ export default function Leads() {
 const {modalIsOpen, openDialog, closeDialog} = useModal()
 const {businessName, setBusinessName, businessCategory, setBusinessCategory, 
      setContactNo, setLastContacted, stage, setStage, clientPlan, setClientPlan, leads} = useLead()
-     
+const {addLead} = useAddLead()    
 
 console.log(leads)
 const plan:PlanInterface[] = [
@@ -98,11 +99,11 @@ const leadStage:LeadStageInterface[]  = [
     name: "Closed + Off Plan"
   },
   {
-     id: 2.3,
+     id: 2.4,
     name: "Dead"
   },
   {
-    id: 2.4,
+    id: 2.5,
     name: "Not Interested"
   }
 ]
@@ -121,7 +122,7 @@ const leadStage:LeadStageInterface[]  = [
       {/* Add lead modal */}
       {modalIsOpen && 
       <div onClick={closeDialog} className="fixed flex justify-center items-center bg-black/50 inset-0 z-50">
-         <form onClick={e => e.stopPropagation()} className="bg-slate-900 rounded-2xl p-8 w-md">
+         <form onSubmit={addLead} onClick={e => e.stopPropagation()} className="bg-slate-900 rounded-2xl p-8 w-md">
            <h3 className="text-center text-lg font-bold text-blue-600 pb-8">Enter Lead's Information</h3>
            <div className="pb-5">
             <label htmlFor="businessName">Business Name :</label>
@@ -132,7 +133,7 @@ const leadStage:LeadStageInterface[]  = [
            <div className="pb-5">
             <label htmlFor="bCategory">Business Category :</label>
             <div>
-            <select value={businessCategory} onChange={e => setBusinessCategory(e.target.value)} id="bCategory" className={`border ${businessCategory  ? "text-blue-600" : businessCategory == "" ? "text-slate-700" : ""} w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg`} required>
+            <select value={businessCategory}  onChange={e => setBusinessCategory(e.target.value)} id="bCategory" className={`border ${businessCategory  ? "text-blue-600" : businessCategory == "" ? "text-slate-700" : ""} w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg`} required>
               <option value="" className="bg-slate-950" disabled>Choose Business Category</option>
             {bCategoryOption.map(category => (<option key={category.id} className="bg-slate-950 text-slate-50" value={category.name}>{category.name}</option>))}
             </select>
@@ -169,7 +170,7 @@ const leadStage:LeadStageInterface[]  = [
             <div className="pb-5">
             <label htmlFor="lastContactDate">Last Contact Date :</label>
             <div>
-            <input disabled={stage == "New"} onChange={(e) => setLastContacted(e.target.value)} id="lastContactDate" type="date" className={`border ${stage == "New" ? "text-slate-700" : ""} w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg `} required/>
+            <input  disabled={stage == "New"} onChange={(e) => setLastContacted(e.target.value)} id="lastContactDate" type="date" className={`border ${stage == "New" ? "text-slate-700" : ""} w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg `} required/>
             </div>
            </div>
 
@@ -179,6 +180,8 @@ const leadStage:LeadStageInterface[]  = [
          </form>
       </div>
 }
+
+
     </div>
   )
 }

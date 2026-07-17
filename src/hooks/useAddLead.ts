@@ -1,9 +1,13 @@
+import type React from 'react'
 import { useLead } from '../context/LeadContext'
+import useSaveToStorage from './useSaveToStorage'
 
 export default function useAddLead() {
 
 const {businessName, businessCategory, contactNo, stage, clientPlan, lastContacted, setLeads} = useLead()
- const addLead = () => {
+const {saveToStorage} = useSaveToStorage()
+ const addLead = (e: React.SubmitEvent) => {
+ e.preventDefault()
     const leadInfo = {
        name: businessName,
        category: businessCategory,
@@ -17,6 +21,7 @@ const {businessName, businessCategory, contactNo, stage, clientPlan, lastContact
     }
 
     setLeads(prev => ([...prev, leadInfo]))
+    saveToStorage()
  }
 
   return {addLead}
