@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState } from 'react'
 interface LeadsInterface {
     name: string,
     category: string,
-    contact: number,
+    contact: number | string,
     stage: string,
     plan: string,
     lastContacted: Date | string,
@@ -19,8 +19,8 @@ interface LeadContextType {
   setBusinessName: React.Dispatch<React.SetStateAction<string>>,
   businessCategory: string,
   setBusinessCategory: React.Dispatch<React.SetStateAction<string>>,
-  contactNo: number,
-  setContactNo: React.Dispatch<React.SetStateAction<number>>,
+  contactNo: number | string,
+  setContactNo: React.Dispatch<React.SetStateAction<number | string>>,
   stage: string,
   setStage: React.Dispatch<React.SetStateAction<string>>,
   lastContacted: Date | string,
@@ -28,19 +28,23 @@ interface LeadContextType {
   leads: LeadsInterface[],
   setLeads: React.Dispatch<React.SetStateAction<LeadsInterface[]>>,
   clientPlan: string,
-  setClientPlan: React.Dispatch<React.SetStateAction<string>>
+  setClientPlan: React.Dispatch<React.SetStateAction<string>>,
+  modalIsOpen: boolean,
+  setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 const LeadContext = createContext<LeadContextType | null>(null)
 export default function LeadContextProvider({children}: {children: React.ReactNode}) {
   const [leads, setLeads] = useState<LeadsInterface[]>(localStorage.getItem("leads")  ?  JSON.parse(localStorage.getItem("leads") as string ) : [] )
   const [businessName, setBusinessName] = useState("")
   const [businessCategory, setBusinessCategory] = useState("")
-  const [contactNo, setContactNo] = useState(0)
+  const [contactNo, setContactNo] = useState<number | string>("")
   const [stage, setStage] = useState("")
   const [lastContacted, setLastContacted] = useState<Date | string>("")
   const [clientPlan, setClientPlan] = useState("")
-  const contextValues = {leads, setLeads, businessName, setBusinessName,businessCategory, setBusinessCategory, 
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const contextValues = {modalIsOpen, setModalIsOpen, leads, setLeads, businessName, setBusinessName,businessCategory, setBusinessCategory, 
     contactNo, setContactNo, stage, setStage, lastContacted, setLastContacted, clientPlan, setClientPlan}
+
     return (
     <LeadContext value={contextValues}>{children}</LeadContext>
   )

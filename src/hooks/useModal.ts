@@ -1,12 +1,13 @@
-import { useState } from 'react'
+
+import { useLead } from '../context/LeadContext'
 
 export default function useModal() {
-const [modalIsOpen, setModalIsOpen] = useState(false)
+const { setModalIsOpen} = useLead()
 const openDialog = (): void => {
   setModalIsOpen(true)
 }
 const closeDialog = ():void => {
   setModalIsOpen(false)
 }
-  return {modalIsOpen, openDialog, closeDialog}
+  return { setModalIsOpen, openDialog, closeDialog}
 }

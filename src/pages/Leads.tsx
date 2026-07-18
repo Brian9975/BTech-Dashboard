@@ -15,11 +15,11 @@ interface PlanInterface {
   amount?: number
 }
 export default function Leads() {
-const {modalIsOpen, openDialog, closeDialog} = useModal()
-const {businessName, setBusinessName, businessCategory, setBusinessCategory, 
-     setContactNo, setLastContacted, stage, setStage, clientPlan, setClientPlan, leads} = useLead()
-const {addLead} = useAddLead()    
 
+const {openDialog, closeDialog} = useModal()
+const {businessName, setBusinessName, businessCategory, setBusinessCategory, 
+     setContactNo, contactNo, setLastContacted, stage, setStage, clientPlan, setClientPlan, leads, modalIsOpen} = useLead()
+const {addLead} = useAddLead()    
 console.log(leads)
 const plan:PlanInterface[] = [
   {
@@ -140,9 +140,9 @@ const leadStage:LeadStageInterface[]  = [
             </div>
            </div>
             <div className="pb-5">
-            <label htmlFor="contact">Contact :</label>
+            <label  htmlFor="contact">Contact :</label>
             <div>
-            <input  onChange={e => setContactNo(Number(e.target.value))} id="contact" type="number"  className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" placeholder="eg. 0711111111" required/>
+            <input value={contactNo} onChange={e => setContactNo(Number(e.target.value))} id="contact" type="number"  className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" placeholder="eg. 0711111111" required/>
             </div>
            </div>
 
