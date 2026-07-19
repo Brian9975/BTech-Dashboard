@@ -2,6 +2,8 @@ import React, { createContext, useContext, useState } from 'react'
 
 
 interface LeadsInterface {
+
+    id: string,
     name: string,
     category: string,
     contact: number | string,
@@ -31,10 +33,11 @@ interface LeadContextType {
   setClientPlan: React.Dispatch<React.SetStateAction<string>>,
   modalIsOpen: boolean,
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+  saveToStorage: () => void
 }
 const LeadContext = createContext<LeadContextType | null>(null)
 export default function LeadContextProvider({children}: {children: React.ReactNode}) {
-  const [leads, setLeads] = useState<LeadsInterface[]>(localStorage.getItem("leads")  ?  JSON.parse(localStorage.getItem("leads") as string ) : [] )
+  const [leads, setLeads] = useState<LeadsInterface[]>(localStorage.getItem("leads") ? JSON.parse(localStorage.getItem("leads") as string)  : [] )
   const [businessName, setBusinessName] = useState("")
   const [businessCategory, setBusinessCategory] = useState("")
   const [contactNo, setContactNo] = useState<number | string>("")
@@ -42,7 +45,10 @@ export default function LeadContextProvider({children}: {children: React.ReactNo
   const [lastContacted, setLastContacted] = useState<Date | string>("")
   const [clientPlan, setClientPlan] = useState("")
   const [modalIsOpen, setModalIsOpen] = useState(false)
-  const contextValues = {modalIsOpen, setModalIsOpen, leads, setLeads, businessName, setBusinessName,businessCategory, setBusinessCategory, 
+  const saveToStorage = () => {
+ localStorage.setItem("leads", JSON.stringify(leads))
+}
+  const contextValues = {saveToStorage, modalIsOpen, setModalIsOpen, leads, setLeads, businessName, setBusinessName,businessCategory, setBusinessCategory, 
     contactNo, setContactNo, stage, setStage, lastContacted, setLastContacted, clientPlan, setClientPlan}
 
     return (

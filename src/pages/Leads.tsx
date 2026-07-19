@@ -1,6 +1,9 @@
+import { useEffect } from "react"
+import { BadgeDollarSign, ChartBarIncreasing, Contact, DeleteIcon, Handshake, Move, MoveRight } from "lucide-react"
 import { useLead } from "../context/LeadContext"
 import useAddLead from "../hooks/useAddLead"
 import useModal from "../hooks/useModal"
+import { Link } from "react-router-dom"
 interface LeadStageInterface {
   id: number,
   name: string
@@ -18,7 +21,7 @@ export default function Leads() {
 
 const {openDialog, closeDialog} = useModal()
 const {businessName, setBusinessName, businessCategory, setBusinessCategory, 
-     setContactNo, contactNo, setLastContacted, stage, setStage, clientPlan, setClientPlan, leads, modalIsOpen} = useLead()
+     setContactNo, contactNo, setLastContacted, stage, setStage, clientPlan, setClientPlan, leads, modalIsOpen, saveToStorage} = useLead()
 const {addLead} = useAddLead()    
 console.log(leads)
 const plan:PlanInterface[] = [
@@ -108,7 +111,9 @@ const leadStage:LeadStageInterface[]  = [
   }
 ]
 
-
+useEffect(() => {
+ saveToStorage()
+}, [leads])
   return (
     <div>
       <div className="text-center">
@@ -158,9 +163,9 @@ const leadStage:LeadStageInterface[]  = [
 
 
             <div className="pb-5">
-            <label htmlFor="stage">Client's Plan :</label>
+            <label htmlFor="plan">Client's Plan :</label>
             <div>
-            <select value={clientPlan}  onChange={e => setClientPlan(e.target.value)} id="stage" className={`border w-full border-slate-600 ${clientPlan == "Growth Plan" ? "text-green-600" : clientPlan == "Care Plan" ? "text-amber-600" : clientPlan == "None" ? "text-gray-500" : "text-slate-700"} p-2 outline-0 placeholder-slate-700  rounded-lg`} required>
+            <select value={clientPlan}  onChange={e => setClientPlan(e.target.value)} id="plan" className={`border w-full border-slate-600 ${clientPlan == "Growth Plan" ? "text-green-500" : clientPlan == "Care Plan" ? "text-amber-500" : clientPlan == "None" ? "text-gray-500" : "text-slate-700"} p-2 outline-0 placeholder-slate-700  rounded-lg`} required>
               <option value="" className="bg-slate-950" disabled>Clients Plan</option>
             {plan.map(p => <option className="bg-slate-950 text-slate-50" key={p.id} value={p.name}>{p.name}</option>)}
             </select>
@@ -181,6 +186,41 @@ const leadStage:LeadStageInterface[]  = [
       </div>
 }
 
+
+<main className=" flex overflow-x-auto justify-center gap-10 flex-col items-center">
+
+ { leads.map(l => <div key={l.id} className="flex min-w-max md:gap-6 gap-4 border p-5 border-blue-600 rounded-lg">
+   <div className="flex shrink-0 flex-col gap-5">
+    <h1 className="md:text-2xl text-lg font-bold">{l.name}</h1>
+    <p className="md:text-2xl text-lg text-blue-600">{l.category}</p>
+    <p className="md:text-lg font-bold">0{l.contact}</p>
+    <p className="text-amber-500 text-sm md:text-md">Last Contact :<span className="bg-amber-500  ml-1 text-slate-950 rounded-3xl py-1 px-3 font-bold md:text-md text-xs">{l.lastContacted.toString()}</span></p>
+   </div>
+   <div className="flex shrink-0 flex-col gap-5">
+    <div>
+    <button className="bg-slate-400 text-slate-950 cursor-pointer py-1 px-2 rounded-lg md:text-md text-sm  font-bold">Update Status</button>
+    </div>
+    <div>
+    <button className="bg-amber-500  text-slate-950 cursor-pointer py-1 px-2 rounded-lg md:text-md text-sm  font-bold flex justify-center gap-1 items-center"><span>Update Last </span><Contact className="hidden md:block"/><Contact size={20} className="md:hidden"/></button>
+    </div>
+    <div>
+    <button className="bg-blue-600 text-slate-950 cursor-pointer py-1 px-2 rounded-lg md:text-md text-sm  font-bold">Update Plan</button>
+    </div>
+    <div>
+      <Link to="/" className="flex gap-2 text-sm md:text-md items-center"><MoveRight/><span className="text-blue-600 font-bold">Go to Lead</span></Link>
+    </div>
+   </div>
+   <div className="flex shrink-0 flex-col gap-5">
+    <p className="md:text-lg  font-bold flex items-center gap-1  uppercase"><Handshake/><span className="  max-w-40">{l.stage}</span></p>
+    <p className="md:text-lg font-bold flex uppercase items-center gap-1"><ChartBarIncreasing/><span>{l.plan}</span></p>
+    <div className="flex items-center gap-5"><button className="bg-slate-50 px-3 cursor-pointer rounded-lg"><BadgeDollarSign className="text-slate-950 md:hidden"/><BadgeDollarSign className="text-slate-950 md:block hidden" size={35}/></button><span className="md:text-sm border text-xs  border-green-500 rounded-3xl py-1 px-3 text-green-500 font-bold"><span className="text-slate-50">TE :</span> Ksh 100,300</span></div>
+   <div className="flex gap-5"><button className="bg-slate-900 cursor-pointer py-1 rounded-lg shadow-md shadow-slate-600 px-4">Update</button><button className="bg-slate-900 py-1 rounded-lg shadow-md shadow-slate-600 cursor-pointer px-4">Delete</button></div>
+   </div>
+
+  </div>)
+  
+}
+</main>
 
     </div>
   )

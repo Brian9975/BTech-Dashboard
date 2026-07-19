@@ -1,16 +1,17 @@
 import type React from 'react'
 import { useLead } from '../context/LeadContext'
-import useSaveToStorage from './useSaveToStorage'
+
 import useModal from './useModal'
 
 export default function useAddLead() {
 
-const {businessName,setBusinessName, businessCategory, setBusinessCategory, contactNo, setContactNo, stage, setStage, clientPlan, setClientPlan, lastContacted, setLeads} = useLead()
-const {saveToStorage} = useSaveToStorage()
+const {businessName,setBusinessName, businessCategory, setBusinessCategory, contactNo, setContactNo, stage, setStage, clientPlan, setClientPlan, lastContacted, setLeads, saveToStorage} = useLead()
+
 const {closeDialog} = useModal()
  const addLead = (e: React.SubmitEvent) => {
  e.preventDefault()
     const leadInfo = {
+       id: Date.now().toString(),
        name: businessName,
        category: businessCategory,
        contact: contactNo,
@@ -23,7 +24,7 @@ const {closeDialog} = useModal()
     }
 
     setLeads(prev => ([...prev, leadInfo]))
-    saveToStorage()
+   
     closeDialog()
 
     setBusinessName("")
