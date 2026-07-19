@@ -5,7 +5,7 @@ import useModal from './useModal'
 
 export default function useAddLead() {
 
-const {businessName,setBusinessName, businessCategory, setBusinessCategory, contactNo, setContactNo, stage, setStage, clientPlan, setClientPlan, lastContacted, setLeads, saveToStorage} = useLead()
+const {businessName,setBusinessName, businessCategory, setBusinessCategory, contactNo, setContactNo, stage, setStage, clientPlan, setClientPlan, lastContacted, setLeads} = useLead()
 
 const {closeDialog} = useModal()
  const addLead = (e: React.SubmitEvent) => {
