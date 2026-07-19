@@ -1,40 +1,50 @@
-import type React from 'react'
-import { useLead } from '../context/LeadContext'
+import type React from "react";
+import { useLead } from "../context/LeadContext";
 
-import useModal from './useModal'
+import useModal from "./useModal";
 
 export default function useAddLead() {
+  const {
+    businessName,
+    setBusinessName,
+    businessCategory,
+    setBusinessCategory,
+    contactNo,
+    setContactNo,
+    stage,
+    setStage,
+    clientPlan,
+    setClientPlan,
+    lastContacted,
+    setLeads,
+  } = useLead();
 
-const {businessName,setBusinessName, businessCategory, setBusinessCategory, contactNo, setContactNo, stage, setStage, clientPlan, setClientPlan, lastContacted, setLeads} = useLead()
-
-const {closeDialog} = useModal()
- const addLead = (e: React.SubmitEvent) => {
- e.preventDefault()
+  const { closeDialog } = useModal();
+  const addLead = (e: React.SubmitEvent) => {
+    e.preventDefault();
     const leadInfo = {
-       id: Date.now().toString(),
-       name: businessName,
-       category: businessCategory,
-       contact: contactNo,
-       stage,
-       plan:clientPlan,
-       lastContacted,
-       dateAdded: new Date(),
-       notes: "",
-       earningsFromLead: 0
-    }
+      id: Date.now().toString(),
+      name: businessName,
+      category: businessCategory,
+      contact: contactNo,
+      stage,
+      plan: clientPlan,
+      lastContacted,
+      dateAdded: new Date(),
+      notes: "",
+      earningsFromLead: 0,
+    };
 
-    setLeads(prev => ([...prev, leadInfo]))
-   
-    closeDialog()
+    setLeads((prev) => [...prev, leadInfo]);
 
-    setBusinessName("")
-    setBusinessCategory("")
-    setContactNo("")
-    setStage("")
-    setClientPlan("")
- }
+    closeDialog();
 
+    setBusinessName("");
+    setBusinessCategory("");
+    setContactNo("");
+    setStage("");
+    setClientPlan("");
+  };
 
-
-  return {addLead}
+  return { addLead };
 }

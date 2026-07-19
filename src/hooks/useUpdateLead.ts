@@ -1,6 +1,5 @@
 import { useLead } from "../context/LeadContext";
 
-
 export default function useUpdateLead() {
   const {
     leads,
@@ -12,24 +11,24 @@ export default function useUpdateLead() {
     editStage,
     editClientPlan,
     editLastContacted,
-    saveToStorage
+    saveToStorage,
   } = useLead();
-  
-  const updateLead = (e: React.SubmitEvent) => {
- e.preventDefault()
-   const leadToEditIndex = leads.findIndex(l => l.id == leadToEdit)
 
-   leads[leadToEditIndex] = {
-    ...leads[leadToEditIndex],
-    name: editBusinessName,
-    category: editBusinessCategory,
-    contact: editContactNo,
-    stage: editStage,
-    plan: editClientPlan,
-    lastContacted: editLastContacted
-   }
-  saveToStorage()
-  setLeadToEdit(null)
+  const updateLead = (e: React.SubmitEvent) => {
+    e.preventDefault();
+    const leadToEditIndex = leads.findIndex((l) => l.id == leadToEdit);
+
+    leads[leadToEditIndex] = {
+      ...leads[leadToEditIndex],
+      name: editBusinessName,
+      category: editBusinessCategory,
+      contact: editContactNo,
+      stage: editStage,
+      plan: editClientPlan,
+      lastContacted: editLastContacted,
+    };
+    saveToStorage();
+    setLeadToEdit(null);
   };
   return { updateLead };
 }
