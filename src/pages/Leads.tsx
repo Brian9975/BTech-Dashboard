@@ -1,227 +1,577 @@
-import { useEffect } from "react"
-import { BadgeDollarSign, ChartBarIncreasing, Contact, DeleteIcon, Handshake, Move, MoveRight } from "lucide-react"
-import { useLead } from "../context/LeadContext"
-import useAddLead from "../hooks/useAddLead"
-import useModal from "../hooks/useModal"
-import { Link } from "react-router-dom"
+import { useEffect } from "react";
+import {
+  BadgeDollarSign,
+  ChartBarIncreasing,
+  Contact,
+  Handshake,
+  MoveRight,
+} from "lucide-react";
+import { useLead } from "../context/LeadContext";
+import useAddLead from "../hooks/useAddLead";
+import useModal from "../hooks/useModal";
+import { Link } from "react-router-dom";
+import useUpdateLead from "../hooks/useUpdateLead";
 interface LeadStageInterface {
-  id: number,
-  name: string
+  id: number;
+  name: string;
 }
 interface BCategory {
- id: number,
- name:string
+  id: number;
+  name: string;
 }
 interface PlanInterface {
-  id: number,
-  name: string,
-  amount?: number
+  id: number;
+  name: string;
+  amount?: number;
 }
 export default function Leads() {
+  const { openDialog, closeDialog } = useModal();
+  const {
+    businessName,
+    setBusinessName,
+    businessCategory,
+    setBusinessCategory,
+    setContactNo,
+    contactNo,
+    setLastContacted,
+    stage,
+    setStage,
+    clientPlan,
+    setClientPlan,
+    leads,
+    modalIsOpen,
+    saveToStorage,
+    leadToEdit,
+    setLeadToEdit,
+    editBusinessName,
+    setEditBusinessName,
+    editBusinessCategory,
+    setEditBusinessCategory,
+    editContactNo,
+    setEditContactNo,
+    editStage,
+    setEditStage,
+    editClientPlan,
+    setEditClientPlan,
+    editLastContacted,
+    setEditLastContacted,
+  } = useLead();
+  const { addLead } = useAddLead();
+  const { updateLead } = useUpdateLead();
 
-const {openDialog, closeDialog} = useModal()
-const {businessName, setBusinessName, businessCategory, setBusinessCategory, 
-     setContactNo, contactNo, setLastContacted, stage, setStage, clientPlan, setClientPlan, leads, modalIsOpen, saveToStorage} = useLead()
-const {addLead} = useAddLead()    
-console.log(leads)
-const plan:PlanInterface[] = [
-  {
-    id: 1,
-    name: "Care Plan",
-    amount: 2000
-  },
-   {
-    id: 2,
-    name: "Growth Plan",
-    amount: 3000
-  },
-  {
-    id: 3,
-    name: "None"
-  } 
-]
-const bCategoryOption:BCategory[] = [{
-  id: 1,
-  name: "pharmacy"
-}, {
-  id: 2,
-  name: "restaurant"
-}]
+  const leadToEditObject = leads.find((l) => l.id === leadToEdit);
 
-const leadStage:LeadStageInterface[]  = [
-  {
-    id: 1.1,
-    name: "New"
-  },
-  {
-    id: 1.2,
-    name: "Contacted"
-  },
-  {
-     id: 1.3,
-    name: "Replied"
-  },
-  {
-    id: 1.4,
-    name: "Preview Sent"
-  },
-  {
-     id: 1.5,
-    name: "Price Sent"
-  },
-  {
-     id: 1.6,
-    name: "Negotiating"
-  },
-  {
-     id: 1.7,
-    name: "Deposit paid"
-  },
-  {
-     id: 1.8,
-    name: "Checklist Sent"
-  },
-  {
-    id: 1.9,
-    name: "Building Phase",
-  },
-  {
-     id: 2.0,
-    name: "Review Phase"
-  },
-  {
-     id: 2.1,
-    name: "Payment Complete + Pitch Care Plan"
-  },
-  {
-    id: 2.2,
-    name: "Closed + On Plan"
-  },
-  {
-    id:2.3,
-    name: "Closed + Off Plan"
-  },
-  {
-     id: 2.4,
-    name: "Dead"
-  },
-  {
-    id: 2.5,
-    name: "Not Interested"
-  }
-]
+  console.log(leadToEditObject);
+  const plan: PlanInterface[] = [
+    {
+      id: 1,
+      name: "Care Plan",
+      amount: 2000,
+    },
+    {
+      id: 2,
+      name: "Growth Plan",
+      amount: 3000,
+    },
+    {
+      id: 3,
+      name: "None",
+    },
+  ];
+  const bCategoryOption: BCategory[] = [
+    {
+      id: 1,
+      name: "pharmacy",
+    },
+    {
+      id: 2,
+      name: "restaurant",
+    },
+  ];
 
-useEffect(() => {
- saveToStorage()
-}, [leads])
+  const leadStage: LeadStageInterface[] = [
+    {
+      id: 1.1,
+      name: "New",
+    },
+    {
+      id: 1.2,
+      name: "Contacted",
+    },
+    {
+      id: 1.3,
+      name: "Replied",
+    },
+    {
+      id: 1.4,
+      name: "Preview Sent",
+    },
+    {
+      id: 1.5,
+      name: "Price Sent",
+    },
+    {
+      id: 1.6,
+      name: "Negotiating",
+    },
+    {
+      id: 1.7,
+      name: "Deposit paid",
+    },
+    {
+      id: 1.8,
+      name: "Checklist Sent",
+    },
+    {
+      id: 1.9,
+      name: "Building Phase",
+    },
+    {
+      id: 2.0,
+      name: "Review Phase",
+    },
+    {
+      id: 2.1,
+      name: "Payment Complete + Pitch Care Plan",
+    },
+    {
+      id: 2.2,
+      name: "Closed + On Plan",
+    },
+    {
+      id: 2.3,
+      name: "Closed + Off Plan",
+    },
+    {
+      id: 2.4,
+      name: "Dead",
+    },
+    {
+      id: 2.5,
+      name: "Not Interested",
+    },
+  ];
+
+  useEffect(() => {
+    if (leadToEditObject) {
+      setEditBusinessName(leadToEditObject.name);
+      setEditBusinessCategory(leadToEditObject.category);
+      setEditContactNo(leadToEditObject.contact);
+      setEditClientPlan(leadToEditObject.plan);
+      setEditStage(leadToEditObject.stage);
+      setEditLastContacted(leadToEditObject.lastContacted);
+    }
+  }, [leadToEdit]);
+  useEffect(() => {
+    saveToStorage();
+  }, [leads]);
   return (
     <div>
       <div className="text-center">
-        <button onClick={openDialog} className="bg-blue-500 md:w-lg shadow-md shadow-slate-800 text-slate-950 font-bold cursor-pointer  rounded-lg py-3 px-5 text-lg">Add Lead</button>
+        <button
+          onClick={openDialog}
+          className="bg-blue-500 md:w-lg shadow-md shadow-slate-800 text-slate-950 font-bold cursor-pointer  rounded-lg py-3 px-5 text-lg"
+        >
+          Add Lead
+        </button>
       </div>
       <div className="flex justify-center">
-        <input className={`border-slate-600  border my-15 text-lg rounded-lg p-2 placeholder-slate-700 outline-0 md:w-xl`} type="text" placeholder="Search for lead..."/>
+        <input
+          className={`border-slate-600  border my-15 text-lg rounded-lg p-2 placeholder-slate-700 outline-0 md:w-xl`}
+          type="text"
+          placeholder="Search for lead..."
+        />
       </div>
-
 
       {/* Add lead modal */}
-      {modalIsOpen && 
-      <div onClick={closeDialog} className="fixed flex justify-center items-center bg-black/50 inset-0 z-50">
-         <form onSubmit={addLead} onClick={e => e.stopPropagation()} className="bg-slate-900 rounded-2xl p-8 w-md">
-           <h3 className="text-center text-lg font-bold text-blue-600 pb-8">Enter Lead's Information</h3>
-           <div className="pb-5">
-            <label htmlFor="businessName">Business Name :</label>
-            <div>
-            <input value={businessName} onChange={e => setBusinessName(e.target.value)} id="businessName" type="text" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" placeholder="eg. Ahwan Pharmacy" required/>
-            </div>
-           </div>
-           <div className="pb-5">
-            <label htmlFor="bCategory">Business Category :</label>
-            <div>
-            <select value={businessCategory}  onChange={e => setBusinessCategory(e.target.value)} id="bCategory" className={`border ${businessCategory  ? "text-blue-600" : businessCategory == "" ? "text-slate-700" : ""} w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg`} required>
-              <option value="" className="bg-slate-950" disabled>Choose Business Category</option>
-            {bCategoryOption.map(category => (<option key={category.id} className="bg-slate-950 text-slate-50" value={category.name}>{category.name}</option>))}
-            </select>
-            </div>
-           </div>
+      {modalIsOpen && (
+        <div
+          onClick={closeDialog}
+          className="fixed flex justify-center items-center bg-black/50 inset-0 z-50"
+        >
+          <form
+            onSubmit={addLead}
+            onClick={(e) => e.stopPropagation()}
+            className="bg-slate-900 rounded-2xl p-8 w-md"
+          >
+            <h3 className="text-center text-lg font-bold text-blue-600 pb-8">
+              Enter Lead's Information
+            </h3>
             <div className="pb-5">
-            <label  htmlFor="contact">Contact :</label>
-            <div>
-            <input value={contactNo} onChange={e => setContactNo(Number(e.target.value))} id="contact" type="number"  className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" placeholder="eg. 0711111111" required/>
+              <label htmlFor="businessName">Business Name :</label>
+              <div>
+                <input
+                  value={businessName}
+                  onChange={(e) => setBusinessName(e.target.value)}
+                  id="businessName"
+                  type="text"
+                  className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
+                  placeholder="eg. Ahwan Pharmacy"
+                  required
+                />
+              </div>
             </div>
-           </div>
+            <div className="pb-5">
+              <label htmlFor="bCategory">Business Category :</label>
+              <div>
+                <select
+                  value={businessCategory}
+                  onChange={(e) => setBusinessCategory(e.target.value)}
+                  id="bCategory"
+                  className={`border ${businessCategory ? "text-blue-600" : businessCategory == "" ? "text-slate-700" : ""} w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg`}
+                  required
+                >
+                  <option value="" className="bg-slate-950" disabled>
+                    Choose Business Category
+                  </option>
+                  {bCategoryOption.map((category) => (
+                    <option
+                      key={category.id}
+                      className="bg-slate-950 text-slate-50"
+                      value={category.name}
+                    >
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className="pb-5">
+              <label htmlFor="contact">Contact :</label>
+              <div>
+                <input
+                  value={contactNo}
+                  onChange={(e) => setContactNo(Number(e.target.value))}
+                  id="contact"
+                  type="number"
+                  className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
+                  placeholder="eg. 0711111111"
+                  required
+                />
+              </div>
+            </div>
 
             <div className="pb-5">
-            <label htmlFor="stage">Lead Stage :</label>
-            <div>
-            <select value={stage} onChange={e => setStage(e.target.value)} id="stage" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" required>
-              <option value=""  className="bg-slate-950" disabled>Select Stage</option>
-            {leadStage.map(stage => (<option key={stage.id} className={`bg-slate-950 ${stage.id === 1.1 ? "" : stage.id === 1.2 ? "" : stage.id === 1.3 ? "" : stage.id === 1.4 ? "" : stage.id === 1.5 ? "" : stage.id === 1.6 ? "" : stage.id === 1.7 ? "" : stage.id === 1.8 ? "" : stage.id === 1.9 ? "" : stage.id === 2.0 ? "" : stage.id === 2.1 ? "" : stage.id === 2.2 ? "" : stage.id === 2.3 ? "" : ""}`} value={stage.name}>{stage.name}</option>))}
-            </select>
+              <label htmlFor="stage">Lead Stage :</label>
+              <div>
+                <select
+                  value={stage}
+                  onChange={(e) => setStage(e.target.value)}
+                  id="stage"
+                  className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
+                  required
+                >
+                  <option value="" className="bg-slate-950" disabled>
+                    Select Stage
+                  </option>
+                  {leadStage.map((stage) => (
+                    <option
+                      key={stage.id}
+                      className={`bg-slate-950 ${stage.id === 1.1 ? "" : stage.id === 1.2 ? "" : stage.id === 1.3 ? "" : stage.id === 1.4 ? "" : stage.id === 1.5 ? "" : stage.id === 1.6 ? "" : stage.id === 1.7 ? "" : stage.id === 1.8 ? "" : stage.id === 1.9 ? "" : stage.id === 2.0 ? "" : stage.id === 2.1 ? "" : stage.id === 2.2 ? "" : stage.id === 2.3 ? "" : ""}`}
+                      value={stage.name}
+                    >
+                      {stage.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
-           </div>
-
 
             <div className="pb-5">
-            <label htmlFor="plan">Client's Plan :</label>
-            <div>
-            <select value={clientPlan}  onChange={e => setClientPlan(e.target.value)} id="plan" className={`border w-full border-slate-600 ${clientPlan == "Growth Plan" ? "text-green-500" : clientPlan == "Care Plan" ? "text-amber-500" : clientPlan == "None" ? "text-gray-500" : "text-slate-700"} p-2 outline-0 placeholder-slate-700  rounded-lg`} required>
-              <option value="" className="bg-slate-950" disabled>Clients Plan</option>
-            {plan.map(p => <option className="bg-slate-950 text-slate-50" key={p.id} value={p.name}>{p.name}</option>)}
-            </select>
+              <label htmlFor="plan">Client's Plan :</label>
+              <div>
+                <select
+                  value={clientPlan}
+                  onChange={(e) => setClientPlan(e.target.value)}
+                  id="plan"
+                  className={`border w-full border-slate-600 ${clientPlan == "Growth Plan" ? "text-green-500" : clientPlan == "Care Plan" ? "text-amber-500" : clientPlan == "None" ? "text-gray-500" : "text-slate-700"} p-2 outline-0 placeholder-slate-700  rounded-lg`}
+                  required
+                >
+                  <option value="" className="bg-slate-950" disabled>
+                    Clients Plan
+                  </option>
+                  {plan.map((p) => (
+                    <option
+                      className="bg-slate-950 text-slate-50"
+                      key={p.id}
+                      value={p.name}
+                    >
+                      {p.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
-           </div>
 
             <div className="pb-5">
-            <label htmlFor="lastContactDate">Last Contact Date :</label>
-            <div>
-            <input  disabled={stage == "New"} onChange={(e) => setLastContacted(e.target.value)} id="lastContactDate" type="date" className={`border ${stage == "New" ? "text-slate-700" : ""} w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg `} required/>
+              <label htmlFor="lastContactDate">Last Contact Date :</label>
+              <div>
+                <input
+                  disabled={stage == "New"}
+                  onChange={(e) => setLastContacted(e.target.value)}
+                  id="lastContactDate"
+                  type="date"
+                  className={`border ${stage == "New" ? "text-slate-700" : ""} w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg `}
+                  required
+                />
+              </div>
             </div>
-           </div>
 
-           <div className="pt-5 flex justify-between">
-            <button onClick={closeDialog} type="button" className="bg-slate-50 cursor-pointer text-slate-950 py-2 px-8 font-bold rounded-md">Cancel</button><button type="submit" className="bg-blue-600 cursor-pointer text-slate-50 py-2 px-8 font-bold rounded-md">Save</button>
-           </div>
-         </form>
-      </div>
-}
+            <div className="pt-5 flex justify-between">
+              <button
+                onClick={closeDialog}
+                type="button"
+                className="bg-slate-50 cursor-pointer text-slate-950 py-2 px-8 font-bold rounded-md"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="bg-blue-600 cursor-pointer text-slate-50 py-2 px-8 font-bold rounded-md"
+              >
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
 
+      <main className=" flex overflow-x-auto justify-center gap-10 flex-col items-center">
+        {leads.map((l) => (
+          <div
+            key={l.id}
+            className="flex min-w-max md:gap-6 gap-4 border p-5 border-blue-600 rounded-lg"
+          >
+            <div className="flex shrink-0 flex-col gap-5">
+              <h1 className="md:text-2xl text-lg font-bold">{l.name}</h1>
+              <p className="md:text-2xl text-lg text-blue-600">{l.category}</p>
+              <p className="md:text-lg font-bold">0{l.contact}</p>
+              <p className="text-amber-500 text-sm md:text-md">
+                Last Contact :
+                <span className="bg-amber-500  ml-1 text-slate-950 rounded-3xl py-1 px-3 font-bold md:text-md text-xs">
+                  {l.lastContacted.toString()}
+                </span>
+              </p>
+            </div>
+            <div className="flex shrink-0 flex-col gap-5">
+              <div>
+                <button className="bg-slate-400 text-slate-950 cursor-pointer py-1 px-2 rounded-lg md:text-md text-sm  font-bold">
+                  Update Status
+                </button>
+              </div>
+              <div>
+                <button className="bg-amber-500  text-slate-950 cursor-pointer py-1 px-2 rounded-lg md:text-md text-sm  font-bold flex justify-center gap-1 items-center">
+                  <span>Update Last </span>
+                  <Contact className="hidden md:block" />
+                  <Contact size={20} className="md:hidden" />
+                </button>
+              </div>
+              <div>
+                <button className="bg-blue-600 text-slate-950 cursor-pointer py-1 px-2 rounded-lg md:text-md text-sm  font-bold">
+                  Update Plan
+                </button>
+              </div>
+              <div>
+                <Link
+                  to="/"
+                  className="flex gap-2 text-sm md:text-md items-center"
+                >
+                  <MoveRight />
+                  <span className="text-blue-600 font-bold">Go to Lead</span>
+                </Link>
+              </div>
+            </div>
+            <div className="flex shrink-0 flex-col gap-5">
+              <p className="md:text-lg  font-bold flex items-center gap-1  uppercase">
+                <Handshake />
+                <span className="  max-w-40">{l.stage}</span>
+              </p>
+              <p className="md:text-lg font-bold flex uppercase items-center gap-1">
+                <ChartBarIncreasing />
+                <span>{l.plan}</span>
+              </p>
+              <div className="flex items-center gap-5">
+                <button className="bg-slate-50 px-3 cursor-pointer rounded-lg">
+                  <BadgeDollarSign className="text-slate-950 md:hidden" />
+                  <BadgeDollarSign
+                    className="text-slate-950 md:block hidden"
+                    size={35}
+                  />
+                </button>
+                <span className="md:text-sm border text-xs  border-green-500 rounded-3xl py-1 px-3 text-green-500 font-bold">
+                  <span className="text-slate-50">TE :</span> Ksh{" "}
+                  {l.earningsFromLead}
+                </span>
+              </div>
+              <div className="flex gap-5">
+                <button
+                  onClick={() => setLeadToEdit(l.id)}
+                  className="bg-slate-900 cursor-pointer py-1 rounded-lg shadow-md shadow-slate-600 px-4"
+                >
+                  Update
+                </button>
+                <button className="bg-slate-900 py-1 rounded-lg shadow-md shadow-slate-600 cursor-pointer px-4">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </main>
 
-<main className=" flex overflow-x-auto justify-center gap-10 flex-col items-center">
+      {/* Edit lead modal */}
+      {leadToEdit && (
+        <div
+          onClick={() => setLeadToEdit(null)}
+          className="fixed flex justify-center items-center bg-black/50 inset-0 z-50"
+        >
+          <form
+            onSubmit={updateLead}
+            onClick={(e) => e.stopPropagation()}
+            className="bg-slate-900 rounded-2xl p-8 w-md"
+          >
+            <h3 className="text-center text-lg font-bold text-blue-600 pb-8">
+              Update Lead's Information
+            </h3>
+            <div className="pb-5">
+              <label htmlFor="businessName">Business Name :</label>
+              <div>
+                <input
+                  value={editBusinessName}
+                  onChange={(e) => setEditBusinessName(e.target.value)}
+                  id="businessName"
+                  type="text"
+                  className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
+                  placeholder="eg. Ahwan Pharmacy"
+                  required
+                />
+              </div>
+            </div>
+            <div className="pb-5">
+              <label htmlFor="bCategory">Business Category :</label>
+              <div>
+                <select
+                  value={editBusinessCategory}
+                  onChange={(e) => setEditBusinessCategory(e.target.value)}
+                  id="bCategory"
+                  className={`border ${businessCategory ? "text-blue-600" : businessCategory == "" ? "text-slate-700" : ""} w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg`}
+                  required
+                >
+                  <option value="" className="bg-slate-950" disabled>
+                    Choose Business Category
+                  </option>
+                  {bCategoryOption.map((category) => (
+                    <option
+                      key={category.id}
+                      className="bg-slate-950 text-slate-50"
+                      value={category.name}
+                    >
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className="pb-5">
+              <label htmlFor="contact">Contact :</label>
+              <div>
+                <input
+                  value={editContactNo}
+                  onChange={(e) => setEditContactNo(Number(e.target.value))}
+                  id="contact"
+                  type="number"
+                  className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
+                  placeholder="eg. 0711111111"
+                  required
+                />
+              </div>
+            </div>
 
- { leads.map(l => <div key={l.id} className="flex min-w-max md:gap-6 gap-4 border p-5 border-blue-600 rounded-lg">
-   <div className="flex shrink-0 flex-col gap-5">
-    <h1 className="md:text-2xl text-lg font-bold">{l.name}</h1>
-    <p className="md:text-2xl text-lg text-blue-600">{l.category}</p>
-    <p className="md:text-lg font-bold">0{l.contact}</p>
-    <p className="text-amber-500 text-sm md:text-md">Last Contact :<span className="bg-amber-500  ml-1 text-slate-950 rounded-3xl py-1 px-3 font-bold md:text-md text-xs">{l.lastContacted.toString()}</span></p>
-   </div>
-   <div className="flex shrink-0 flex-col gap-5">
-    <div>
-    <button className="bg-slate-400 text-slate-950 cursor-pointer py-1 px-2 rounded-lg md:text-md text-sm  font-bold">Update Status</button>
+            <div className="pb-5">
+              <label htmlFor="stage">Lead Stage :</label>
+              <div>
+                <select
+                  value={editStage}
+                  onChange={(e) => setEditStage(e.target.value)}
+                  id="stage"
+                  className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
+                  required
+                >
+                  <option value="" className="bg-slate-950" disabled>
+                    Select Stage
+                  </option>
+                  {leadStage.map((stage) => (
+                    <option
+                      key={stage.id}
+                      className={`bg-slate-950 ${stage.id === 1.1 ? "" : stage.id === 1.2 ? "" : stage.id === 1.3 ? "" : stage.id === 1.4 ? "" : stage.id === 1.5 ? "" : stage.id === 1.6 ? "" : stage.id === 1.7 ? "" : stage.id === 1.8 ? "" : stage.id === 1.9 ? "" : stage.id === 2.0 ? "" : stage.id === 2.1 ? "" : stage.id === 2.2 ? "" : stage.id === 2.3 ? "" : ""}`}
+                      value={stage.name}
+                    >
+                      {stage.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="pb-5">
+              <label htmlFor="plan">Client's Plan :</label>
+              <div>
+                <select
+                  value={editClientPlan}
+                  onChange={(e) => setEditClientPlan(e.target.value)}
+                  id="plan"
+                  className={`border w-full border-slate-600 ${clientPlan == "Growth Plan" ? "text-green-500" : clientPlan == "Care Plan" ? "text-amber-500" : clientPlan == "None" ? "text-gray-500" : "text-slate-700"} p-2 outline-0 placeholder-slate-700  rounded-lg`}
+                  required
+                >
+                  <option value="" className="bg-slate-950" disabled>
+                    Clients Plan
+                  </option>
+                  {plan.map((p) => (
+                    <option
+                      className="bg-slate-950 text-slate-50"
+                      key={p.id}
+                      value={p.name}
+                    >
+                      {p.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="pb-5">
+              <label htmlFor="lastContactDate">Last Contact Date :</label>
+              <div>
+                <input
+                  disabled={editStage == "New"}
+                  value={editLastContacted as any}
+                  onChange={(e) => setEditLastContacted(e.target.value)}
+                  id="lastContactDate"
+                  type="date"
+                  className={`border ${stage == "New" ? "text-slate-700" : ""} w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg `}
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="pt-5 flex justify-between">
+              <button
+                onClick={() => setLeadToEdit(null)}
+                type="button"
+                className="bg-slate-50 cursor-pointer text-slate-950 py-2 px-8 font-bold rounded-md"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="bg-blue-600 cursor-pointer text-slate-50 py-2 px-8 font-bold rounded-md"
+              >
+                Update
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
     </div>
-    <div>
-    <button className="bg-amber-500  text-slate-950 cursor-pointer py-1 px-2 rounded-lg md:text-md text-sm  font-bold flex justify-center gap-1 items-center"><span>Update Last </span><Contact className="hidden md:block"/><Contact size={20} className="md:hidden"/></button>
-    </div>
-    <div>
-    <button className="bg-blue-600 text-slate-950 cursor-pointer py-1 px-2 rounded-lg md:text-md text-sm  font-bold">Update Plan</button>
-    </div>
-    <div>
-      <Link to="/" className="flex gap-2 text-sm md:text-md items-center"><MoveRight/><span className="text-blue-600 font-bold">Go to Lead</span></Link>
-    </div>
-   </div>
-   <div className="flex shrink-0 flex-col gap-5">
-    <p className="md:text-lg  font-bold flex items-center gap-1  uppercase"><Handshake/><span className="  max-w-40">{l.stage}</span></p>
-    <p className="md:text-lg font-bold flex uppercase items-center gap-1"><ChartBarIncreasing/><span>{l.plan}</span></p>
-    <div className="flex items-center gap-5"><button className="bg-slate-50 px-3 cursor-pointer rounded-lg"><BadgeDollarSign className="text-slate-950 md:hidden"/><BadgeDollarSign className="text-slate-950 md:block hidden" size={35}/></button><span className="md:text-sm border text-xs  border-green-500 rounded-3xl py-1 px-3 text-green-500 font-bold"><span className="text-slate-50">TE :</span> Ksh 100,300</span></div>
-   <div className="flex gap-5"><button className="bg-slate-900 cursor-pointer py-1 rounded-lg shadow-md shadow-slate-600 px-4">Update</button><button className="bg-slate-900 py-1 rounded-lg shadow-md shadow-slate-600 cursor-pointer px-4">Delete</button></div>
-   </div>
-
-  </div>)
-  
-}
-</main>
-
-    </div>
-  )
+  );
 }
