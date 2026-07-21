@@ -11,6 +11,7 @@ import useAddLead from "../hooks/useAddLead";
 import useModal from "../hooks/useModal";
 import { Link } from "react-router-dom";
 import useUpdateLead from "../hooks/useUpdateLead";
+import useRemoveLead from "../hooks/useRemoveLead";
 interface LeadStageInterface {
   id: number;
   name: string;
@@ -55,13 +56,14 @@ export default function Leads() {
     setEditClientPlan,
     editLastContacted,
     setEditLastContacted,
+    leadToDelete,
+    setLeadToDelete
   } = useLead();
   const { addLead } = useAddLead();
   const { updateLead } = useUpdateLead();
-
+  const {removeLead} = useRemoveLead()
   const leadToEditObject = leads.find((l) => l.id === leadToEdit);
 
-  console.log(leadToEditObject);
   const plan: PlanInterface[] = [
     {
       id: 1,
@@ -335,7 +337,8 @@ export default function Leads() {
           </form>
         </div>
       )}
-
+        
+        {/* Leads Display */}
       <main className=" flex overflow-x-auto justify-center gap-10 flex-col items-center">
         {leads.map((l) => (
           <div
@@ -410,7 +413,7 @@ export default function Leads() {
                 >
                   Update
                 </button>
-                <button className="bg-slate-900 py-1 rounded-lg shadow-md shadow-slate-600 cursor-pointer px-4">
+                <button onClick={() => setLeadToDelete(l.id)} className="bg-slate-900 py-1 rounded-lg shadow-md shadow-slate-600 cursor-pointer px-4">
                   Delete
                 </button>
               </div>
@@ -572,6 +575,20 @@ export default function Leads() {
           </form>
         </div>
       )}
+
+
+      {/* Delete Modal */}
+      { leadToDelete &&
+      <div className="inset-0 z-50  flex justify-center items-center fixed bg-black/50">
+        <div className="bg-slate-950 md:w-lg shadow-md shadow-slate-700 px-10 py-8 rounded-lg text-center">
+
+        <p className="text-lg md:text-xl mb-5 font-bold text-blue-600">Complete Deletion!</p>
+        <div className="flex justify-between gap-20">
+          <button onClick={() => setLeadToDelete(null)} className="bg-slate-900 cursor-pointer rounded-lg font-bold py-2  text-slate-50 md:w-40 md:text-lg w-25">Cancel</button><button onClick={removeLead} className="bg-slate-50 cursor-pointer text-lg md:w-40  rounded-lg font-bold py-2  text-slate-950 w-25">Yes</button>
+        </div>
+        </div>
+      </div>
+}
     </div>
   );
 }

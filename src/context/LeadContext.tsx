@@ -33,6 +33,8 @@ interface LeadContextType {
   saveToStorage: () => void;
   leadToEdit: string | null;
   setLeadToEdit: React.Dispatch<React.SetStateAction<string | null>>;
+  leadToDelete: string | null;
+  setLeadToDelete: React.Dispatch<React.SetStateAction<string | null>>;
   editBusinessName: string;
   setEditBusinessName: React.Dispatch<React.SetStateAction<string>>;
   editBusinessCategory: string;
@@ -73,11 +75,14 @@ export default function LeadContextProvider({
   const [editStage, setEditStage] = useState("");
   const [editClientPlan, setEditClientPlan] = useState("");
   const [editLastContacted, setEditLastContacted] = useState<Date | string>("");
-
+  
+  const [leadToDelete, setLeadToDelete] = useState<string | null>(null)
   const saveToStorage = () => {
     localStorage.setItem("leads", JSON.stringify(leads));
   };
   const contextValues = {
+    leadToDelete,
+    setLeadToDelete,
     leadToEdit,
     setLeadToEdit,
     editBusinessName,
