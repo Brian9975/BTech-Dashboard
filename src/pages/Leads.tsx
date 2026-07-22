@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import {  useEffect } from "react";
 import {
   BadgeDollarSign,
   ChartBarIncreasing,
@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import useUpdateLead from "../hooks/useUpdateLead";
 import useRemoveLead from "../hooks/useRemoveLead";
 import useUpdateStage from "../hooks/useUpdateStage";
+import useUpdateLastContacted from "../hooks/useUpdateLastContacted";
 interface LeadStageInterface {
   id: number;
   name: string;
@@ -28,7 +29,9 @@ interface PlanInterface {
 }
 export default function Leads() {
   const {leadToUpdateStage, setLeadToUpdateStage, updateStage} = useUpdateStage()
+  const {updateLastContacted, lastContactedValue, setLastContactedValue, leadLastContactedToUpdate, setLeadLastContactedToUpdate} = useUpdateLastContacted()
   const { openDialog, closeDialog } = useModal();
+
   const {
     businessName,
     setBusinessName,
@@ -65,7 +68,8 @@ export default function Leads() {
   const { updateLead } = useUpdateLead();
   const {removeLead} = useRemoveLead()
   const leadToEditObject = leads.find((l) => l.id === leadToEdit);
-
+  const leadToUpdateLastContactedObject = leads.find(l => l.id == leadLastContactedToUpdate)
+  
   const plan: PlanInterface[] = [
     {
       id: 1,
@@ -155,6 +159,14 @@ export default function Leads() {
       name: "Not Interested",
     },
   ];
+
+
+
+  useEffect(() => {
+    if (leadToUpdateLastContactedObject) {
+      setLastContactedValue(leadToUpdateLastContactedObject.lastContacted)
+    }
+  }, [leadLastContactedToUpdate])
 
   useEffect(() => {
     if (leadToEditObject) {
@@ -343,9 +355,16 @@ export default function Leads() {
         {/* Leads Display */}
       <main className=" flex  overflow-x-auto justify-center gap-10 flex-col items-center">
          {/* Update Status Dropdown */}
-         <div onClick={() => setLeadToUpdateStage(null)} className={` fixed inset-0 bg-black/50  ${leadToUpdateStage ? "block " : "hidden"} `}> </div>
-        <div className={`fixed w-full duration-300 z-50 bg-slate-950 py-5 overflow-y-auto  h-100   border border-blue-600 rounded-lg transition-all  ${leadToUpdateStage ? "top-0" : "-top-350"} left-0  right-0`}>
+         <div onClick={() => setLeadToUpdateStage(null)} className={`z-50 fixed inset-0 bg-black/50  ${leadToUpdateStage ? "block " : "hidden"} `}> </div>
+        <div className={`fixed w-full duration-300 z-50 bg-slate-950 py-5 overflow-y-auto  h-100  shadow-md shadow-slate-700   rounded-b-4xl transition-all  ${leadToUpdateStage ? "top-0" : "-top-350"} left-0  right-0`}>
          {leadStage.map(l => <div onClick={() => updateStage(l.name)}  className="font-bold text-slate-600 cursor-pointer px-5 py-3 hover:bg-slate-400">{l.name}</div>)}
+        </div>
+
+        {/* Update Last Contacted */}
+ <div  onClick={() => setLeadLastContactedToUpdate(null)} className={`z-50 fixed inset-0 bg-black/50  ${leadLastContactedToUpdate ? "block" : "hidden"}`}> </div>
+        <div className={`fixed  w-full flex-col gap-10 flex justify-center items-center duration-300 z-50 bg-slate-950 py-5 overflow-y-auto  h-50  shadow-md shadow-slate-700  ${leadLastContactedToUpdate ? "top-0" : "-top-350"}   rounded-b-4xl transition-all left-0  right-0`}>
+         <input value={lastContactedValue as any}  onChange={e => setLastContactedValue(e.target.value)} className="w-lg  bg-slate-50 text-lg text-slate-950  border-slate-600 p-2 outline-0  rounded-lg border" type="date" />
+         <button  onClick={updateLastContacted} className="bg-slate-50 py-3 transition-all rounded-lg cursor-pointer font-bold hover:scale-105 w-3xs text-slate-950">Save</button>
         </div>
 
         {leads.map((l) => (
@@ -373,7 +392,7 @@ export default function Leads() {
              
               </div>
               <div>
-                <button className="bg-amber-500  text-slate-950 cursor-pointer py-1 px-2 rounded-lg md:text-md text-sm  font-bold flex justify-center gap-1 items-center">
+                <button onClick={() => setLeadLastContactedToUpdate(l.id)} className="bg-amber-500  text-slate-950 cursor-pointer py-1 px-2 rounded-lg md:text-md text-sm  font-bold flex justify-center gap-1 items-center">
                   <span>Update Last </span>
                   <Contact className="hidden md:block" />
                   <Contact size={20} className="md:hidden" />
