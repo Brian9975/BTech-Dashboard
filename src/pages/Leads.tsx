@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   BadgeDollarSign,
   ChartBarIncreasing,
@@ -12,6 +12,7 @@ import useModal from "../hooks/useModal";
 import { Link } from "react-router-dom";
 import useUpdateLead from "../hooks/useUpdateLead";
 import useRemoveLead from "../hooks/useRemoveLead";
+import useUpdateStage from "../hooks/useUpdateStage";
 interface LeadStageInterface {
   id: number;
   name: string;
@@ -26,6 +27,7 @@ interface PlanInterface {
   amount?: number;
 }
 export default function Leads() {
+  const {leadToUpdateStage, setLeadToUpdateStage, updateStage} = useUpdateStage()
   const { openDialog, closeDialog } = useModal();
   const {
     businessName,
@@ -339,7 +341,13 @@ export default function Leads() {
       )}
         
         {/* Leads Display */}
-      <main className=" flex overflow-x-auto justify-center gap-10 flex-col items-center">
+      <main className=" flex  overflow-x-auto justify-center gap-10 flex-col items-center">
+         {/* Update Status Dropdown */}
+         <div onClick={() => setLeadToUpdateStage(null)} className={` fixed inset-0 bg-black/50  ${leadToUpdateStage ? "block " : "hidden"} `}> </div>
+        <div className={`fixed w-full duration-300 z-50 bg-slate-950 py-5 overflow-y-auto  h-100   border border-blue-600 rounded-lg transition-all  ${leadToUpdateStage ? "top-0" : "-top-350"} left-0  right-0`}>
+         {leadStage.map(l => <div onClick={() => updateStage(l.name)}  className="font-bold text-slate-600 cursor-pointer px-5 py-3 hover:bg-slate-400">{l.name}</div>)}
+        </div>
+
         {leads.map((l) => (
           <div
             key={l.id}
@@ -356,11 +364,13 @@ export default function Leads() {
                 </span>
               </p>
             </div>
-            <div className="flex shrink-0 flex-col gap-5">
+            <div className="flex  shrink-0 flex-col gap-5">
               <div>
-                <button className="bg-slate-400 text-slate-950 cursor-pointer py-1 px-2 rounded-lg md:text-md text-sm  font-bold">
+                
+                <button onClick={() => setLeadToUpdateStage(l.id)} className="bg-slate-400 text-slate-950 cursor-pointer py-1 px-2 rounded-lg md:text-md text-sm  font-bold">
                   Update Status
                 </button>
+             
               </div>
               <div>
                 <button className="bg-amber-500  text-slate-950 cursor-pointer py-1 px-2 rounded-lg md:text-md text-sm  font-bold flex justify-center gap-1 items-center">
