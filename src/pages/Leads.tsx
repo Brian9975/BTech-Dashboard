@@ -1,4 +1,4 @@
-import {  useEffect } from "react";
+import {  useEffect, useState } from "react";
 import {
   BadgeDollarSign,
   BluetoothConnectedIcon,
@@ -31,11 +31,14 @@ interface PlanInterface {
   amount?: number;
 }
 export default function Leads() {
+  const [searchVal, setSearchVal] = useState("")
   const {leadToUpdateStage, setLeadToUpdateStage, updateStage} = useUpdateStage()
   const {updateLastContacted, lastContactedValue, setLastContactedValue, leadLastContactedToUpdate, setLeadLastContactedToUpdate} = useUpdateLastContacted()
   const {updatePlan, leadToUpdatePlan, setLeadToUpdatePlan} = useUpdatePlan()
   const {leadToUpdateEarnings, setLeadToUpdateEarnings, amount, setAmount, updateEarningsFromLead} = useUpdateEarningsFromLead()
   const { openDialog, closeDialog } = useModal();
+
+
 
   const {
     businessName,
@@ -75,6 +78,7 @@ export default function Leads() {
   const leadToEditObject = leads.find((l) => l.id === leadToEdit);
   const leadToUpdateLastContactedObject = leads.find(l => l.id == leadLastContactedToUpdate)
   
+  const filteredLeads = leads.filter(l => l.stage.toLowerCase().includes(searchVal.toLowerCase()) || l.name.toLowerCase().includes(searchVal.toLowerCase()))
   const plan: PlanInterface[] = [
     {
       id: 1,
@@ -188,16 +192,17 @@ export default function Leads() {
   }, [leads]);
   return (
     <div>
-      <div className="text-center">
+      <div className="text-right">
         <button
           onClick={openDialog}
-          className="bg-blue-500 md:w-lg shadow-md shadow-slate-800 text-slate-950 font-bold cursor-pointer  rounded-lg py-3 px-5 text-lg"
+          className="bg-blue-500  shadow-md shadow-blue-300 text-slate-950 font-bold cursor-pointer  rounded-lg py-2 px-5 text-lg"
         >
           Add Lead
         </button>
       </div>
       <div className="flex justify-center">
         <input
+          onChange={e => setSearchVal(e.target.value)}
           className={`border-slate-600  border my-15 text-lg rounded-lg p-2 placeholder-slate-700 outline-0 md:w-xl`}
           type="text"
           placeholder="Search for lead..."
@@ -392,7 +397,7 @@ export default function Leads() {
         </div>
 
 
-        {leads.map((l) => (
+        {filteredLeads.map((l) => (
           <div
             key={l.id}
             className="flex min-w-max md:gap-6 gap-4 border p-5 border-blue-600 rounded-lg"
@@ -511,7 +516,7 @@ export default function Leads() {
                   value={editBusinessCategory}
                   onChange={(e) => setEditBusinessCategory(e.target.value)}
                   id="bCategory"
-                  className={`border ${businessCategory ? "text-blue-600" : businessCategory == "" ? "text-slate-700" : ""} w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg`}
+                  className={`border text-blue-600 w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg`}
                   required
                 >
                   <option value="" className="bg-slate-950" disabled>
@@ -577,7 +582,7 @@ export default function Leads() {
                   value={editClientPlan}
                   onChange={(e) => setEditClientPlan(e.target.value)}
                   id="plan"
-                  className={`border w-full border-slate-600 ${clientPlan == "Growth Plan" ? "text-green-500" : clientPlan == "Care Plan" ? "text-amber-500" : clientPlan == "None" ? "text-gray-500" : "text-slate-700"} p-2 outline-0 placeholder-slate-700  rounded-lg`}
+                  className={`border w-full border-slate-600 ${editClientPlan == "Growth Plan" ? "text-green-500" : editClientPlan == "Care Plan" ? "text-amber-500" : editClientPlan == "None" ? "text-gray-500" : "text-slate-700"} p-2 outline-0 placeholder-slate-700  rounded-lg`}
                   required
                 >
                   <option value="" className="bg-slate-950" disabled>
