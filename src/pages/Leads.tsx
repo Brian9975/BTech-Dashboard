@@ -1,6 +1,7 @@
 import {  useEffect } from "react";
 import {
   BadgeDollarSign,
+  BluetoothConnectedIcon,
   ChartBarIncreasing,
   Contact,
   Handshake,
@@ -14,6 +15,8 @@ import useUpdateLead from "../hooks/useUpdateLead";
 import useRemoveLead from "../hooks/useRemoveLead";
 import useUpdateStage from "../hooks/useUpdateStage";
 import useUpdateLastContacted from "../hooks/useUpdateLastContacted";
+import useUpdatePlan from "../hooks/useUpdatePlan";
+import useUpdateEarningsFromLead from "../hooks/useUpdateEarningsFromLead";
 interface LeadStageInterface {
   id: number;
   name: string;
@@ -30,6 +33,8 @@ interface PlanInterface {
 export default function Leads() {
   const {leadToUpdateStage, setLeadToUpdateStage, updateStage} = useUpdateStage()
   const {updateLastContacted, lastContactedValue, setLastContactedValue, leadLastContactedToUpdate, setLeadLastContactedToUpdate} = useUpdateLastContacted()
+  const {updatePlan, leadToUpdatePlan, setLeadToUpdatePlan} = useUpdatePlan()
+  const {leadToUpdateEarnings, setLeadToUpdateEarnings, amount, setAmount, updateEarningsFromLead} = useUpdateEarningsFromLead()
   const { openDialog, closeDialog } = useModal();
 
   const {
@@ -367,6 +372,26 @@ export default function Leads() {
          <button  onClick={updateLastContacted} className="bg-slate-50 py-3 transition-all rounded-lg cursor-pointer font-bold hover:scale-105 w-3xs text-slate-950">Save</button>
         </div>
 
+
+        {/* Update Plan */}
+        <div onClick={() => setLeadToUpdatePlan(null)} className={`z-50 fixed inset-0 bg-black/50   ${leadToUpdatePlan ? "block " : "hidden"}`}> </div>
+        <div className={`fixed ${leadToUpdatePlan ? "top-0" : "-top-350"} w-full duration-300 z-50 bg-slate-950 py-5 overflow-y-auto  shadow-md shadow-slate-700   rounded-b-4xl transition-all  left-0  right-0`}>
+         {plan.map(p => <div onClick={() => updatePlan(p.name)}  className="font-bold text-slate-600 cursor-pointer px-5 py-3 hover:bg-slate-400">{p.name}</div>)}
+        </div>
+
+         
+         {/* Update Earnings From Lead */}
+         <div onClick={() => {
+          setLeadToUpdateEarnings(null)
+          setAmount(0)
+
+         }} className={`z-50 fixed inset-0 bg-black/50   ${leadToUpdateEarnings ? "block" : "hidden"}`}> </div>
+        <div className={`fixed ${leadToUpdateEarnings ? "top-0" : "-top-350"} flex flex-col justify-center items-center gap-10  w-full duration-300 z-50 bg-slate-950 py-5 overflow-y-auto  shadow-md shadow-slate-700   rounded-b-4xl transition-all  left-0  right-0`}>
+         <div><div><label className="text-lg font-bold">KSH</label></div><input value={amount} onChange={e => setAmount(Number(e.target.value))}  className="w-lg   text-lg text-green-600  border-slate-600 p-2 outline-0  rounded-lg border" type="number" required/></div>
+         <button  onClick={updateEarningsFromLead} className=" py-3 transition-all border border-green-600 rounded-lg cursor-pointer font-bold hover:scale-105 w-45 text-green-600">Add</button>
+        </div>
+
+
         {leads.map((l) => (
           <div
             key={l.id}
@@ -399,7 +424,7 @@ export default function Leads() {
                 </button>
               </div>
               <div>
-                <button className="bg-blue-600 text-slate-950 cursor-pointer py-1 px-2 rounded-lg md:text-md text-sm  font-bold">
+                <button onClick={() => setLeadToUpdatePlan(l.id)} className="bg-blue-600 text-slate-950 cursor-pointer py-1 px-2 rounded-lg md:text-md text-sm  font-bold">
                   Update Plan
                 </button>
               </div>
@@ -423,7 +448,7 @@ export default function Leads() {
                 <span>{l.plan}</span>
               </p>
               <div className="flex items-center gap-5">
-                <button className="bg-slate-50 px-3 cursor-pointer rounded-lg">
+                <button onClick={() => setLeadToUpdateEarnings(l.id)} className="bg-slate-50 px-3 cursor-pointer rounded-lg">
                   <BadgeDollarSign className="text-slate-950 md:hidden" />
                   <BadgeDollarSign
                     className="text-slate-950 md:block hidden"
