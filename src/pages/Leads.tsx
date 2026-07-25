@@ -435,7 +435,7 @@ export default function Leads() {
               </div>
               <div>
                 <Link
-                  to="/"
+                  to={`/lead/${l.id}`}
                   className="flex gap-2 text-sm md:text-md items-center"
                 >
                   <MoveRight />
