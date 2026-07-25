@@ -12,7 +12,9 @@ export default function Lead() {
       <p className="text-right">
       <Link className="text-lg font-bold text-blue-600" to="/leads">Back To Leads</Link>
       </p>
+     
 
+     <p>{leadData?.name}</p>
     </div>
   )
 }

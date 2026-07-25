@@ -1,7 +1,7 @@
 import {  useEffect, useState } from "react";
 import {
   BadgeDollarSign,
-  BluetoothConnectedIcon,
+  
   ChartBarIncreasing,
   Contact,
   Handshake,
