@@ -367,7 +367,7 @@ export default function Leads() {
          {/* Update Status Dropdown */}
          <div onClick={() => setLeadToUpdateStage(null)} className={`z-50 fixed inset-0 bg-black/50  ${leadToUpdateStage ? "block " : "hidden"} `}> </div>
         <div className={`fixed w-full duration-300 z-50 bg-slate-950 py-5 overflow-y-auto  h-100  shadow-md shadow-slate-700   rounded-b-4xl transition-all  ${leadToUpdateStage ? "top-0" : "-top-350"} left-0  right-0`}>
-         {leadStage.map(l => <div onClick={() => updateStage(l.name)}  className="font-bold text-slate-600 cursor-pointer px-5 py-3 hover:bg-slate-400">{l.name}</div>)}
+         {leadStage.map(l => <div key={l.id} onClick={() => updateStage(l.name)}  className="font-bold text-slate-600 cursor-pointer px-5 py-3 hover:bg-slate-400">{l.name}</div>)}
         </div>
 
         {/* Update Last Contacted */}
@@ -381,7 +381,7 @@ export default function Leads() {
         {/* Update Plan */}
         <div onClick={() => setLeadToUpdatePlan(null)} className={`z-50 fixed inset-0 bg-black/50   ${leadToUpdatePlan ? "block " : "hidden"}`}> </div>
         <div className={`fixed ${leadToUpdatePlan ? "top-0" : "-top-350"} w-full duration-300 z-50 bg-slate-950 py-5 overflow-y-auto  shadow-md shadow-slate-700   rounded-b-4xl transition-all  left-0  right-0`}>
-         {plan.map(p => <div onClick={() => updatePlan(p.name)}  className="font-bold text-slate-600 cursor-pointer px-5 py-3 hover:bg-slate-400">{p.name}</div>)}
+         {plan.map(p => <div key={p.id} onClick={() => updatePlan(p.name)}  className="font-bold text-slate-600 cursor-pointer px-5 py-3 hover:bg-slate-400">{p.name}</div>)}
         </div>
 
          
