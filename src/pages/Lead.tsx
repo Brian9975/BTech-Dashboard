@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { useLead } from "../context/LeadContext"
 import { ArrowRight } from "lucide-react"
+import useDateFormater from "../hooks/useDateFormater"
 
 export default function Lead() {
   const {id} = useParams()
@@ -10,7 +11,7 @@ export default function Lead() {
   const {leads, setLeads, saveToStorage} = useLead()
   const leadData = leads.find(l => l.id == id)
   const [notesValue, setNotesValue] = useState(leadData?.notes || "")
-
+  const {formatAnyDate} = useDateFormater()
  
  const updateNotes = () => {
  setLeads(leads.map(l => l.id == id ? {
@@ -63,11 +64,11 @@ console.log(leadData)
     </div>
     <div className="border p-5 col-span-2 border-blue-600 text-center rounded-lg">
        <h1 className="text-lg font-bold">Date Added</h1>
-      <p className="uppercase pt-3 text-blue-600 text-lg">{leadData?.dateAdded.toString()}</p>
+      <p className="uppercase pt-3 text-blue-600 text-lg">{formatAnyDate(leadData?.dateAdded)}</p>
     </div>
        <div className="border  col-span-2 p-5 border-blue-600 text-center rounded-lg">
        <h1 className="text-lg font-bold">Last Contacted</h1>
-      <p className="uppercase pt-3 text-blue-600 text-lg">{leadData?.lastContacted.toString()}</p>
+      <p className="uppercase pt-3 text-blue-600 text-lg">{formatAnyDate(leadData?.lastContacted)}</p>
     </div>
   </div>
 

@@ -17,6 +17,7 @@ import useUpdateStage from "../hooks/useUpdateStage";
 import useUpdateLastContacted from "../hooks/useUpdateLastContacted";
 import useUpdatePlan from "../hooks/useUpdatePlan";
 import useUpdateEarningsFromLead from "../hooks/useUpdateEarningsFromLead";
+import useDateFormater from "../hooks/useDateFormater";
 interface LeadStageInterface {
   id: number;
   name: string;
@@ -37,7 +38,7 @@ export default function Leads() {
   const {updatePlan, leadToUpdatePlan, setLeadToUpdatePlan} = useUpdatePlan()
   const {leadToUpdateEarnings, setLeadToUpdateEarnings, amount, setAmount, updateEarningsFromLead} = useUpdateEarningsFromLead()
   const { openDialog, closeDialog } = useModal();
-
+  const {formatAnyDate} = useDateFormater()
 
 
   const {
@@ -409,7 +410,7 @@ export default function Leads() {
               <p className="text-amber-500 text-sm md:text-md">
                 Last Contact :
                 <span className="bg-amber-500  ml-1 text-slate-950 rounded-3xl py-1 px-3 font-bold md:text-md text-xs">
-                  {l.lastContacted.toString()}
+                  {formatAnyDate(l.lastContacted)}
                 </span>
               </p>
             </div>
