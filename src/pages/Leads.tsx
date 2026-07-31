@@ -117,58 +117,101 @@ export default function Leads() {
       name: "Contacted",
     },
     {
+
       id: 1.3,
-      name: "Replied",
+      name: "Follow up 1 after Contact",
     },
+
     {
+
       id: 1.4,
-      name: "Preview Sent",
+      name: "Last Follow up after Contact",
     },
     {
       id: 1.5,
-      name: "Price Sent",
+      name: "Replied",
     },
     {
       id: 1.6,
-      name: "Negotiating",
+      name: "Preview Sent",
     },
+
     {
+
       id: 1.7,
-      name: "Deposit paid",
+      name: "Follow up 1 after Preview",
     },
+
     {
+
       id: 1.8,
-      name: "Checklist Sent",
+      name: "Last Follow up after Preview",
     },
     {
       id: 1.9,
-      name: "Building Phase",
+      name: "Price Sent",
     },
+
     {
+
       id: 2.0,
-      name: "Review Phase",
+      name: "Follow up 1 after Price",
     },
+
     {
+
       id: 2.1,
-      name: "Payment Complete + Pitch Care Plan",
+      name: "Last Follow up after Price",
     },
     {
       id: 2.2,
-      name: "Closed + On Plan",
+      name: "Negotiating",
     },
     {
       id: 2.3,
-      name: "Closed + Off Plan",
+      name: "Deposit paid",
     },
     {
       id: 2.4,
+      name: "Checklist Sent",
+    },
+
+    {
+
+      id: 2.5,
+      name: "Follow up after Checklist",
+    },
+    {
+      id: 2.6,
+      name: "Building Phase",
+    },
+    {
+      id: 2.7,
+      name: "Review Phase",
+    },
+    {
+      id: 2.8,
+      name: "Payment Complete + Pitch Care Plan",
+    },
+    {
+      id: 2.9,
+      name: "Closed + On Plan",
+    },
+    {
+      id: 3.0,
+      name: "Closed + Off Plan",
+    },
+    {
+      id: 3.1,
       name: "Dead",
     },
     {
-      id: 2.5,
+      id: 3.2,
       name: "Not Interested",
     },
   ];
+
+
 
 
 
