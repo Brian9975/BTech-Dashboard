@@ -29,7 +29,18 @@ const [leadToUpdate, setLeadToUpdate] = useState<string | null>(null)
        ...l,
        stage: "Last Follow up after Price",
        lastContacted: new Date()
-      }: l
+      } : l.id == leadToUpdate && l.stage.includes("Last Follow up")? {
+       ...l,
+       stage: "Dead",
+      }  : l.id == leadToUpdate && l.stage.includes("Checklist Sent")? {
+       ...l,
+       stage: "Follow up after Checklist",
+       lastContacted: new Date()
+      }   : l.id == leadToUpdate && l.stage.includes("New")? {
+       ...l,
+       stage: "Contacted",
+       lastContacted: new Date()
+      } : l
       ))
 
       setLeadToUpdate(null)
