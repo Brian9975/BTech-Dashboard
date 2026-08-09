@@ -17,7 +17,7 @@ export default function Today() {
 
       <main className="flex md:flex-row flex-col items-center my-10 justify-start gap-4">
         <div className="border text-lg  border-green-600 rounded-lg p-2">
-          Here is what you will be working on today
+          Check what you will be working on today right here
         </div>
 
         <div>

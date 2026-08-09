@@ -1,11 +1,31 @@
 import {  useEffect, useState } from "react";
 import {
+  AlarmClock,
+  BadgeCheck,
   BadgeDollarSign,
   
   ChartBarIncreasing,
+  CheckCircle2,
+  Clock,
   Contact,
+  DollarSign,
+  Eye,
+  Hammer,
   Handshake,
+  HeartHandshake,
+  ListChecks,
+  MessageCircle,
+  MinusCircle,
   MoveRight,
+  PhoneCall,
+  Send,
+  ShieldCheck,
+  Skull,
+  TrendingUp,
+  UserLock,
+  UserPlus,
+  Wallet,
+  XCircle,
 } from "lucide-react";
 import { useLead } from "../context/LeadContext";
 import useAddLead from "../hooks/useAddLead";
@@ -74,15 +94,21 @@ export default function Leads() {
       id: 1,
       name: "Care Plan",
       amount: 2000,
+      color: "#0D9488",
+      icon: HeartHandshake
     },
     {
       id: 2,
       name: "Growth Plan",
       amount: 3000,
+      color: "#16A34A",
+      icon: TrendingUp
     },
     {
       id: 3,
       name: "None",
+      color: "#9CA3AF",
+      icon: MinusCircle
     },
   ];
   const bCategoryOption: BCategory[] = [
@@ -100,103 +126,147 @@ export default function Leads() {
     {
       id: 1.1,
       name: "New",
+      color: "#6B7280",
+      icon: UserPlus
     },
     {
       id: 1.2,
       name: "Contacted",
+      color: "#3B82F6",
+      icon: PhoneCall
     },
     {
 
       id: 1.3,
       name: "Follow up 1 after Contact",
+      color: "#F59E0B",
+      icon: Clock
     },
 
     {
 
       id: 1.4,
       name: "Last Follow up after Contact",
+      color: "#EA580C",
+      icon: AlarmClock
     },
     {
       id: 1.5,
       name: "Replied",
+      color: "#10B981",
+      icon: MessageCircle
     },
     {
       id: 1.6,
       name: "Preview Sent",
+      color: "#06B6D4",
+      icon: Send
     },
 
     {
 
       id: 1.7,
       name: "Follow up 1 after Preview",
+      color: "#F59E0B",
+      icon: Clock
     },
 
     {
 
       id: 1.8,
       name: "Last Follow up after Preview",
+      color: "#EA580C",
+      icon: AlarmClock
     },
     {
       id: 1.9,
       name: "Price Sent",
+      color: "#14B8A6",
+      icon: DollarSign
     },
 
     {
 
       id: 2.0,
       name: "Follow up 1 after Price",
+      color: "#F59E0B",
+      icon: Clock
     },
 
     {
 
       id: 2.1,
       name: "Last Follow up after Price",
+      color: "#EA580C",
+      icon: AlarmClock
     },
     {
       id: 2.2,
       name: "Negotiating",
+      color: "#8B5CF6",
+      icon: Handshake
     },
     {
       id: 2.3,
       name: "Deposit paid",
+      color: "#6366F1",
+      icon: Wallet
     },
     {
       id: 2.4,
       name: "Checklist Sent",
+      color: "#3B82F6",
+      icon: ListChecks
     },
 
     {
 
       id: 2.5,
       name: "Follow up after Checklist",
+      color: "#F59E0B",
+      icon: Clock
     },
     {
       id: 2.6,
       name: "Building Phase",
+      color: "#0D9488",
+      icon: Hammer
     },
     {
       id: 2.7,
       name: "Review Phase",
+      color: "#7C3AED",
+      icon: Eye
     },
     {
       id: 2.8,
       name: "Payment Complete + Pitch Care Plan",
+      color: "#059669",
+      icon: BadgeCheck
     },
     {
       id: 2.9,
       name: "Closed + On Plan",
+      color: "#047857",
+      icon: ShieldCheck
     },
     {
       id: 3.0,
       name: "Closed + Off Plan",
+      color: "#64748B",
+      icon: CheckCircle2
     },
     {
       id: 3.1,
       name: "Dead",
+      color: "#991B1B",
+      icon: Skull
     },
     {
       id: 3.2,
       name: "Not Interested",
+      color: "#DC2626",
+      icon: XCircle
     },
   ];
 
@@ -228,19 +298,19 @@ export default function Leads() {
       <div className="text-right">
         <button
           onClick={openDialog}
-          className="bg-blue-500  shadow-md shadow-blue-300 text-slate-950 font-bold cursor-pointer  rounded-lg py-2 px-5 text-lg"
+          className="bg-blue-600  shadow-md text-slate-950 hover:scale-105 transition-all font-bold cursor-pointer  rounded-lg py-2 px-5 text-lg"
         >
           Add Lead
         </button>
       </div>
-      <div className="flex justify-center">
+      { leads.length != 0 && <div className="flex justify-center">
         <input
           onChange={e => setSearchVal(e.target.value)}
           className={`border-slate-600  border my-15 text-lg rounded-lg p-2 placeholder-slate-700 outline-0 md:w-xl`}
           type="text"
           placeholder="Search for lead..."
         />
-      </div>
+      </div>}
 
       {/* Add lead modal */}
       {modalIsOpen && ( <AddLeadForm closeDialog={closeDialog} addLead={addLead} businessName={businessName} setBusinessName={setBusinessName} businessCategory={businessCategory} setBusinessCategory={setBusinessCategory} bCategoryOption={bCategoryOption} contactNo={contactNo} setContactNo={setContactNo} stage={stage} setStage={setStage} leadStage={leadStage} plan={plan} clientPlan={clientPlan} setClientPlan={setClientPlan} setLastContacted={setLastContacted}/>
@@ -248,40 +318,10 @@ export default function Leads() {
         
         {/* Leads Display */}
       <main className=" flex  overflow-x-auto justify-center gap-10 flex-col items-center">
-         {/* Update Status Dropdown */}
-         <div onClick={() => setLeadToUpdateStage(null)} className={`z-50 fixed inset-0 bg-black/50  ${leadToUpdateStage ? "block " : "hidden"} `}> </div>
-        <div className={`fixed  duration-300 z-50 bg-slate-950 py-5 overflow-y-auto  h-100  shadow-md shadow-slate-700   rounded-b-4xl transition-all  ${leadToUpdateStage ? "top-0" : "-top-350"} left-0  right-0`}>
-         {leadStage.map(l => <div key={l.id} onClick={() => updateStage(l.name)}  className="font-bold text-slate-600 cursor-pointer px-5 py-3 hover:bg-slate-400">{l.name}</div>)}
-        </div>
-
-        {/* Update Last Contacted */}
- <div  onClick={() => setLeadLastContactedToUpdate(null)} className={`z-50 fixed inset-0 bg-black/50  ${leadLastContactedToUpdate ? "block" : "hidden"}`}> </div>
-        <div className={`fixed  w-full flex-col gap-10 flex justify-center items-center duration-300 z-50 bg-slate-950 py-5 overflow-y-auto  h-50  shadow-md shadow-slate-700  ${leadLastContactedToUpdate ? "top-0" : "-top-350"}   rounded-b-4xl transition-all left-0  right-0`}>
-         <input value={lastContactedValue as any}  onChange={e => setLastContactedValue(e.target.value)} className="w-lg  bg-slate-50 text-lg text-slate-950  border-slate-600 p-2 outline-0  rounded-lg border" type="date" />
-         <button  onClick={updateLastContacted} className="bg-slate-50 py-3 transition-all rounded-lg cursor-pointer font-bold hover:scale-105 w-3xs text-slate-950">Save</button>
-        </div>
+ 
 
 
-        {/* Update Plan */}
-        <div onClick={() => setLeadToUpdatePlan(null)} className={`z-50 fixed inset-0 bg-black/50   ${leadToUpdatePlan ? "block " : "hidden"}`}> </div>
-        <div className={`fixed ${leadToUpdatePlan ? "top-0" : "-top-350"} w-full duration-300 z-50 bg-slate-950 py-5 overflow-y-auto  shadow-md shadow-slate-700   rounded-b-4xl transition-all  left-0  right-0`}>
-         {plan.map(p => <div key={p.id} onClick={() => updatePlan(p.name)}  className="font-bold text-slate-600 cursor-pointer px-5 py-3 hover:bg-slate-400">{p.name}</div>)}
-        </div>
-
-         
-         {/* Update Earnings From Lead */}
-         <div onClick={() => {
-          setLeadToUpdateEarnings(null)
-          setAmount(0)
-
-         }} className={`z-50 fixed inset-0 bg-black/50   ${leadToUpdateEarnings ? "block" : "hidden"}`}> </div>
-        <div className={`fixed ${leadToUpdateEarnings ? "top-0" : "-top-350"} flex flex-col justify-center items-center gap-10  w-full duration-300 z-50 bg-slate-950 py-5 overflow-y-auto  shadow-md shadow-slate-700   rounded-b-4xl transition-all  left-0  right-0`}>
-         <div><div><label className="text-lg font-bold">KSH</label></div><input value={amount} onChange={e => setAmount(Number(e.target.value))}  className="w-lg   text-lg text-green-600  border-slate-600 p-2 outline-0  rounded-lg border" type="number" required/></div>
-         <button  onClick={updateEarningsFromLead} className=" py-3 transition-all border border-green-600 rounded-lg cursor-pointer font-bold hover:scale-105 w-45 text-green-600">Add</button>
-        </div>
-
-
-        {filteredLeads.map((l) => (
+        {leads.length == 0 ? <div className="bg-slate-900 rounded-lg py-5 px-10 text-xl flex flex-col items-center justify-center gap-2  shadow-md my-30 shadow-slate-600"><UserLock className="text-blue-600" size={35}/><span>No added leads at the moment!</span></div> : filteredLeads.map((l) => (
           <div
             key={l.id}
             className="flex min-w-max md:gap-6 gap-4 border p-5 border-blue-600 rounded-lg"
@@ -532,6 +572,39 @@ export default function Leads() {
         </div>
       </div>
 }
+
+
+        {/* Update Status Dropdown */}
+         <div onClick={() => setLeadToUpdateStage(null)} className={`z-50 fixed inset-0 bg-black/50  ${leadToUpdateStage ? "block " : "hidden"} `}> </div>
+        <div className={`fixed  duration-300 z-50 bg-slate-950 py-5 overflow-y-auto  h-100  shadow-md shadow-slate-700   rounded-b-4xl transition-all  ${leadToUpdateStage ? "top-0" : "-top-350"} left-0  right-0`}>
+         {leadStage.map(l => <div key={l.id} onClick={() => updateStage(l.name)}  className="font-bold text-slate-600 cursor-pointer px-5 py-3 hover:bg-slate-400">{l.name}</div>)}
+        </div>
+
+        {/* Update Last Contacted */}
+ <div  onClick={() => setLeadLastContactedToUpdate(null)} className={`z-50 fixed inset-0 bg-black/50  ${leadLastContactedToUpdate ? "block" : "hidden"}`}> </div>
+        <div className={`fixed  w-full flex-col gap-10 flex justify-center items-center duration-300 z-50 bg-slate-950 py-5 overflow-y-auto  h-50  shadow-md shadow-slate-700  ${leadLastContactedToUpdate ? "top-0" : "-top-350"}   rounded-b-4xl transition-all left-0  right-0`}>
+         <input value={lastContactedValue as any}  onChange={e => setLastContactedValue(e.target.value)} className="w-lg  bg-slate-50 text-lg text-slate-950  border-slate-600 p-2 outline-0  rounded-lg border" type="date" />
+         <button  onClick={updateLastContacted} className="bg-slate-50 py-3 transition-all rounded-lg cursor-pointer font-bold hover:scale-105 w-3xs text-slate-950">Save</button>
+        </div>
+
+
+        {/* Update Plan */}
+        <div onClick={() => setLeadToUpdatePlan(null)} className={`z-50 fixed inset-0 bg-black/50   ${leadToUpdatePlan ? "block " : "hidden"}`}> </div>
+        <div className={`fixed ${leadToUpdatePlan ? "top-0" : "-top-350"} w-full duration-300 z-50 bg-slate-950 py-5 overflow-y-auto  shadow-md shadow-slate-700   rounded-b-4xl transition-all  left-0  right-0`}>
+         {plan.map(p => <div key={p.id} onClick={() => updatePlan(p.name)}  className="font-bold text-slate-600 cursor-pointer px-5 py-3 hover:bg-slate-400">{p.name}</div>)}
+        </div>
+
+         
+         {/* Update Earnings From Lead */}
+         <div onClick={() => {
+          setLeadToUpdateEarnings(null)
+          setAmount(0)
+
+         }} className={`z-50 fixed inset-0 bg-black/50   ${leadToUpdateEarnings ? "block" : "hidden"}`}> </div>
+        <div className={`fixed ${leadToUpdateEarnings ? "top-0" : "-top-350"} flex flex-col justify-center items-center gap-10  w-full duration-300 z-50 bg-slate-950 py-5 overflow-y-auto  shadow-md shadow-slate-700   rounded-b-4xl transition-all  left-0  right-0`}>
+         <div><div><label className="text-lg font-bold">KSH</label></div><input value={amount} onChange={e => setAmount(Number(e.target.value))}  className="w-lg   text-lg text-green-600  border-slate-600 p-2 outline-0  rounded-lg border" type="number" required/></div>
+         <button  onClick={updateEarningsFromLead} className=" py-3 transition-all border border-green-600 rounded-lg cursor-pointer font-bold hover:scale-105 w-45 text-green-600">Add</button>
+        </div>
     </div>
   );
 }
