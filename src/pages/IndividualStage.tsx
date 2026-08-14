@@ -1,6 +1,5 @@
 import { useParams, Link } from "react-router-dom";
 import { useLead } from "../context/LeadContext";
-import { leadStage } from "../LeadStage";
 export default function IndividualStage() {
   const { name } = useParams();
   const { leads } = useLead();
