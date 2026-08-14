@@ -20,6 +20,7 @@ function App() {
     <Route path="/today" element={<Today/>}></Route>
     <Route path="/myscripts" element={<MyScripts/>}></Route>
     <Route path="/lead/:id" element={<Lead/>}/>
+    <Route path="/stage/:name" />
 
       {/* Navigate / to mydash */}
     <Route path="/" element={<Navigate to="/mydash"/>}></Route>
