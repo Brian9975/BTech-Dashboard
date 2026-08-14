@@ -64,6 +64,7 @@ export default function MyDash() {
       <div className="grid grid-cols-4 items-start gap-4">
         {leadStage.map((s) => (
           <div
+           onClick={() => navigate(`/stage/${s.name}`)}
             key={s.id}
             style={{ borderColor: s.color }}
             className="bg-slate-950 cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2"

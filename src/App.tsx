@@ -6,6 +6,7 @@ import MyScripts from "./pages/MyScripts"
 import Layout from "./layout/Layout"
 import LeadContextProvider from "./context/LeadContext"
 import Lead from "./pages/Lead"
+import IndividualStage from "./pages/IndividualStage"
 function App() {
   
   
@@ -20,7 +21,7 @@ function App() {
     <Route path="/today" element={<Today/>}></Route>
     <Route path="/myscripts" element={<MyScripts/>}></Route>
     <Route path="/lead/:id" element={<Lead/>}/>
-    <Route path="/stage/:name" />
+    <Route path="/stage/:name" element={<IndividualStage/>}/>
 
       {/* Navigate / to mydash */}
     <Route path="/" element={<Navigate to="/mydash"/>}></Route>
