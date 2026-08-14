@@ -1,32 +1,20 @@
 import {  useEffect, useState } from "react";
 import {
-  AlarmClock,
-  BadgeCheck,
   BadgeDollarSign,
-  
+ 
   ChartBarIncreasing,
-  CheckCircle2,
-  Clock,
+
   Contact,
-  DollarSign,
-  Eye,
-  Hammer,
   Handshake,
   HeartHandshake,
-  ListChecks,
-  MessageCircle,
+  
   MinusCircle,
   MoveRight,
-  PhoneCall,
-  Send,
-  ShieldCheck,
-  Skull,
+
   TrendingUp,
   UserLock,
-  UserPlus,
-  Wallet,
-  XCircle,
 } from "lucide-react";
+import { leadStage } from "../LeadStage";
 import { useLead } from "../context/LeadContext";
 import useAddLead from "../hooks/useAddLead";
 import useModal from "../hooks/useModal";
@@ -38,7 +26,7 @@ import useUpdateLastContacted from "../hooks/useUpdateLastContacted";
 import useUpdatePlan from "../hooks/useUpdatePlan";
 import useUpdateEarningsFromLead from "../hooks/useUpdateEarningsFromLead";
 import useDateFormater from "../hooks/useDateFormater";
-import type { LeadStageInterface, PlanInterface, BCategory } from "../types/planStageCateg";
+import type {  PlanInterface, BCategory } from "../types/planStageCateg";
 import AddLeadForm from "../components/AddLeadForm"
 export default function Leads() {
   const [searchVal, setSearchVal] = useState("")
@@ -87,7 +75,7 @@ export default function Leads() {
   const {removeLead} = useRemoveLead()
   const leadToEditObject = leads.find((l) => l.id === leadToEdit);
   const leadToUpdateLastContactedObject = leads.find(l => l.id == leadLastContactedToUpdate)
-  
+  const leadToUpdateStageObject = leads.find(l => l.id === leadToUpdateStage)
   const filteredLeads = leads.filter(l => l.stage.toLowerCase().includes(searchVal.toLowerCase()) || l.name.toLowerCase().includes(searchVal.toLowerCase()))
   const plan: PlanInterface[] = [
     {
@@ -122,154 +110,7 @@ export default function Leads() {
     },
   ];
 
-  const leadStage: LeadStageInterface[] = [
-    {
-      id: 1.1,
-      name: "New",
-      color: "#6B7280",
-      icon: UserPlus
-    },
-    {
-      id: 1.2,
-      name: "Contacted",
-      color: "#3B82F6",
-      icon: PhoneCall
-    },
-    {
-
-      id: 1.3,
-      name: "Follow up 1 after Contact",
-      color: "#F59E0B",
-      icon: Clock
-    },
-
-    {
-
-      id: 1.4,
-      name: "Last Follow up after Contact",
-      color: "#EA580C",
-      icon: AlarmClock
-    },
-    {
-      id: 1.5,
-      name: "Replied",
-      color: "#10B981",
-      icon: MessageCircle
-    },
-    {
-      id: 1.6,
-      name: "Preview Sent",
-      color: "#06B6D4",
-      icon: Send
-    },
-
-    {
-
-      id: 1.7,
-      name: "Follow up 1 after Preview",
-      color: "#F59E0B",
-      icon: Clock
-    },
-
-    {
-
-      id: 1.8,
-      name: "Last Follow up after Preview",
-      color: "#EA580C",
-      icon: AlarmClock
-    },
-    {
-      id: 1.9,
-      name: "Price Sent",
-      color: "#14B8A6",
-      icon: DollarSign
-    },
-
-    {
-
-      id: 2.0,
-      name: "Follow up 1 after Price",
-      color: "#F59E0B",
-      icon: Clock
-    },
-
-    {
-
-      id: 2.1,
-      name: "Last Follow up after Price",
-      color: "#EA580C",
-      icon: AlarmClock
-    },
-    {
-      id: 2.2,
-      name: "Negotiating",
-      color: "#8B5CF6",
-      icon: Handshake
-    },
-    {
-      id: 2.3,
-      name: "Deposit paid",
-      color: "#6366F1",
-      icon: Wallet
-    },
-    {
-      id: 2.4,
-      name: "Checklist Sent",
-      color: "#3B82F6",
-      icon: ListChecks
-    },
-
-    {
-
-      id: 2.5,
-      name: "Follow up after Checklist",
-      color: "#F59E0B",
-      icon: Clock
-    },
-    {
-      id: 2.6,
-      name: "Building Phase",
-      color: "#0D9488",
-      icon: Hammer
-    },
-    {
-      id: 2.7,
-      name: "Review Phase",
-      color: "#7C3AED",
-      icon: Eye
-    },
-    {
-      id: 2.8,
-      name: "Payment Complete + Pitch Care Plan",
-      color: "#059669",
-      icon: BadgeCheck
-    },
-    {
-      id: 2.9,
-      name: "Closed + On Plan",
-      color: "#047857",
-      icon: ShieldCheck
-    },
-    {
-      id: 3.0,
-      name: "Closed + Off Plan",
-      color: "#64748B",
-      icon: CheckCircle2
-    },
-    {
-      id: 3.1,
-      name: "Dead",
-      color: "#991B1B",
-      icon: Skull
-    },
-    {
-      id: 3.2,
-      name: "Not Interested",
-      color: "#DC2626",
-      icon: XCircle
-    },
-  ];
-
+  
 
 
 
@@ -577,7 +418,7 @@ export default function Leads() {
         {/* Update Status Dropdown */}
          <div onClick={() => setLeadToUpdateStage(null)} className={`z-50 fixed inset-0 bg-black/50  ${leadToUpdateStage ? "block " : "hidden"} `}> </div>
         <div className={`fixed  duration-300 z-50 bg-slate-950 py-5 overflow-y-auto  h-100  shadow-md shadow-slate-700   rounded-b-4xl transition-all  ${leadToUpdateStage ? "top-0" : "-top-350"} left-0  right-0`}>
-         {leadStage.map(l => <div key={l.id} onClick={() => updateStage(l.name)}  className="font-bold text-slate-600 cursor-pointer px-5 py-3 hover:bg-slate-400">{l.name}</div>)}
+         {leadStage.map(s => <div key={s.id} onClick={() => updateStage(s.name)}  className={`font-bold  text-slate-600 ${s.name === leadToUpdateStageObject?.stage && "bg-slate-400"} cursor-pointer px-5 py-3 hover:bg-slate-400 flex justify-center items-center gap-2`}><s.icon color={s.color}/><span>{s.name}</span></div>)}
         </div>
 
         {/* Update Last Contacted */}
