@@ -114,7 +114,7 @@ export default function Today() {
 
       {/* Confirmation To Update Modal */}
       {leadToUpdate && (
-        <div className="inset-0 bg-black/50 fixed flex justify-center items-center">
+        <div className="inset-0 bg-black/50 z-50 fixed flex justify-center items-center">
           <div className="bg-slate-950 shadow-md shadow-slate-600 py-5 px-10 rounded-lg">
             <h1 className="text-lg pt-5 font-bold">
               Do you want to continue updating lead?
