@@ -1,4 +1,4 @@
-import { DeleteIcon, Edit, MoveRight } from "lucide-react";
+import { CheckCircle2, DeleteIcon, Edit, MoveRight, Plus } from "lucide-react";
 import { useLead } from "../context/LeadContext";
 import { Link, useNavigate } from "react-router-dom";
 import { leadStage } from "../LeadStage";
@@ -258,19 +258,50 @@ export default function MyDash() {
         </div>
 
         <div className="bg-slate-900 p-5 flex-1 rounded-lg">
+         <div className="flex justify-end pb-3"><button className=" cursor-pointer hover:text-blue-600 transition-all hover:scale-115"><Plus size={30}/></button></div>
           <h1 className="text-xl font-bold pb-3 text-blue-600">Your Tasks</h1>
           <ul>
             <div className="bg-slate-950 p-2 rounded-lg">
-              <li className=" text-lg">
-                <span>Purchase a custom domain for my business</span>{" "}
+              <li className="flex gap-2 cursor-pointer hover:text-slate-600 hover:scale-95 transition-all items-start text-lg">
+               <CheckCircle2 className="hidden md:block" size={25}/> <CheckCircle2 className="md:hidden" size={30}/><span>Purchase a custom domain for my business</span>{" "}
               </li>
               <span className="flex justify-between pt-3">
-                <Edit />
+                <button className="cursor-pointer hover:scale-110"><Edit /></button>
+                <button className="cursor-pointer hover:scale-110">
                 <DeleteIcon />
+                </button>
               </span>
             </div>
           </ul>
         </div>
+      </div>
+
+
+      {/* Add Task Modal */}
+      <div className="fixed bg-black/50 z-50 inset-0"></div>
+      <div className="fixed border-t bottom-0 flex border-slate-600 justify-center items-center duration-300 z-50 bg-slate-950 py-10 overflow-y-auto    shadow-md shadow-slate-700  rounded-t-4xl transition-all left-0  right-0">
+       
+        <form>
+
+           <h1 className="text-center text-lg text-blue-600 font-bold pb-5">Add your Task</h1>
+          <div>
+            <div>
+              <label htmlFor="taskText">Task :</label>
+            </div>
+            <input placeholder="eg. Code a React Component" type="text" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" required/>
+          </div>
+          <div className="pt-5">
+
+            <div>
+              <label htmlFor="taskText">Done By :</label>
+            </div>
+            <input className="w-lg  bg-slate-50 text-lg text-slate-950  border-slate-600 p-2 outline-0  rounded-lg border" type="date" required/>
+          </div>
+
+          <div className="flex justify-center  pt-10">
+            <button className="bg-blue-600 hover:scale-105 transition-all text-slate-950 py-1.5 px-4 font-bold w-30 rounded-lg cursor-pointer">Add</button>
+          </div>
+        </form>
       </div>
     </div>
   );
