@@ -18,7 +18,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       { isOpenMobile && <div onClick={() => {
          setIsOpenMobile(false)
-      }} className={` z-50 md:hidden inset-0 bg-black/50 fixed`}></div>}
+      }} className={` z-70 md:hidden inset-0 bg-black/50 fixed`}></div>}
       <div className={`bg-slate-900 z-50 transition-all hidden md:block  ${sidebarOpen ? "md:w-xs" : "w-0"} border-r border-blue-500 overflow-y-auto h-screen`}>
         <Link to="/mydash" className={`${sidebarOpen ? "block" : "hidden"}`}>
           <h1 className="text-3xl">
@@ -52,7 +52,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* Mobile Sidebar */}
-       <div className={`bg-slate-900 z-50 transition-all fixed md:hidden  ${isOpenMobile ? "w-sm" : "w-0"} border-r border-blue-500 overflow-y-auto h-screen`}>
+       <div className={`bg-slate-900 z-80 transition-all fixed md:hidden  ${isOpenMobile ? "w-sm" : "w-0"} border-r border-blue-500 overflow-y-auto h-screen`}>
         <Link to="/mydash" onClick={() => setIsOpenMobile(false)}>
           <h1 className="text-3xl">
             <div className="flex bg-slate-950 border border-blue-500 m-8 p-3 rounded-lg justify-center gap-2 items-center">
