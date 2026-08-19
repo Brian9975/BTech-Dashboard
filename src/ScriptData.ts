@@ -111,6 +111,6 @@ export const scriptData: ScriptDataInterface[] = [
   {
     id: "20",
     title: "Final Payment + Care Plan Pitch",
-    message: "Thank you, fully paid up and live! 🎉 Quick note — your domain renews yearly at KSh 1,200, I'll remind you before it's due.One more thing — I offer an ongoing Care Plan to keep your site secure and help more customers find you: Basic Care (KSh 1,500/mo): hosting/domain management, backups, security monitoring, monthly updates. Growth Care (KSh 2,500/mo): everything in Basic, plus Google Business Profile management and a monthly report on your visibility and traffic. Want me to set you up?"
+    message: "Thank you, fully paid up and live! 🎉 Quick note your domain renews yearly at KSh 1,200, I'll remind you before it's due.One more thing — I offer an ongoing Care Plan to keep your site secure and help more customers find you: Basic Care (KSh 1,500/mo): hosting/domain management, backups, security monitoring, monthly updates. Growth Care (KSh 2,500/mo): everything in Basic, plus Google Business Profile management and a monthly report on your visibility and traffic. Want me to set you up?"
   },
 ];

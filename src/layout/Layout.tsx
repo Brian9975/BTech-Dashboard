@@ -86,7 +86,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
 
       <div className="overflow-y-auto h-screen flex-1 flex-col">
-        <div className="sticky  bg-slate-900 top-0 flex items-center p-5 justify-between "><div><button onClick={() => {
+        <div className="sticky z-50   bg-slate-900 top-0 flex items-center p-5 justify-between "><div><button onClick={() => {
           
           setSidebarOpen(!sidebarOpen)
           
