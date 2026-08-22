@@ -7,13 +7,16 @@ import Layout from "./layout/Layout"
 import LeadContextProvider from "./context/LeadContext"
 import Lead from "./pages/Lead"
 import IndividualStage from "./pages/IndividualStage"
+import TaskContextProvider from "./context/TaskContext"
 function App() {
   
   
   return (
  <Router>
+  <TaskContextProvider>
   <LeadContextProvider>
   <Layout>
+
   <Routes>
 
     <Route path="/mydash" element={<MyDash/>}></Route>
@@ -31,6 +34,7 @@ function App() {
   </Routes>
   </Layout>
   </LeadContextProvider>
+  </TaskContextProvider>
  </Router>
   )
 

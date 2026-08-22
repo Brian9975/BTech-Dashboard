@@ -4,10 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { leadStage } from "../LeadStage";
 import useAutoCheckLead from "../hooks/useAutoCheckLead";
 import useModal from "../hooks/useModal";
+import  { useTask } from "../context/TaskContext";
 export default function MyDash() {
   const navigate = useNavigate()
+  const {tasks} = useTask()
   const {openDialog, closeDialog, modalIsOpen} = useModal()
-  console.log(modalIsOpen)
   const { checkDaysPassed } = useAutoCheckLead();
   const { leads } = useLead();
   const newCount = leads.filter((l) => l.stage === "New").length;
@@ -61,7 +62,9 @@ export default function MyDash() {
     (l) => l.stage === "Not Interested",
   ).length;
  
+  console.log(tasks)
   return (
+    
     <div>
       {/* Stats */}
       <div className="grid grid-cols-4 items-start gap-4">
@@ -140,7 +143,7 @@ export default function MyDash() {
           {leads.map((l) =>
           
             checkDaysPassed(l.lastContacted) >= 2 && l.stage == "Contacted" ? (
-              <div>
+              <div key={l.id}>
                 <p className="flex gap-15 items-center">
                   <span className="text-lg">{l.name}</span>{" "}
                   <Link
@@ -153,7 +156,7 @@ export default function MyDash() {
               </div>
             ) : checkDaysPassed(l.lastContacted) >= 4 &&
               l.stage == "Follow up 1 after Contact" ? (
-              <div>
+              <div key={l.id}>
                 <p className="flex gap-15 items-center">
                   <span className="text-lg">{l.name}</span>{" "}
                   <Link
@@ -218,7 +221,7 @@ export default function MyDash() {
               </div>
             ) : checkDaysPassed(l.lastContacted) >= 2 &&
               l.stage.includes("Last Follow up") ? (
-              <div>
+              <div key={l.id}>
                 <p className="flex gap-15 items-center">
                   <span className="text-lg">{l.name}</span>{" "}
                   <Link
@@ -310,5 +313,6 @@ export default function MyDash() {
         </form>
       </div>
     </div>
+    
   );
 }
