@@ -3,8 +3,11 @@ import { useLead } from "../context/LeadContext";
 import { Link, useNavigate } from "react-router-dom";
 import { leadStage } from "../LeadStage";
 import useAutoCheckLead from "../hooks/useAutoCheckLead";
+import useModal from "../hooks/useModal";
 export default function MyDash() {
   const navigate = useNavigate()
+  const {openDialog, closeDialog, modalIsOpen} = useModal()
+  console.log(modalIsOpen)
   const { checkDaysPassed } = useAutoCheckLead();
   const { leads } = useLead();
   const newCount = leads.filter((l) => l.stage === "New").length;
@@ -57,7 +60,7 @@ export default function MyDash() {
   const noInterestCount = leads.filter(
     (l) => l.stage === "Not Interested",
   ).length;
-  console.log(newCount);
+ 
   return (
     <div>
       {/* Stats */}
@@ -133,7 +136,9 @@ export default function MyDash() {
       <div className="flex  items-start gap-15 py-10">
         <div className="p-5">
           <h1 className="text-xl pb-3 font-bold ">Today</h1>
+          <div className="h-35 border p-3 rounded-lg border-slate-600 overflow-y-auto">
           {leads.map((l) =>
+          
             checkDaysPassed(l.lastContacted) >= 2 && l.stage == "Contacted" ? (
               <div>
                 <p className="flex gap-15 items-center">
@@ -250,7 +255,8 @@ export default function MyDash() {
                 </p>
               </div>
             ) : null,
-          )}
+         
+          )}</div>
 
           <div className="text-center pt-5">
           <Link to="/today" className="bg-blue-600 hover:bg-blue-800 text-slate-950 rounded-lg text-lg font-bold p-2.5 hover:text-slate-50 transition-all">Go To Today</Link>
@@ -258,7 +264,7 @@ export default function MyDash() {
         </div>
 
         <div className="bg-slate-900 p-5 flex-1 rounded-lg">
-         <div className="flex justify-end pb-3"><button className=" cursor-pointer hover:text-blue-600 transition-all hover:scale-115"><Plus size={30}/></button></div>
+         <div className="flex justify-end pb-3"><button onClick={openDialog} className=" cursor-pointer hover:text-blue-600 transition-all hover:scale-115"><Plus size={30}/></button></div>
           <h1 className="text-xl font-bold pb-3 text-blue-600">Your Tasks</h1>
           <ul>
             <div className="bg-slate-950 p-2 rounded-lg">
@@ -278,8 +284,8 @@ export default function MyDash() {
 
 
       {/* Add Task Modal */}
-      <div className="fixed bg-black/50 z-50 inset-0"></div>
-      <div className="fixed border-t bottom-0 flex border-slate-600 justify-center items-center duration-300 z-50 bg-slate-950 py-10 overflow-y-auto    shadow-md shadow-slate-700  rounded-t-4xl transition-all left-0  right-0">
+      <div onClick={closeDialog} className={`fixed ${modalIsOpen ? "block" : "hidden"} bg-black/50 z-50 inset-0`}></div>
+      <div className={`fixed border-t  flex border-slate-600 justify-center items-center duration-300 z-50 bg-slate-950 py-10 overflow-y-auto    shadow-md shadow-slate-700 ${modalIsOpen ? "bottom-0" : "-bottom-350"} rounded-t-4xl transition-all left-0  right-0`}>
        
         <form>
 
