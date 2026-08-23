@@ -8,9 +8,9 @@ const TaskContext = createContext<TaskContextType | null>(null);
 export default function TaskContextProvider({
   children,
 }: {
-  children: React.it add ReactNode;
+  children: React.ReactNode;
 }) {
-  const [tasks, setTasks] = useState<TaskInterface[]>([]);
+  const [tasks, setTasks] = useState<TaskInterface[]>(localStorage.getItem("tasks") ? JSON.parse(localStorage.getItem("tasks") as string) : []);
   const contextValues = { tasks, setTasks };
   return <TaskContext value={contextValues}>{children}</TaskContext>;
 }

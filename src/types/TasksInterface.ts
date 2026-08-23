@@ -1,5 +1,6 @@
 export interface TaskInterface {
+ id: string,
  task: string,
- deadline: Date,
+ deadline: Date | string,
  createdAt: Date
 }

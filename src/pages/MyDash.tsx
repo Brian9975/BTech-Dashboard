@@ -5,9 +5,12 @@ import { leadStage } from "../LeadStage";
 import useAutoCheckLead from "../hooks/useAutoCheckLead";
 import useModal from "../hooks/useModal";
 import  { useTask } from "../context/TaskContext";
+import useAddTask from "../hooks/useAddTask";
+import { useEffect } from "react";
 export default function MyDash() {
   const navigate = useNavigate()
   const {tasks} = useTask()
+  const {addTask, setDeadline, setTaskText, deadline, taskText} = useAddTask()
   const {openDialog, closeDialog, modalIsOpen} = useModal()
   const { checkDaysPassed } = useAutoCheckLead();
   const { leads } = useLead();
@@ -63,6 +66,12 @@ export default function MyDash() {
   ).length;
  
   console.log(tasks)
+
+
+
+  useEffect(() => {
+   localStorage.setItem("tasks", JSON.stringify(tasks))
+  }, [tasks])
   return (
     
     <div>
@@ -270,9 +279,9 @@ export default function MyDash() {
          <div className="flex justify-end pb-3"><button onClick={openDialog} className=" cursor-pointer hover:text-blue-600 transition-all hover:scale-115"><Plus size={30}/></button></div>
           <h1 className="text-xl font-bold pb-3 text-blue-600">Your Tasks</h1>
           <ul>
-            <div className="bg-slate-950 p-2 rounded-lg">
+            { tasks.map(t => <div className="bg-slate-950 p-2 rounded-lg">
               <li className="flex gap-2 cursor-pointer hover:text-slate-600 hover:scale-95 transition-all items-start text-lg">
-               <CheckCircle2 className="hidden md:block" size={25}/> <CheckCircle2 className="md:hidden" size={30}/><span>Purchase a custom domain for my business</span>{" "}
+               <CheckCircle2 className="hidden md:block" size={25}/> <CheckCircle2 className="md:hidden" size={30}/><span>{t.task}</span>{" "}
               </li>
               <span className="flex justify-between pt-3">
                 <button className="cursor-pointer hover:scale-110"><Edit /></button>
@@ -280,7 +289,8 @@ export default function MyDash() {
                 <DeleteIcon />
                 </button>
               </span>
-            </div>
+            </div>)
+            }
           </ul>
         </div>
       </div>
@@ -290,21 +300,21 @@ export default function MyDash() {
       <div onClick={closeDialog} className={`fixed ${modalIsOpen ? "block" : "hidden"} bg-black/50 z-50 inset-0`}></div>
       <div className={`fixed border-t  flex border-slate-600 justify-center items-center duration-300 z-50 bg-slate-950 py-10 overflow-y-auto    shadow-md shadow-slate-700 ${modalIsOpen ? "bottom-0" : "-bottom-350"} rounded-t-4xl transition-all left-0  right-0`}>
        
-        <form>
+        <form onSubmit={addTask}>
 
            <h1 className="text-center text-lg text-blue-600 font-bold pb-5">Add your Task</h1>
           <div>
             <div>
               <label htmlFor="taskText">Task :</label>
             </div>
-            <input placeholder="eg. Code a React Component" type="text" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" required/>
+            <input value={taskText} onChange={(e) => setTaskText(e.target.value)} placeholder="eg. Code a React Component" type="text" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" required/>
           </div>
           <div className="pt-5">
 
             <div>
               <label htmlFor="taskText">Done By :</label>
             </div>
-            <input className="w-lg  bg-slate-50 text-lg text-slate-950  border-slate-600 p-2 outline-0  rounded-lg border" type="date" required/>
+            <input value={deadline as any} onChange={(e) => setDeadline(e.target.value)} className="w-lg  bg-slate-50 text-lg text-slate-950  border-slate-600 p-2 outline-0  rounded-lg border" type="date" required/>
           </div>
 
           <div className="flex justify-center  pt-10">
