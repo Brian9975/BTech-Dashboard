@@ -145,7 +145,7 @@ export default function MyDash() {
       </div>
 
       {/* Todays view  */}
-      <div className="flex  items-start gap-15 py-10">
+      <div className="flex  items-center gap-15  py-10">
         <div className="p-5">
           <h1 className="text-xl pb-3 font-bold ">Today</h1>
           <div className="h-35 border p-3 rounded-lg border-slate-600 overflow-y-auto">
@@ -275,10 +275,13 @@ export default function MyDash() {
           </div>
         </div>
 
-        <div className="bg-slate-900 p-5 flex-1 rounded-lg">
-         <div className="flex justify-end pb-3"><button onClick={openDialog} className=" cursor-pointer hover:text-blue-600 transition-all hover:scale-115"><Plus size={30}/></button></div>
-          <h1 className="text-xl font-bold pb-3 text-blue-600">Your Tasks</h1>
-          <ul>
+        <div className="bg-slate-900 relative h-70 overflow-y-auto flex-1 rounded-lg">
+          <div className="sticky p-3 top-0 backdrop-blur-xl">
+         <div className="flex justify-end "><button onClick={openDialog} className=" cursor-pointer hover:text-blue-600 transition-all hover:scale-115"><Plus size={30}/></button></div>
+         
+          <h1 className="text-xl font-bold  text-blue-600">Your Tasks</h1>
+          </div>
+          <ul className="flex p-5 flex-col gap-5">
             { tasks.map(t => <div className="bg-slate-950 p-2 rounded-lg">
               <li className="flex gap-2 cursor-pointer hover:text-slate-600 hover:scale-95 transition-all items-start text-lg">
                <CheckCircle2 className="hidden md:block" size={25}/> <CheckCircle2 className="md:hidden" size={30}/><span>{t.task}</span>{" "}
@@ -298,7 +301,7 @@ export default function MyDash() {
 
       {/* Add Task Modal */}
       <div onClick={closeDialog} className={`fixed ${modalIsOpen ? "block" : "hidden"} bg-black/50 z-50 inset-0`}></div>
-      <div className={`fixed border-t  flex border-slate-600 justify-center items-center duration-300 z-50 bg-slate-950 py-10 overflow-y-auto    shadow-md shadow-slate-700 ${modalIsOpen ? "bottom-0" : "-bottom-350"} rounded-t-4xl transition-all left-0  right-0`}>
+      <div className={`fixed border-t  flex border-slate-600 justify-center items-center duration-300 z-50  backdrop-blur-xl py-10 overflow-y-auto    shadow-md shadow-slate-700 ${modalIsOpen ? "bottom-0" : "-bottom-350"} rounded-t-4xl transition-all left-0  right-0`}>
        
         <form onSubmit={addTask}>
 
