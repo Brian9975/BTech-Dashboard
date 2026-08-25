@@ -13,6 +13,7 @@ export default function useAddTask() {
         id: Date.now().toString(),
         task: taskText,
         deadline,
+        isCompleted: false,
         createdAt: new Date()
       }
 
