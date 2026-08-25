@@ -1,9 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
+import type { TaskContextType } from "../types/TaskContextType";
 import type { TaskInterface } from "../types/TasksInterface";
-interface TaskContextType {
-  tasks: TaskInterface[];
-  setTasks: React.Dispatch<React.SetStateAction<TaskInterface[]>>;
-}
+
 const TaskContext = createContext<TaskContextType | null>(null);
 export default function TaskContextProvider({
   children,
