@@ -408,7 +408,7 @@ export default function Leads() {
 
         <p className="text-lg md:text-xl mb-5 font-bold text-blue-600">Complete Deletion!</p>
         <div className="flex justify-between gap-20">
-          <button onClick={() => setLeadToDelete(null)} className="bg-slate-900 cursor-pointer rounded-lg font-bold py-2  text-slate-50 md:w-40 md:text-lg w-25">Cancel</button><button onClick={removeLead} className="bg-slate-50 cursor-pointer text-lg md:w-40  rounded-lg font-bold py-2  text-slate-950 w-25">Yes</button>
+          <button onClick={() => setLeadToDelete(null)} className="bg-slate-900 cursor-pointer rounded-lg font-bold py-2  text-slate-50 md:w-40 md:text-lg w-25">Cancel</button><button onClick={removeLead} className="bg-slate-50 cursor-pointer md:text-lg md:w-40  rounded-lg font-bold py-2  text-slate-950 w-25">Yes</button>
         </div>
         </div>
       </div>

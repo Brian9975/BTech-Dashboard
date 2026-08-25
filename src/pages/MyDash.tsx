@@ -9,6 +9,7 @@ import useAddTask from "../hooks/useAddTask";
 import React, { useEffect } from "react";
 import useEditTask from "../hooks/useEditTask";
 import useStatCount from "../hooks/useStatCount";
+import useDeleteTask from "../hooks/useDeleteTask";
 export default function MyDash() {
   const navigate = useNavigate()
   const {tasks} = useTask()
@@ -40,7 +41,7 @@ export default function MyDash() {
     negotiatingCount,
     repliedCount,
     previewCount,} = useStatCount()
-  
+const {deleteTask, taskToDelete, setTaskToDelete} = useDeleteTask()
 
 const taskToUpdateObject = tasks.find(t => t.id === taskToUpdate)
 
@@ -280,7 +281,7 @@ useEffect(() => {
                   <p className="flex flex-col items-center"><span className="text-sm">Deadline</span><span>{t.deadline as React.ReactNode}</span></p>
 
                 </div>
-                <button className="cursor-pointer hover:scale-110">
+                <button onClick={() => setTaskToDelete(t.id)} className="cursor-pointer hover:scale-110">
                 <DeleteIcon />
                 </button>
               </span>
@@ -344,6 +345,21 @@ useEffect(() => {
             <button className="bg-blue-600 hover:scale-105 transition-all text-slate-950 py-1.5 px-4 font-bold w-30 rounded-lg cursor-pointer">Update</button>
           </div>
         </form>
+      </div>
+
+        {/* Delete Task Modal */}
+      <div className={`fixed ${taskToDelete ? "block" : "hidden"} bg-black/50 z-50 inset-0`}></div>
+      <div className={`fixed border-t  flex border-slate-600 justify-center items-center duration-300 z-50  backdrop-blur-xl py-10 overflow-y-auto shadow-md shadow-slate-700 ${taskToDelete ? "bottom-0" : "-bottom-350"} rounded-t-4xl transition-all left-0  right-0`}>
+        <div>
+        <p className="text-lg font-bold">Are you sure you want to continue ?</p>
+        <div className="flex justify-between pt-10">
+          <button onClick={() => setTaskToDelete(null)} className="bg-slate-900 hover:scale-105 transition-all w-25 py-2 rounded-lg md:w-40 cursor-pointer font-bold">Cancel</button>
+          <button onClick={deleteTask} className="bg-slate-50 w-25 hover:scale-105 transition-all py-2 text-slate-950 cursor-pointer rounded-lg md:w-40 font-bold">Sure</button>
+        </div>
+        </div>
+
+
+        
       </div>
     </div>
     
