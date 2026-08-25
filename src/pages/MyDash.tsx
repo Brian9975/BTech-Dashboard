@@ -6,66 +6,51 @@ import useAutoCheckLead from "../hooks/useAutoCheckLead";
 import useModal from "../hooks/useModal";
 import  { useTask } from "../context/TaskContext";
 import useAddTask from "../hooks/useAddTask";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
+import useEditTask from "../hooks/useEditTask";
+import useStatCount from "../hooks/useStatCount";
 export default function MyDash() {
   const navigate = useNavigate()
   const {tasks} = useTask()
   const {addTask, setDeadline, setTaskText, deadline, taskText} = useAddTask()
+  const {editTask, setTaskToUpdate, taskToUpdate, setTaskEdit, setDeadlineEdit, taskEdit, deadlineEdit} = useEditTask()
   const {openDialog, closeDialog, modalIsOpen} = useModal()
   const { checkDaysPassed } = useAutoCheckLead();
   const { leads } = useLead();
-  const newCount = leads.filter((l) => l.stage === "New").length;
-  const contactedCount = leads.filter((l) => l.stage === "Contacted").length;
-  const f1AfterContactCount = leads.filter(
-    (l) => l.stage === "Follow up 1 after Contact",
-  ).length;
-  const lastFAfterContactCount = leads.filter(
-    (l) => l.stage === "Last Follow up after Contact",
-  ).length;
-  const repliedCount = leads.filter((l) => l.stage === "Replied").length;
-  const previewCount = leads.filter((l) => l.stage === "Preview Sent").length;
-  const f1AfterPreviewCount = leads.filter(
-    (l) => l.stage === "Follow up 1 after Preview",
-  ).length;
-  const lastFAfterPreviewCount = leads.filter(
-    (l) => l.stage === "Last Follow up after Preview",
-  ).length;
-  const priceCount = leads.filter((l) => l.stage === "Price Sent").length;
-  const f1AfterPriceCount = leads.filter(
-    (l) => l.stage === "Follow up 1 after Price",
-  ).length;
-  const lastFAPriceCount = leads.filter(
-    (l) => l.stage === "Last Follow up after Price",
-  ).length;
-  const negotiatingCount = leads.filter(
-    (l) => l.stage === "Negotiating",
-  ).length;
-  const depositCount = leads.filter((l) => l.stage === "Deposit paid").length;
-  const checklistCount = leads.filter(
-    (l) => l.stage === "Checklist Sent",
-  ).length;
-  const fAfterChecklistCount = leads.filter(
-    (l) => l.stage === "Follow up after Checklist",
-  ).length;
-  const buildingCount = leads.filter(
-    (l) => l.stage === "Building Phase",
-  ).length;
-  const reviewCount = leads.filter((l) => l.stage === "Review Phase").length;
-  const paymentDoneCount = leads.filter(
-    (l) => l.stage === "Payment Complete + Pitch Care Plan",
-  ).length;
-  const closedOnPlanCount = leads.filter(
-    (l) => l.stage === "Closed + On Plan",
-  ).length;
-  const closedOffPlanCount = leads.filter(
-    (l) => l.stage === "Closed + Off Plan",
-  ).length;
-  const deadCount = leads.filter((l) => l.stage === "Dead").length;
-  const noInterestCount = leads.filter(
-    (l) => l.stage === "Not Interested",
-  ).length;
- 
-  console.log(tasks)
+  const {
+    newCount,
+    contactedCount,
+    reviewCount,
+    buildingCount,
+    closedOffPlanCount,
+    closedOnPlanCount,
+    paymentDoneCount,
+    deadCount,
+    noInterestCount,
+    f1AfterContactCount,
+    f1AfterPreviewCount,
+    f1AfterPriceCount,
+    lastFAPriceCount,
+    lastFAfterContactCount,
+    lastFAfterPreviewCount,
+    fAfterChecklistCount,
+    checklistCount,
+    depositCount,
+    priceCount,
+    negotiatingCount,
+    repliedCount,
+    previewCount,} = useStatCount()
+  
+
+const taskToUpdateObject = tasks.find(t => t.id === taskToUpdate)
+
+
+useEffect(() => {
+  if (taskToUpdateObject) {
+ setTaskEdit(taskToUpdateObject.task)
+ setDeadlineEdit(taskToUpdateObject.deadline)
+  }
+}, [taskToUpdate])
 
 
 
@@ -282,12 +267,19 @@ export default function MyDash() {
           <h1 className="text-xl font-bold  text-blue-600">Your Tasks</h1>
           </div>
           <ul className="flex p-5 flex-col gap-5">
-            { tasks.map(t => <div className="bg-slate-950 p-2 rounded-lg">
+            { tasks.map(t => <div key={t.id} className="bg-slate-950 p-2 rounded-lg">
               <li className="flex gap-2 cursor-pointer hover:text-slate-600 hover:scale-95 transition-all items-start text-lg">
                <CheckCircle2 className="hidden md:block" size={25}/> <CheckCircle2 className="md:hidden" size={30}/><span>{t.task}</span>{" "}
               </li>
               <span className="flex justify-between pt-3">
-                <button className="cursor-pointer hover:scale-110"><Edit /></button>
+                <button onClick={() => {
+                  setTaskToUpdate(t.id)
+                }} className="cursor-pointer hover:scale-110"><Edit /></button>
+
+                <div className="bg-amber-600 text-slate-950 rounded-lg px-1">
+                  <p className="flex flex-col items-center"><span className="text-sm">Deadline</span><span>{t.deadline as React.ReactNode}</span></p>
+
+                </div>
                 <button className="cursor-pointer hover:scale-110">
                 <DeleteIcon />
                 </button>
@@ -322,6 +314,34 @@ export default function MyDash() {
 
           <div className="flex justify-center  pt-10">
             <button className="bg-blue-600 hover:scale-105 transition-all text-slate-950 py-1.5 px-4 font-bold w-30 rounded-lg cursor-pointer">Add</button>
+          </div>
+        </form>
+      </div>
+
+
+      {/* Edit Task Modal */}
+      <div onClick={() => setTaskToUpdate(null)} className={`fixed ${taskToUpdate ? "block" : "hidden"} bg-black/50 z-50 inset-0`}></div>
+      <div className={`fixed border-t  flex border-slate-600 justify-center items-center duration-300 z-50  backdrop-blur-xl py-10 overflow-y-auto    shadow-md shadow-slate-700 ${taskToUpdate ? "bottom-0" : "-bottom-350"} rounded-t-4xl transition-all left-0  right-0`}>
+       
+        <form onSubmit={editTask}>
+
+           <h1 className="text-center text-lg text-blue-600 font-bold pb-5">Update Task</h1>
+          <div>
+            <div>
+              <label htmlFor="taskText">Task :</label>
+            </div>
+            <input value={taskEdit} onChange={(e) => setTaskEdit(e.target.value)} placeholder="eg. Code a React Component" type="text" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" required/>
+          </div>
+          <div className="pt-5">
+
+            <div>
+              <label htmlFor="taskText">Done By :</label>
+            </div>
+            <input value={deadlineEdit as any} onChange={(e) => setDeadlineEdit(e.target.value)} className="w-lg  bg-slate-50 text-lg text-slate-950  border-slate-600 p-2 outline-0  rounded-lg border" type="date" required/>
+          </div>
+
+          <div className="flex justify-center  pt-10">
+            <button className="bg-blue-600 hover:scale-105 transition-all text-slate-950 py-1.5 px-4 font-bold w-30 rounded-lg cursor-pointer">Update</button>
           </div>
         </form>
       </div>
