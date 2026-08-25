@@ -29,8 +29,8 @@ export default function LeadContextProvider({
   const [editStage, setEditStage] = useState("");
   const [editClientPlan, setEditClientPlan] = useState("");
   const [editLastContacted, setEditLastContacted] = useState<Date | string>("");
-  
-  const [leadToDelete, setLeadToDelete] = useState<string | null>(null)
+
+  const [leadToDelete, setLeadToDelete] = useState<string | null>(null);
   const saveToStorage = () => {
     localStorage.setItem("leads", JSON.stringify(leads));
   };

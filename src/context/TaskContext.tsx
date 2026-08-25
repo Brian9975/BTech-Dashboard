@@ -10,7 +10,11 @@ export default function TaskContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [tasks, setTasks] = useState<TaskInterface[]>(localStorage.getItem("tasks") ? JSON.parse(localStorage.getItem("tasks") as string) : []);
+  const [tasks, setTasks] = useState<TaskInterface[]>(
+    localStorage.getItem("tasks")
+      ? JSON.parse(localStorage.getItem("tasks") as string)
+      : [],
+  );
   const contextValues = { tasks, setTasks };
   return <TaskContext value={contextValues}>{children}</TaskContext>;
 }
