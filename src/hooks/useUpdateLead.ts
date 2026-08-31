@@ -2,8 +2,6 @@ import { useLead } from "../context/LeadContext";
 import { dbPromise } from "../config/indexedDB-config";
 export default function useUpdateLead() {
   const {
-    leads,
-    setLeads,
     leadToEdit,
     setLeadToEdit,
     editBusinessName,
