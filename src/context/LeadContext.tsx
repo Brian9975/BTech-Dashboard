@@ -1,7 +1,8 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import type { LeadsInterface } from "../types/LeadsInterface";
 import type { LeadContextType } from "../types/LeadsContextType";
-
+import { dbPromise } from "../config/indexedDB-config";
+import useAddLead from "../hooks/useAddLead";
 const LeadContext = createContext<LeadContextType | null>(null);
 export default function LeadContextProvider({
   children,
@@ -9,10 +10,12 @@ export default function LeadContextProvider({
   children: React.ReactNode;
 }) {
   const [leads, setLeads] = useState<LeadsInterface[]>(
-    localStorage.getItem("leads")
-      ? JSON.parse(localStorage.getItem("leads") as string)
-      : [],
+    // localStorage.getItem("leads")
+    //   ? JSON.parse(localStorage.getItem("leads") as string)
+    //   : [],
+    []
   );
+  // const {addLead} = useAddLead()
   const [businessName, setBusinessName] = useState("");
   const [businessCategory, setBusinessCategory] = useState("");
   const [contactNo, setContactNo] = useState<number | string>("");
@@ -70,6 +73,16 @@ export default function LeadContextProvider({
     setClientPlan,
   };
 
+  
+      const getAllLeads = async () => {
+        const db = await dbPromise;
+        const data = await db.getAll("leads")
+        setLeads(data)
+      }
+ useEffect(() => {
+    
+      getAllLeads()
+  }, [leads]);
   return <LeadContext value={contextValues}>{children}</LeadContext>;
 }
 export const useLead = () => {

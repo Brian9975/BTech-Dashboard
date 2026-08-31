@@ -1,6 +1,6 @@
 import type React from "react";
 import { useLead } from "../context/LeadContext";
-
+import { dbPromise } from "../config/indexedDB-config";
 import useModal from "./useModal";
 
 export default function useAddLead() {
@@ -16,11 +16,11 @@ export default function useAddLead() {
     clientPlan,
     setClientPlan,
     lastContacted,
-    setLeads,
+    
   } = useLead();
 
   const { closeDialog } = useModal();
-  const addLead = (e: React.SubmitEvent) => {
+  const addLead = async (e: React.SubmitEvent) => {
     e.preventDefault();
     const leadInfo = {
       id: Date.now().toString(),
@@ -34,8 +34,9 @@ export default function useAddLead() {
       notes: "",
       earningsFromLead: 0,
     };
-
-    setLeads((prev) => [...prev, leadInfo]);
+   const db = await dbPromise
+   await db.add("leads", leadInfo)
+    // setLeads((prev) => [...prev, leadInfo]);
 
     closeDialog();
 

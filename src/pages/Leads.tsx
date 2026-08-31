@@ -24,6 +24,7 @@ import useUpdateEarningsFromLead from "../hooks/useUpdateEarningsFromLead";
 import useDateFormater from "../hooks/useDateFormater";
 import type { PlanInterface, BCategory } from "../types/planStageCateg";
 import AddLeadForm from "../components/AddLeadForm";
+import useGetAllLeads from "../hooks/useGetAllLeads";
 export default function Leads() {
   const [searchVal, setSearchVal] = useState("");
   const { leadToUpdateStage, setLeadToUpdateStage, updateStage } =
@@ -81,6 +82,7 @@ export default function Leads() {
   const { addLead } = useAddLead();
   const { updateLead } = useUpdateLead();
   const { removeLead } = useRemoveLead();
+  const {getAllLeads} = useGetAllLeads()
   const leadToEditObject = leads.find((l) => l.id === leadToEdit);
   const leadToUpdateLastContactedObject = leads.find(
     (l) => l.id == leadLastContactedToUpdate,
@@ -140,9 +142,10 @@ export default function Leads() {
       setEditLastContacted(leadToEditObject.lastContacted);
     }
   }, [leadToEdit]);
-  useEffect(() => {
-    saveToStorage();
-  }, [leads]);
+  // useEffect(() => {
+  //   // saveToStorage();
+  //     getAllLeads()
+  // }, []);
   return (
     <div>
       <div className="text-right">
