@@ -82,7 +82,7 @@ export default function Leads() {
   const { addLead } = useAddLead();
   const { updateLead } = useUpdateLead();
   const { removeLead } = useRemoveLead();
-  const { getAllLeads } = useGetAllLeads();
+  
   const leadToEditObject = leads.find((l) => l.id === leadToEdit);
   const leadToUpdateLastContactedObject = leads.find(
     (l) => l.id == leadLastContactedToUpdate,
