@@ -1,5 +1,5 @@
 import { useLead } from "../context/LeadContext";
-
+import { dbPromise } from "../config/indexedDB-config";
 export default function useUpdateLead() {
   const {
     leads,
@@ -14,7 +14,7 @@ export default function useUpdateLead() {
     editLastContacted,
   } = useLead();
 
-  const updateLead = (e: React.SubmitEvent) => {
+  const updateLead = async (e: React.SubmitEvent) => {
     e.preventDefault();
     // const leadToEditIndex = leads.findIndex((l) => l.id == leadToEdit);
 
@@ -29,18 +29,27 @@ export default function useUpdateLead() {
     // };
     // saveToStorage();
 
+const db = await dbPromise;
+const leadObject = await db.get("leads", leadToEdit as IDBKeyRange | IDBValidKey)
+leadObject.name = editBusinessName
+leadObject.category = editBusinessCategory
+leadObject.contact = editContactNo
+leadObject.stage = editStage
+leadObject.plan = editClientPlan
+leadObject.lastContacted = editLastContacted
 
+await db.put("leads", leadObject)
 
-    setLeads(leads.map(l => l.id == leadToEdit ? ({
-      ...l,
-      name: editBusinessName,
-      category: editBusinessCategory,
-      contact: editContactNo,
-      stage: editStage,
-      plan: editClientPlan,
-      lastContacted: editLastContacted,
+    // setLeads(leads.map(l => l.id == leadToEdit ? ({
+    //   ...l,
+    //   name: editBusinessName,
+    //   category: editBusinessCategory,
+    //   contact: editContactNo,
+    //   stage: editStage,
+    //   plan: editClientPlan,
+    //   lastContacted: editLastContacted,
 
-    }) : l))
+    // }) : l))
     setLeadToEdit(null);
   };
   return { updateLead };
