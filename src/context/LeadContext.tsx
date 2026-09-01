@@ -15,6 +15,8 @@ export default function LeadContextProvider({
     //   : [],
     []
   );
+
+  const [isLoading, setIsLoading] = useState(true)
   // const {addLead} = useAddLead()
   const [businessName, setBusinessName] = useState("");
   const [businessCategory, setBusinessCategory] = useState("");
@@ -38,6 +40,8 @@ export default function LeadContextProvider({
     localStorage.setItem("leads", JSON.stringify(leads));
   };
   const contextValues = {
+
+    isLoading,
     leadToDelete,
     setLeadToDelete,
     leadToEdit,
@@ -78,6 +82,7 @@ export default function LeadContextProvider({
         const db = await dbPromise;
         const data = await db.getAll("leads")
         setLeads(data)
+        setIsLoading(false)
       }
  useEffect(() => {
     

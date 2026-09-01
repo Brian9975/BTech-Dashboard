@@ -77,6 +77,7 @@ export default function Leads() {
     setEditLastContacted,
     leadToDelete,
     setLeadToDelete,
+    isLoading
   } = useLead();
   const { addLead } = useAddLead();
   const { updateLead } = useUpdateLead();
@@ -190,7 +191,7 @@ export default function Leads() {
 
       {/* Leads Display */}
       <main className=" flex  overflow-x-auto justify-center gap-10 flex-col items-center">
-        {leads.length == 0 ? (
+        {isLoading ? <div><h1>Loading...</h1></div> : leads.length == 0 ? (
           <div className="bg-slate-900 rounded-lg py-5 px-10 text-xl flex flex-col items-center justify-center gap-2  shadow-md my-30 shadow-slate-600">
             <UserLock className="text-blue-600" size={35} />
             <span>No added leads at the moment!</span>

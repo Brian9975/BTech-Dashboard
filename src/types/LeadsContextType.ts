@@ -36,4 +36,5 @@ export interface LeadContextType {
   setEditClientPlan: React.Dispatch<React.SetStateAction<string>>;
   editLastContacted: Date | string;
   setEditLastContacted: React.Dispatch<React.SetStateAction<Date | string>>;
+  isLoading: boolean;
 }
