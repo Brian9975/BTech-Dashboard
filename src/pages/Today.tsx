@@ -7,25 +7,24 @@ import TodayViewCard from "../components/TodayViewCard";
 import useGetFlaggedAction from "../hooks/useGetFlaggedAction";
 
 export default function Today() {
-  const {getFlaggedAction} = useGetFlaggedAction()
+  const { getFlaggedAction } = useGetFlaggedAction();
   const { checkDaysPassed } = useAutoCheckLead();
-  const { leads } = useLead();
+  const { leads, isLoading } = useLead();
   const { formatAnyDate } = useDateFormater();
   const { updateStatLastCont, leadToUpdate, setLeadToUpdate } =
     useUpdateStatLast();
 
-    const flaggedLeads = leads
-    .map(l => ({lead: l, action: getFlaggedAction(l, checkDaysPassed)}))
-    .filter(l => l.action !== null)
+  const flaggedLeads = leads
+    .map((l) => ({ lead: l, action: getFlaggedAction(l, checkDaysPassed) }))
+    .filter((l) => l.action !== null);
 
-
-    
-    
   return (
     <div>
-    <button className="bg-blue-600 p-3 cursor-pointer" onClick={() => console.log(flaggedLeads)}>Click Me</button>
       <h1 className="font-bold text-xl">Welcome to the todays screen Brian,</h1>
-
+{isLoading ? <div><h1>Loading...</h1></div> : flaggedLeads.length === 0 ?  <div className="bg-slate-900 rounded-lg py-5 px-10 text-xl flex flex-col items-center justify-center gap-2  shadow-md my-10 shadow-slate-600">
+            🎉🎉🎉
+            <span>Today you are free, no leads to follow up with!</span>
+          </div> :
       <main className="flex md:flex-row flex-col items-center my-10 justify-start gap-4">
         <div className="border text-lg  border-green-600 rounded-lg p-2">
           Check what you will be working on today right here
@@ -37,17 +36,18 @@ export default function Today() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {flaggedLeads.map((l) => (<TodayViewCard
+          {flaggedLeads.map((l) => (
+            <TodayViewCard
               key={l.lead.id}
               l={l.lead}
               checkDaysPassed={checkDaysPassed}
               formatAnyDate={formatAnyDate}
               setLeadToUpdate={setLeadToUpdate}
               action={l.action as string}
-            />)
-          )}
+            />
+          ))}
         </div>
-      </main>
+      </main>}
 
       {/* Confirmation To Update Modal */}
       {leadToUpdate && (
