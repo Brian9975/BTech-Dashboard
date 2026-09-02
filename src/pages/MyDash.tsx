@@ -2,7 +2,7 @@ import { CheckCircle2, DeleteIcon, Edit, MoveRight, Plus } from "lucide-react";
 import { useLead } from "../context/LeadContext";
 import { Link, useNavigate } from "react-router-dom";
 import { leadStage } from "../LeadStage";
-import useAutoCheckLead from "../hooks/useAutoCheckLead";
+// import useAutoCheckLead from "../hooks/useAutoCheckLead";
 import useModal from "../hooks/useModal";
 import { useTask } from "../context/TaskContext";
 import useAddTask from "../hooks/useAddTask";
@@ -26,8 +26,8 @@ export default function MyDash() {
     deadlineEdit,
   } = useEditTask();
   const { openDialog, closeDialog, modalIsOpen } = useModal();
-  const { checkDaysPassed } = useAutoCheckLead();
-  const { leads } = useLead();
+  // const { checkDaysPassed } = useAutoCheckLead();
+  const { isLoading, flaggedLeads } = useLead();
   const {
     newCount,
     contactedCount,
@@ -142,124 +142,21 @@ export default function MyDash() {
         <div className="p-5">
           <h1 className="text-xl pb-3 font-bold ">Today</h1>
           <div className="h-35 border p-3 rounded-lg border-slate-600 overflow-y-auto">
-            {leads.map((l) =>
-              checkDaysPassed(l.lastContacted) >= 2 &&
-              l.stage == "Contacted" ? (
-                <div key={l.id}>
-                  <p className="flex gap-15 items-center">
-                    <span className="text-lg">{l.name}</span>{" "}
-                    <Link
-                      to={`/Lead/${l.id}`}
-                      className="hover:text-blue-600 hover:scale-120 transition-all"
-                    >
-                      <MoveRight size={35} />
-                    </Link>
-                  </p>
-                </div>
-              ) : checkDaysPassed(l.lastContacted) >= 4 &&
-                l.stage == "Follow up 1 after Contact" ? (
-                <div key={l.id}>
-                  <p className="flex gap-15 items-center">
-                    <span className="text-lg">{l.name}</span>{" "}
-                    <Link
-                      to={`/Lead/${l.id}`}
-                      className="hover:text-blue-600 hover:scale-120 transition-all"
-                    >
-                      <MoveRight size={35} />
-                    </Link>
-                  </p>
-                </div>
-              ) : checkDaysPassed(l.lastContacted) >= 2 &&
-                l.stage == "Preview Sent" ? (
-                <div>
-                  <p className="flex gap-15 items-center">
-                    <span className="text-lg">{l.name}</span>{" "}
-                    <Link
-                      to={`/Lead/${l.id}`}
-                      className="hover:text-blue-600 hover:scale-120 transition-all"
-                    >
-                      <MoveRight size={35} />
-                    </Link>
-                  </p>
-                </div>
-              ) : checkDaysPassed(l.lastContacted) >= 2 &&
-                l.stage == "Follow up 1 after Preview" ? (
-                <div>
-                  <p className="flex gap-15 items-center">
-                    <span className="text-lg">{l.name}</span>{" "}
-                    <Link
-                      to={`/Lead/${l.id}`}
-                      className="hover:text-blue-600 hover:scale-120 transition-all"
-                    >
-                      <MoveRight size={35} />
-                    </Link>
-                  </p>
-                </div>
-              ) : checkDaysPassed(l.lastContacted) >= 2 &&
-                l.stage == "Price Sent" ? (
-                <div>
-                  <p className="flex gap-15 items-center">
-                    <span className="text-lg">{l.name}</span>{" "}
-                    <Link
-                      to={`/Lead/${l.id}`}
-                      className="hover:text-blue-600 hover:scale-120 transition-all"
-                    >
-                      <MoveRight size={35} />
-                    </Link>
-                  </p>
-                </div>
-              ) : checkDaysPassed(l.lastContacted) >= 2 &&
-                l.stage == "Follow up 1 after Price" ? (
-                <div>
-                  <p className="flex gap-15 items-center">
-                    <span className="text-lg">{l.name}</span>{" "}
-                    <Link
-                      to={`/Lead/${l.id}`}
-                      className="hover:text-blue-600 hover:scale-120 transition-all"
-                    >
-                      <MoveRight size={35} />
-                    </Link>
-                  </p>
-                </div>
-              ) : checkDaysPassed(l.lastContacted) >= 2 &&
-                l.stage.includes("Last Follow up") ? (
-                <div key={l.id}>
-                  <p className="flex gap-15 items-center">
-                    <span className="text-lg">{l.name}</span>{" "}
-                    <Link
-                      to={`/Lead/${l.id}`}
-                      className="hover:text-blue-600 hover:scale-120 transition-all"
-                    >
-                      <MoveRight size={35} />
-                    </Link>
-                  </p>
-                </div>
-              ) : checkDaysPassed(l.lastContacted) >= 1 &&
-                l.stage == "Checklist Sent" ? (
-                <div>
-                  <p className="flex gap-15 items-center">
-                    <span className="text-lg">{l.name}</span>{" "}
-                    <Link
-                      to={`/Lead/${l.id}`}
-                      className="hover:text-blue-600 hover:scale-120 transition-all"
-                    >
-                      <MoveRight size={35} />
-                    </Link>
-                  </p>
-                </div>
-              ) : checkDaysPassed(l.dateAdded) >= 1 && l.stage == "New" ? (
-                <div>
-                  <p className="flex gap-15 items-center">
-                    <span className="text-lg">{l.name}</span>{" "}
-                    <Link
-                      to={`/Lead/${l.id}`}
-                      className="hover:text-blue-600 hover:scale-120 transition-all"
-                    >
-                      <MoveRight size={35} />
-                    </Link>
-                  </p>
-                </div>
-              ) : null,
+           
+            {isLoading ? <div><h1>Loading...</h1></div> : flaggedLeads.length === 0 ? <div><p>No Leads to work on today!</p></div> : flaggedLeads.map(({lead}) =>
+              
+              <div key={lead.id}>
+               <p className="flex gap-15 items-center">
+                   <span className="text-lg">{lead.name}</span>{" "}
+               <Link
+                  to={`/Lead/${lead.id}`}
+                  className="hover:text-blue-600 hover:scale-120 transition-all"
+                >
+                   <MoveRight size={35} />
+                 </Link>
+                </p>
+              </div>
+
             )}
           </div>
 

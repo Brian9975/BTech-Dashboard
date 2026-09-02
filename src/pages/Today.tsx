@@ -4,19 +4,20 @@ import { useLead } from "../context/LeadContext";
 import useDateFormater from "../hooks/useDateFormater";
 import useUpdateStatLast from "../hooks/useUpdateStatLast";
 import TodayViewCard from "../components/TodayViewCard";
-import useGetFlaggedAction from "../hooks/useGetFlaggedAction";
+// import useGetFlaggedAction from "../hooks/useGetFlaggedAction";
 
 export default function Today() {
-  const { getFlaggedAction } = useGetFlaggedAction();
+  // const { getFlaggedAction } = useGetFlaggedAction();
   const { checkDaysPassed } = useAutoCheckLead();
-  const { leads, isLoading } = useLead();
+  const {isLoading, flaggedLeads } = useLead();
   const { formatAnyDate } = useDateFormater();
   const { updateStatLastCont, leadToUpdate, setLeadToUpdate } =
     useUpdateStatLast();
 
-  const flaggedLeads = leads
-    .map((l) => ({ lead: l, action: getFlaggedAction(l, checkDaysPassed) }))
-    .filter((l) => l.action !== null);
+
+  // const flaggedLeads = leads
+  //   .map((l) => ({ lead: l, action: getFlaggedAction(l, checkDaysPassed) }))
+  //   .filter((l) => l.action !== null);
 
   return (
     <div>

@@ -2,6 +2,8 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import type { LeadsInterface } from "../types/LeadsInterface";
 import type { LeadContextType } from "../types/LeadsContextType";
 import { dbPromise } from "../config/indexedDB-config";
+import useAutoCheckLead from "../hooks/useAutoCheckLead";
+import useGetFlaggedAction from "../hooks/useGetFlaggedAction";
 
 const LeadContext = createContext<LeadContextType | null>(null);
 export default function LeadContextProvider({
@@ -36,11 +38,18 @@ export default function LeadContextProvider({
   const [editLastContacted, setEditLastContacted] = useState<Date | string>("");
 
   const [leadToDelete, setLeadToDelete] = useState<string | null>(null);
+  const {checkDaysPassed} = useAutoCheckLead()
+  const {getFlaggedAction} = useGetFlaggedAction()
   const saveToStorage = () => {
     localStorage.setItem("leads", JSON.stringify(leads));
   };
-  const contextValues = {
 
+
+  const flaggedLeads = leads
+    .map((l) => ({ lead: l, action: getFlaggedAction(l, checkDaysPassed) }))
+    .filter((l) => l.action !== null);
+  const contextValues = {
+    flaggedLeads,
     isLoading,
     leadToDelete,
     setLeadToDelete,
