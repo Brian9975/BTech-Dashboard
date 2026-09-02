@@ -4,15 +4,26 @@ import { useLead } from "../context/LeadContext";
 import useDateFormater from "../hooks/useDateFormater";
 import useUpdateStatLast from "../hooks/useUpdateStatLast";
 import TodayViewCard from "../components/TodayViewCard";
+import useGetFlaggedAction from "../hooks/useGetFlaggedAction";
 
 export default function Today() {
+  const {getFlaggedAction} = useGetFlaggedAction()
   const { checkDaysPassed } = useAutoCheckLead();
   const { leads } = useLead();
   const { formatAnyDate } = useDateFormater();
   const { updateStatLastCont, leadToUpdate, setLeadToUpdate } =
     useUpdateStatLast();
+
+    const flaggedLeads = leads
+    .map(l => ({lead: l, action: getFlaggedAction(l, checkDaysPassed)}))
+    .filter(l => l.action !== null)
+
+
+    
+    
   return (
     <div>
+    <button className="bg-blue-600 p-3 cursor-pointer" onClick={() => console.log(flaggedLeads)}>Click Me</button>
       <h1 className="font-bold text-xl">Welcome to the todays screen Brian,</h1>
 
       <main className="flex md:flex-row flex-col items-center my-10 justify-start gap-4">
@@ -26,88 +37,14 @@ export default function Today() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {leads.map((l) =>
-            checkDaysPassed(l.lastContacted) >= 2 && l.stage == "Contacted" ? (
-              <TodayViewCard
-                key={l.id}
-                l={l}
-                checkDaysPassed={checkDaysPassed}
-                formatAnyDate={formatAnyDate}
-                setLeadToUpdate={setLeadToUpdate}
-                action={"Follow up 1 after contact"}
-              />
-            ) : checkDaysPassed(l.lastContacted) >= 4 &&
-              l.stage == "Follow up 1 after Contact" ? (
-              <TodayViewCard
-                l={l}
-                checkDaysPassed={checkDaysPassed}
-                formatAnyDate={formatAnyDate}
-                setLeadToUpdate={setLeadToUpdate}
-                action={"Final Follow up after Contact"}
-              />
-            ) : checkDaysPassed(l.lastContacted) >= 2 &&
-              l.stage == "Preview Sent" ? (
-              <TodayViewCard
-                l={l}
-                checkDaysPassed={checkDaysPassed}
-                formatAnyDate={formatAnyDate}
-                setLeadToUpdate={setLeadToUpdate}
-                action={"Follow up 1 after Preview"}
-              />
-            ) : checkDaysPassed(l.lastContacted) >= 2 &&
-              l.stage == "Follow up 1 after Preview" ? (
-              <TodayViewCard
-                l={l}
-                checkDaysPassed={checkDaysPassed}
-                formatAnyDate={formatAnyDate}
-                setLeadToUpdate={setLeadToUpdate}
-                action={"Final Follow up after Preview"}
-              />
-            ) : checkDaysPassed(l.lastContacted) >= 2 &&
-              l.stage == "Price Sent" ? (
-              <TodayViewCard
-                l={l}
-                checkDaysPassed={checkDaysPassed}
-                formatAnyDate={formatAnyDate}
-                setLeadToUpdate={setLeadToUpdate}
-                action={"Follow up 1 after Price"}
-              />
-            ) : checkDaysPassed(l.lastContacted) >= 2 &&
-              l.stage == "Follow up 1 after Price" ? (
-              <TodayViewCard
-                l={l}
-                checkDaysPassed={checkDaysPassed}
-                formatAnyDate={formatAnyDate}
-                setLeadToUpdate={setLeadToUpdate}
-                action={"Final Follow up after Price"}
-              />
-            ) : checkDaysPassed(l.lastContacted) >= 2 &&
-              l.stage.includes("Last Follow up") ? (
-              <TodayViewCard
-                l={l}
-                checkDaysPassed={checkDaysPassed}
-                formatAnyDate={formatAnyDate}
-                setLeadToUpdate={setLeadToUpdate}
-                action={"Dead"}
-              />
-            ) : checkDaysPassed(l.lastContacted) >= 1 &&
-              l.stage == "Checklist Sent" ? (
-              <TodayViewCard
-                l={l}
-                checkDaysPassed={checkDaysPassed}
-                formatAnyDate={formatAnyDate}
-                setLeadToUpdate={setLeadToUpdate}
-                action={" Follow up after Checklist"}
-              />
-            ) : checkDaysPassed(l.dateAdded) >= 1 && l.stage == "New" ? (
-              <TodayViewCard
-                l={l}
-                checkDaysPassed={checkDaysPassed}
-                formatAnyDate={formatAnyDate}
-                setLeadToUpdate={setLeadToUpdate}
-                action={" Send hook message"}
-              />
-            ) : null,
+          {flaggedLeads.map((l) => (<TodayViewCard
+              key={l.lead.id}
+              l={l.lead}
+              checkDaysPassed={checkDaysPassed}
+              formatAnyDate={formatAnyDate}
+              setLeadToUpdate={setLeadToUpdate}
+              action={l.action as string}
+            />)
           )}
         </div>
       </main>
