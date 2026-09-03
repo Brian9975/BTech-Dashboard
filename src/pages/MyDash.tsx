@@ -64,9 +64,9 @@ export default function MyDash() {
     }
   }, [taskToUpdate]);
 
-  useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
+  // useEffect(() => {
+  //   localStorage.setItem("tasks", JSON.stringify(tasks));
+  // }, [tasks]);
   return (
     <div>
       {/* Stats */}

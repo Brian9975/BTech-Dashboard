@@ -1,6 +1,7 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import type { TaskContextType } from "../types/TaskContextType";
 import type { TaskInterface } from "../types/TasksInterface";
+import { dbPromise } from "../config/indexedDB-config";
 
 const TaskContext = createContext<TaskContextType | null>(null);
 export default function TaskContextProvider({
@@ -9,11 +10,23 @@ export default function TaskContextProvider({
   children: React.ReactNode;
 }) {
   const [tasks, setTasks] = useState<TaskInterface[]>(
-    localStorage.getItem("tasks")
-      ? JSON.parse(localStorage.getItem("tasks") as string)
-      : [],
+      [],
   );
-  const contextValues = { tasks, setTasks };
+  const [taskLoading, setTaskLoading] = useState(true)
+  const contextValues = { tasks, setTasks, taskLoading };
+
+
+  const getAllTasks = async () => {
+    const db = await dbPromise;
+    const data = await db.getAll("tasks")
+
+    setTasks(data)
+    setTaskLoading(false)
+  }
+
+  useEffect(() => {
+    getAllTasks()
+  }, [tasks])
   return <TaskContext value={contextValues}>{children}</TaskContext>;
 }
 
