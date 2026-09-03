@@ -141,9 +141,9 @@ export default function MyDash() {
       <div className="flex  items-center gap-15  py-10">
         <div className="p-5">
           <h1 className="text-xl pb-3 font-bold ">Today</h1>
-          <div className="h-35 border p-3 rounded-lg border-slate-600 overflow-y-auto">
+          <div className={`h-35 border p-3 rounded-lg border-slate-600  overflow-y-auto`}>
            
-            {isLoading ? <div><h1>Loading...</h1></div> : flaggedLeads.length === 0 ? <div><p>No Leads to work on today!</p></div> : flaggedLeads.map(({lead}) =>
+            {isLoading ? <div><h1>Loading...</h1></div> : flaggedLeads.length === 0 ? <div ><div><p  className="pt-10 font-bold text-lg text-green-600">No Leads to work on today!</p></div></div> : flaggedLeads.map(({lead}) =>
               
               <div key={lead.id}>
                <p className="flex gap-15 items-center">
