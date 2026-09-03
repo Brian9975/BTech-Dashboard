@@ -11,6 +11,7 @@ import useEditTask from "../hooks/useEditTask";
 import useStatCount from "../hooks/useStatCount";
 import useDeleteTask from "../hooks/useDeleteTask";
 import useCompleteTask from "../hooks/useCompleteTask";
+import AddTaskForm from "../components/AddTaskForm";
 export default function MyDash() {
   const navigate = useNavigate();
   const { tasks } = useTask();
@@ -225,47 +226,7 @@ export default function MyDash() {
         onClick={closeDialog}
         className={`fixed ${modalIsOpen ? "block" : "hidden"} bg-black/50 z-50 inset-0`}
       ></div>
-      <div
-        className={`fixed border-t  flex border-slate-600 justify-center items-center duration-300 z-50  backdrop-blur-xl py-10 overflow-y-auto    shadow-md shadow-slate-700 ${modalIsOpen ? "bottom-0" : "-bottom-350"} rounded-t-4xl transition-all left-0  right-0`}
-      >
-        <form onSubmit={addTask}>
-          <h1 className="text-center text-lg text-blue-600 font-bold pb-5">
-            Add your Task
-          </h1>
-          <div>
-            <div>
-              <label htmlFor="taskText">Task :</label>
-            </div>
-            <input
-              value={taskText}
-              onChange={(e) => setTaskText(e.target.value)}
-              placeholder="eg. Code a React Component"
-              type="text"
-              className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
-              required
-            />
-          </div>
-          <div className="pt-5">
-            <div>
-              <label htmlFor="taskText">Done By :</label>
-            </div>
-            <input
-              value={deadline as any}
-              onChange={(e) => setDeadline(e.target.value)}
-              className="w-lg  bg-slate-50 text-lg text-slate-950  border-slate-600 p-2 outline-0  rounded-lg border"
-              type="date"
-              required
-            />
-          </div>
-
-          <div className="flex justify-center  pt-10">
-            <button className="bg-blue-600 hover:scale-105 transition-all text-slate-950 py-1.5 px-4 font-bold w-30 rounded-lg cursor-pointer">
-              Add
-            </button>
-          </div>
-        </form>
-      </div>
-
+      <AddTaskForm addTask={addTask} taskText={taskText} setTaskText={setTaskText} deadline={deadline} setDeadline={setDeadline} modalIsOpen={modalIsOpen} />
       {/* Edit Task Modal */}
       <div
         onClick={() => setTaskToUpdate(null)}
