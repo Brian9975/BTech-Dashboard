@@ -14,7 +14,7 @@ import useCompleteTask from "../hooks/useCompleteTask";
 import AddTaskForm from "../components/AddTaskForm";
 export default function MyDash() {
   const navigate = useNavigate();
-  const { tasks } = useTask();
+  const { tasks, taskLoading } = useTask();
   const { addTask, setDeadline, setTaskText, deadline, taskText } =
     useAddTask();
   const {
@@ -144,7 +144,7 @@ export default function MyDash() {
           <h1 className="text-xl pb-3 font-bold ">Today</h1>
           <div className={`h-35 border p-3 rounded-lg border-slate-600  overflow-y-auto`}>
            
-            {isLoading ? <div><h1>Loading...</h1></div> : flaggedLeads.length === 0 ? <div ><div><p  className="pt-10 font-bold text-lg text-green-600">No Leads to work on today!</p></div></div> : flaggedLeads.map(({lead}) =>
+            {isLoading ? <div><h1>Loading...</h1></div> : flaggedLeads.length === 0 ? <div ><div><p  className="pt-10 font-bold text-lg text-green-600 tracking-wide">No Leads to work on today!</p></div></div> : flaggedLeads.map(({lead}) =>
               
               <div key={lead.id}>
                <p className="flex gap-15 items-center">
@@ -184,8 +184,8 @@ export default function MyDash() {
 
             <h1 className="text-xl font-bold  text-blue-600">Your Tasks</h1>
           </div>
-          <ul className="flex p-5 flex-col gap-5">
-            {tasks.map((t) => (
+          <ul className="flex p-5 text-center flex-col gap-5">
+            {taskLoading ? <div><p>Loading...</p></div> : tasks.length === 0 ? <div ><p className="text-lg font-bold tracking-wide">No tasks Added at the moment!</p></div> : tasks.map((t) => (
               <div key={t.id} className="bg-slate-950 p-2 rounded-lg">
                 <li onClick={() => completeTask(t.id)} className={`flex gap-2 ${t.isCompleted && "text-slate-600 line-through"}  cursor-pointer  hover:scale-95 transition-all items-start text-lg`}>
                   <CheckCircle2 className="hidden md:block" size={25} />{" "}
