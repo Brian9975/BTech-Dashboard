@@ -227,6 +227,9 @@ export default function MyDash() {
         className={`fixed ${modalIsOpen ? "block" : "hidden"} bg-black/50 z-50 inset-0`}
       ></div>
       <AddTaskForm addTask={addTask} taskText={taskText} setTaskText={setTaskText} deadline={deadline} setDeadline={setDeadline} modalIsOpen={modalIsOpen} />
+
+
+      
       {/* Edit Task Modal */}
       <div
         onClick={() => setTaskToUpdate(null)}
