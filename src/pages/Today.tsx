@@ -22,6 +22,8 @@ export default function Today() {
   return (
     <div>
       <h1 className="font-bold text-xl">Welcome to the todays screen Brian,</h1>
+
+     <div className={"flex justify-center my-30"}>
 {isLoading ? <div><h1>Loading...</h1></div> : flaggedLeads.length === 0 ?  <div className="bg-slate-900 rounded-lg py-5 px-10 text-xl flex flex-col items-center justify-center gap-2  shadow-md my-10 shadow-slate-600">
             🎉🎉🎉
             <span>Today you are free, no leads to follow up with!</span>
@@ -49,7 +51,7 @@ export default function Today() {
           ))}
         </div>
       </main>}
-
+</div>
       {/* Confirmation To Update Modal */}
       {leadToUpdate && (
         <div className="inset-0 bg-black/50 z-50 fixed flex justify-center items-center">
