@@ -54,7 +54,7 @@ export default function MyDash() {
     repliedCount,
     previewCount,
   } = useStatCount();
-  const { deleteTask, taskToDelete, setTaskToDelete } = useDeleteTask();
+  const { deleteTask, taskToDelete, setTaskToDelete, showDelToast } = useDeleteTask();
   const {completeTask} = useCompleteTask()
   const taskToUpdateObject = tasks.find((t) => t.id === taskToUpdate);
 
@@ -285,19 +285,23 @@ export default function MyDash() {
           <p className="text-lg font-bold">
             Are you sure you want to continue ?
           </p>
-          <div className="flex justify-between pt-10">
+          <div className="flex justify-between  pt-10">
+            <div>
             <button
               onClick={() => setTaskToDelete(null)}
-              className="bg-slate-900 hover:scale-105 transition-all w-25 py-2 rounded-lg md:w-40 cursor-pointer font-bold"
+              className="bg-slate-900 hover:scale-105 transition-all w-25 py-2 rounded-lg md:w-30 cursor-pointer font-bold"
             >
               Cancel
             </button>
+            </div>
+            <div>
             <button
               onClick={deleteTask}
-              className="bg-slate-50 w-25 hover:scale-105 transition-all py-2 text-slate-950 cursor-pointer rounded-lg md:w-40 font-bold"
+              className="bg-slate-50 w-25 hover:scale-105 transition-all py-2 text-slate-950 cursor-pointer rounded-lg md:w-30 font-bold"
             >
               Sure
             </button>
+            </div>
           </div>
         </div>
       </div>
@@ -323,7 +327,7 @@ export default function MyDash() {
               </div>
                  {/*Delete Task Toast */}
               <div
-                className={`bg-slate-50 z-50 fixed shadow-md shadow-slate-700 top-0 transition-all duration-400 ${showEditToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-950`}
+                className={`bg-slate-50 z-50 fixed shadow-md shadow-slate-700 top-0 transition-all duration-400 ${showDelToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-950`}
               >
                 <p className="flex items-center gap-2">
                   <CheckCircleIcon className="text-green-800" />
