@@ -1,8 +1,8 @@
-import { CheckCircle2, DeleteIcon, Edit, MoveRight, Plus } from "lucide-react";
+import { CheckCircle2, CheckCircleIcon, DeleteIcon, Edit, MoveRight, Plus } from "lucide-react";
 import { useLead } from "../context/LeadContext";
 import { Link, useNavigate } from "react-router-dom";
 import { leadStage } from "../LeadStage";
-// import useAutoCheckLead from "../hooks/useAutoCheckLead";
+
 import useModal from "../hooks/useModal";
 import { useTask } from "../context/TaskContext";
 import useAddTask from "../hooks/useAddTask";
@@ -15,7 +15,7 @@ import AddTaskForm from "../components/AddTaskForm";
 export default function MyDash() {
   const navigate = useNavigate();
   const { tasks, taskLoading } = useTask();
-  const { addTask, setDeadline, setTaskText, deadline, taskText } =
+  const { addTask, setDeadline, setTaskText, deadline, taskText, showAddToast } =
     useAddTask();
   const {
     editTask,
@@ -25,9 +25,10 @@ export default function MyDash() {
     setDeadlineEdit,
     taskEdit,
     deadlineEdit,
+    showEditToast,
   } = useEditTask();
   const { openDialog, closeDialog, modalIsOpen } = useModal();
-  // const { checkDaysPassed } = useAutoCheckLead();
+ 
   const { isLoading, flaggedLeads } = useLead();
   const {
     newCount,
@@ -64,9 +65,6 @@ export default function MyDash() {
     }
   }, [taskToUpdate]);
 
-  // useEffect(() => {
-  //   localStorage.setItem("tasks", JSON.stringify(tasks));
-  // }, [tasks]);
   return (
     <div>
       {/* Stats */}
@@ -303,6 +301,17 @@ export default function MyDash() {
           </div>
         </div>
       </div>
+
+
+                 {/* Add Task Toast */}
+              <div
+                className={`bg-slate-50 z-50 fixed shadow-md shadow-slate-700 top-0 transition-all duration-400 ${showAddToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-950`}
+              >
+                <p className="flex items-center gap-2">
+                  <CheckCircleIcon className="text-green-800" />
+                  <span className="font-light text-lg">Task Added Successfully!</span>
+                </p>
+              </div>
     </div>
   );
 }

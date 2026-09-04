@@ -6,6 +6,7 @@ import { dbPromise } from "../config/indexedDB-config";
 export default function useAddTask() {
   const [taskText, setTaskText] = useState("");
   const [deadline, setDeadline] = useState<Date | string>("");
+  const [showAddToast, setShowAddToast] = useState(false)
   // const { setTasks } = useTask();
   const { closeDialog } = useModal();
   const addTask = async (e: React.SubmitEvent) => {
@@ -20,11 +21,15 @@ export default function useAddTask() {
  const db = await dbPromise;
  await db.add("tasks", taskObject)
 
-    // setTasks((prev) => [...prev, taskObject]);
-
+    
+  setShowAddToast(true)
+  setTimeout(() => {
+   setShowAddToast(false)
+  }, 3000
+)
     setTaskText("");
     setDeadline("");
     closeDialog();
   };
-  return { addTask, setTaskText, setDeadline, deadline, taskText };
+  return { addTask, setTaskText, setDeadline, deadline, taskText, showAddToast };
 }

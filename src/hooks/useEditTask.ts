@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { dbPromise } from "../config/indexedDB-config";
-// import { useTask } from "../context/TaskContext";
+
 
 export default function useEditTask() {
+  const [showEditToast, setShowEditToast] = useState(false)
   const [taskToUpdate, setTaskToUpdate] = useState<string | null>(null);
   const [taskEdit, setTaskEdit] = useState("");
   const [deadlineEdit, setDeadlineEdit] = useState<Date | string>("");
-  // const { tasks, setTasks } = useTask();
+  
 
   const editTask = async (e: React.SubmitEvent) => {
     e.preventDefault();
@@ -19,18 +20,12 @@ export default function useEditTask() {
     data.deadline = deadlineEdit,
 
     await db.put("tasks", data)
-    // setTasks(
-    //   tasks.map((t) =>
-    //     t.id === taskToUpdate
-    //       ? {
-    //           ...t,
-    //           task: taskEdit,
-    //           deadline: deadlineEdit,
-    //         }
-    //       : t,
-    //   ),
-    // );
 
+
+    setShowEditToast(true)
+    setTimeout(() => {
+    setShowEditToast(false)
+    }, 3000)
     setTaskToUpdate(null);
   };
   return {
@@ -41,5 +36,6 @@ export default function useEditTask() {
     setDeadlineEdit,
     taskEdit,
     deadlineEdit,
+    showEditToast
   };
 }
