@@ -79,12 +79,12 @@ export default function Leads() {
     setEditLastContacted,
     leadToDelete,
     setLeadToDelete,
-    isLoading
+    isLoading,
   } = useLead();
   const { addLead, loading } = useAddLead();
-  const { updateLead } = useUpdateLead();
+  const { updateLead, showUpdateToast, setShowUpdateToast } = useUpdateLead();
   const { removeLead } = useRemoveLead();
-  const {toastOn, showToast, hideToast} = useToast()
+  const { toastOn, showToast, hideToast } = useToast();
   const leadToEditObject = leads.find((l) => l.id === leadToEdit);
   const leadToUpdateLastContactedObject = leads.find(
     (l) => l.id == leadLastContactedToUpdate,
@@ -188,14 +188,20 @@ export default function Leads() {
           clientPlan={clientPlan}
           setClientPlan={setClientPlan}
           setLastContacted={setLastContacted}
-         showToast={showToast}
-         hideToast={hideToast}
+          showToast={showToast}
+          hideToast={hideToast}
         />
       )}
 
       {/* Leads Display */}
       <main className=" flex  overflow-x-auto justify-center gap-10 flex-col items-center">
-        {isLoading ? <div><h1>Loading...</h1></div> : loading ? <div>Loading...</div> : leads.length == 0 ? (
+        {isLoading ? (
+          <div>
+            <h1>Loading...</h1>
+          </div>
+        ) : loading ? (
+          <div>Loading...</div>
+        ) : leads.length == 0 ? (
           <div className="bg-slate-900 rounded-lg py-5 px-10 text-xl flex flex-col items-center justify-center gap-2  shadow-md my-30 shadow-slate-600">
             <UserLock className="text-blue-600" size={35} />
             <span>No added leads at the moment!</span>
@@ -493,7 +499,13 @@ export default function Leads() {
         {leadStage.map((s) => (
           <div
             key={s.id}
-            onClick={() => updateStage(s.name)}
+            onClick={() => {
+              updateStage(s.name);
+              setShowUpdateToast(true);
+              setTimeout(() => {
+                setShowUpdateToast(false);
+              }, 3000);
+            }}
             className={`font-bold  text-slate-600 ${s.name === leadToUpdateStageObject?.stage && "bg-slate-400"} cursor-pointer px-5 py-3 hover:bg-slate-400 flex justify-center items-center gap-2`}
           >
             <s.icon color={s.color} />
@@ -519,7 +531,13 @@ export default function Leads() {
           type="date"
         />
         <button
-          onClick={updateLastContacted}
+          onClick={() => {
+            updateLastContacted()
+            setShowUpdateToast(true);
+            setTimeout(() => {
+              setShowUpdateToast(false);
+            }, 3000);
+          }}
           className="bg-slate-50 py-3 transition-all rounded-lg cursor-pointer font-bold hover:scale-105 w-3xs text-slate-950"
         >
           Save
@@ -539,7 +557,13 @@ export default function Leads() {
         {plan.map((p) => (
           <div
             key={p.id}
-            onClick={() => updatePlan(p.name)}
+            onClick={() => {
+              updatePlan(p.name);
+              setShowUpdateToast(true);
+              setTimeout(() => {
+                setShowUpdateToast(false);
+              }, 3000);
+            }}
             className="font-bold text-slate-600 cursor-pointer px-5 py-3 hover:bg-slate-400"
           >
             {p.name}
@@ -573,24 +597,39 @@ export default function Leads() {
           />
         </div>
         <button
-          onClick={updateEarningsFromLead}
+          onClick={() => {
+            updateEarningsFromLead()
+              setShowUpdateToast(true)
+    setTimeout(() => {
+      setShowUpdateToast(false)
+    }, 3000)
+          }}
           className=" py-3 transition-all border border-green-600 rounded-lg cursor-pointer font-bold hover:scale-105 w-45 text-green-600"
         >
           Add
         </button>
       </div>
 
-
-
-
-
       {/* Toast Notification */}
       {
-      <div className={`bg-slate-50 fixed shadow-md shadow-slate-700 bottom-0 transition-all duration-400 ${toastOn ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-950`}>
+        <div
+          className={`bg-slate-50 fixed shadow-md shadow-slate-700 bottom-0 transition-all duration-400 ${toastOn ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-950`}
+        >
+          <p className="flex items-center gap-2">
+            <CheckCircleIcon className="text-green-800" />
+            <span className="font-light text-lg">Lead Added Successfully!</span>
+          </p>
+        </div>
+      }
 
-        
-         <p className="flex items-center gap-2"><CheckCircleIcon className="text-green-800"/><span className="font-light text-lg">Lead Added Successfully!</span></p>
-      </div>}
+      <div
+        className={`bg-slate-50 fixed shadow-md shadow-slate-700 bottom-0 transition-all duration-400 ${showUpdateToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-950`}
+      >
+        <p className="flex items-center gap-2">
+          <CheckCircleIcon className="text-green-800" />
+          <span className="font-light text-lg">Lead Updated Successfully!</span>
+        </p>
+      </div>
     </div>
   );
 }

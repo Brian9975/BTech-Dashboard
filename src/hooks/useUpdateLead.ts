@@ -1,6 +1,8 @@
 import { useLead } from "../context/LeadContext";
 import { dbPromise } from "../config/indexedDB-config";
+import { useState } from "react";
 export default function useUpdateLead() {
+  const [showUpdateToast, setShowUpdateToast] = useState(false)
   const {
     leadToEdit,
     setLeadToEdit,
@@ -48,7 +50,11 @@ await db.put("leads", leadObject)
     //   lastContacted: editLastContacted,
 
     // }) : l))
+    setShowUpdateToast(true)
+    setTimeout(() => {
+      setShowUpdateToast(false)
+    }, 3000)
     setLeadToEdit(null);
   };
-  return { updateLead };
+  return { updateLead, showUpdateToast, setShowUpdateToast };
 }
