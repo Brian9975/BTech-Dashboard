@@ -312,6 +312,24 @@ export default function MyDash() {
                   <span className="font-light text-lg">Task Added Successfully!</span>
                 </p>
               </div>
+                 {/*Edit Task Toast */}
+              <div
+                className={`bg-slate-50 z-50 fixed shadow-md shadow-slate-700 top-0 transition-all duration-400 ${showEditToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-950`}
+              >
+                <p className="flex items-center gap-2">
+                  <CheckCircleIcon className="text-green-800" />
+                  <span className="font-light text-lg">Task Updated Successfully!</span>
+                </p>
+              </div>
+                 {/*Delete Task Toast */}
+              <div
+                className={`bg-slate-50 z-50 fixed shadow-md shadow-slate-700 top-0 transition-all duration-400 ${showEditToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-950`}
+              >
+                <p className="flex items-center gap-2">
+                  <CheckCircleIcon className="text-green-800" />
+                  <span className="font-light text-lg">Task Deletion Completed!</span>
+                </p>
+              </div>
     </div>
   );
 }
