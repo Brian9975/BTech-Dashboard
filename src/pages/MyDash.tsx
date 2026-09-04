@@ -94,7 +94,7 @@ export default function MyDash() {
     <div>
       {/* Stats */}
       <div className="grid grid-cols-4 items-start gap-4">
-        <div className="bg-slate-950 cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">
+        <div className="bg-slate-950 border-[#3B82F6] cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">
           <p style={{ color: "#3B82F6" }}>Total Leads</p>
           <div className="flex justify-between items-center">
             {/* <s.icon color={s.color} /> */}
@@ -102,7 +102,7 @@ export default function MyDash() {
             <span className="text-2xl font-bold">{totalLeadsCount}</span>
           </div>
         </div>
-        <div className="bg-slate-950 cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">
+        <div className="bg-slate-950 border-[#6366F1] cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">
           <p style={{ color: "#6366F1" }}>Total Tasks</p>
           <div className="flex justify-between items-center">
             {/* <s.icon color={s.color} /> */}
@@ -110,7 +110,7 @@ export default function MyDash() {
             <span className="text-2xl font-bold">{totalTasksCount}</span>
           </div>
         </div>
-        <div className="bg-slate-950 cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">
+        <div className="bg-slate-950 border-[#E8A33D] cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">
           <p style={{ color: "#E8A33D" }}>Today</p>
           <div className="flex justify-between items-center">
             {/* <s.icon color={s.color} /> */}
@@ -118,7 +118,7 @@ export default function MyDash() {
             <span className="text-2xl font-bold">{todayCount}</span>
           </div>
         </div>
-        <div className="bg-slate-950 cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">
+        <div className="bg-slate-950 border-[#F59E0B] cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">
           <p style={{ color: "#F59E0B" }}>Deadline Alert</p>
           <div className="flex justify-between items-center">
             {/* <s.icon color={s.color} /> */}
@@ -126,7 +126,7 @@ export default function MyDash() {
             <span className="text-2xl font-bold">2</span>
           </div>
         </div>
-        <div className="bg-slate-950 cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">
+        <div className="bg-slate-950 border-[#10B981] cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">
           <p style={{ color: "#10B981" }}>Total Earnings</p>
           <div className="flex justify-between items-center">
             {/* <s.icon color={s.color} /> */}

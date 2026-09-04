@@ -9,7 +9,6 @@ import {
   MinusCircle,
   MoveRight,
   TrendingUp,
-  UserLock,
   UserPlus,
 } from "lucide-react";
 import { leadStage } from "../LeadStage";
