@@ -83,7 +83,7 @@ export default function Leads() {
   } = useLead();
   const { addLead, loading } = useAddLead();
   const { updateLead, showUpdateToast, setShowUpdateToast } = useUpdateLead();
-  const { removeLead } = useRemoveLead();
+  const { removeLead, showDeleteToast } = useRemoveLead();
   const { toastOn, showToast, hideToast } = useToast();
   const leadToEditObject = leads.find((l) => l.id === leadToEdit);
   const leadToUpdateLastContactedObject = leads.find(
@@ -628,6 +628,15 @@ export default function Leads() {
         <p className="flex items-center gap-2">
           <CheckCircleIcon className="text-green-800" />
           <span className="font-light text-lg">Lead Updated Successfully!</span>
+        </p>
+      </div>
+
+      <div
+        className={`bg-slate-50 fixed shadow-md shadow-slate-700 bottom-0 transition-all duration-400 ${showDeleteToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-950`}
+      >
+        <p className="flex items-center gap-2">
+          <CheckCircleIcon className="text-green-800" />
+          <span className="font-light text-lg">Lead Deletion Completed!</span>
         </p>
       </div>
     </div>
