@@ -37,6 +37,7 @@ export interface LeadContextType {
   editLastContacted: Date | string;
   setEditLastContacted: React.Dispatch<React.SetStateAction<Date | string>>;
   isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   flaggedLeads: {
     lead: LeadsInterface;
     action: string | null;

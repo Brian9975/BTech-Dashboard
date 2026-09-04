@@ -51,6 +51,7 @@ export default function LeadContextProvider({
   const contextValues = {
     flaggedLeads,
     isLoading,
+    setIsLoading,
     leadToDelete,
     setLeadToDelete,
     leadToEdit,

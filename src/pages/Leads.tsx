@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   BadgeDollarSign,
   ChartBarIncreasing,
+  CheckCircleIcon,
   Contact,
   Handshake,
   HeartHandshake,
@@ -24,6 +25,7 @@ import useUpdateEarningsFromLead from "../hooks/useUpdateEarningsFromLead";
 import useDateFormater from "../hooks/useDateFormater";
 import type { PlanInterface, BCategory } from "../types/planStageCateg";
 import AddLeadForm from "../components/AddLeadForm";
+import useToast from "../hooks/useToast";
 export default function Leads() {
   const [searchVal, setSearchVal] = useState("");
   const { leadToUpdateStage, setLeadToUpdateStage, updateStage } =
@@ -79,10 +81,10 @@ export default function Leads() {
     setLeadToDelete,
     isLoading
   } = useLead();
-  const { addLead } = useAddLead();
+  const { addLead, loading } = useAddLead();
   const { updateLead } = useUpdateLead();
   const { removeLead } = useRemoveLead();
-
+  const {toastOn, showToast, hideToast} = useToast()
   const leadToEditObject = leads.find((l) => l.id === leadToEdit);
   const leadToUpdateLastContactedObject = leads.find(
     (l) => l.id == leadLastContactedToUpdate,
@@ -186,12 +188,14 @@ export default function Leads() {
           clientPlan={clientPlan}
           setClientPlan={setClientPlan}
           setLastContacted={setLastContacted}
+         showToast={showToast}
+         hideToast={hideToast}
         />
       )}
 
       {/* Leads Display */}
       <main className=" flex  overflow-x-auto justify-center gap-10 flex-col items-center">
-        {isLoading ? <div><h1>Loading...</h1></div> : leads.length == 0 ? (
+        {isLoading ? <div><h1>Loading...</h1></div> : loading ? <div>Loading...</div> : leads.length == 0 ? (
           <div className="bg-slate-900 rounded-lg py-5 px-10 text-xl flex flex-col items-center justify-center gap-2  shadow-md my-30 shadow-slate-600">
             <UserLock className="text-blue-600" size={35} />
             <span>No added leads at the moment!</span>
@@ -575,6 +579,18 @@ export default function Leads() {
           Add
         </button>
       </div>
+
+
+
+
+
+      {/* Toast Notification */}
+      {
+      <div className={`bg-slate-50 fixed shadow-md shadow-slate-700 bottom-0 transition-all duration-400 ${toastOn ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-950`}>
+
+        
+         <p className="flex items-center gap-2"><CheckCircleIcon className="text-green-800"/><span className="font-light text-lg">Lead Added Successfully!</span></p>
+      </div>}
     </div>
   );
 }

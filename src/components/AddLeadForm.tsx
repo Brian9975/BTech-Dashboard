@@ -17,8 +17,10 @@ interface AddLeadFormProps {
     clientPlan: string;
     setClientPlan: React.Dispatch<React.SetStateAction<string>>;
     setLastContacted: React.Dispatch<React.SetStateAction<string | Date>>;
+    showToast: () => void;
+    hideToast: () => void;
 }
-export default function AddLeadForm({closeDialog, addLead, businessName, setBusinessName, 
+export default function AddLeadForm({closeDialog,showToast, hideToast, addLead, businessName, setBusinessName, 
     businessCategory, setBusinessCategory, bCategoryOption,
      contactNo, setContactNo, stage, setStage, leadStage, 
      plan, clientPlan, setClientPlan, setLastContacted}: AddLeadFormProps) {
@@ -28,7 +30,13 @@ export default function AddLeadForm({closeDialog, addLead, businessName, setBusi
           className="fixed flex justify-center items-center bg-black/50 inset-0 z-50"
         >
           <form
-            onSubmit={addLead}
+            onSubmit={(e) => {
+              addLead(e)
+              showToast()
+              setTimeout(() => {
+                 hideToast()
+              }, 3000)
+            }}
             onClick={(e) => e.stopPropagation()}
             className="bg-slate-900 rounded-2xl p-8 w-md"
           >
