@@ -10,6 +10,7 @@ import {
   MoveRight,
   TrendingUp,
   UserLock,
+  UserPlus,
 } from "lucide-react";
 import { leadStage } from "../LeadStage";
 import { useLead } from "../context/LeadContext";
@@ -202,8 +203,8 @@ export default function Leads() {
         ) : loading ? (
           <div>Loading...</div>
         ) : leads.length == 0 ? (
-          <div className="bg-slate-900 rounded-lg py-5 px-10 text-xl flex flex-col items-center justify-center gap-2  shadow-md my-30 shadow-slate-600">
-            <UserLock className="text-blue-600" size={35} />
+          <div className="bg-slate-900 text-[#9CA3AF] rounded-lg py-5 px-10 text-xl flex flex-col items-center justify-center gap-2  shadow-md my-30 shadow-slate-600">
+            <UserPlus  size={30} />
             <span>No added leads at the moment!</span>
           </div>
         ) : (
@@ -532,7 +533,7 @@ export default function Leads() {
         />
         <button
           onClick={() => {
-            updateLastContacted()
+            updateLastContacted();
             setShowUpdateToast(true);
             setTimeout(() => {
               setShowUpdateToast(false);
@@ -598,11 +599,11 @@ export default function Leads() {
         </div>
         <button
           onClick={() => {
-            updateEarningsFromLead()
-              setShowUpdateToast(true)
-    setTimeout(() => {
-      setShowUpdateToast(false)
-    }, 3000)
+            updateEarningsFromLead();
+            setShowUpdateToast(true);
+            setTimeout(() => {
+              setShowUpdateToast(false);
+            }, 3000);
           }}
           className=" py-3 transition-all border border-green-600 rounded-lg cursor-pointer font-bold hover:scale-105 w-45 text-green-600"
         >
