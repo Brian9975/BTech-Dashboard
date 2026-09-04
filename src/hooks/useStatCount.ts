@@ -1,7 +1,10 @@
 import { useLead } from "../context/LeadContext";
+import { useTask } from "../context/TaskContext";
 
 export default function useStatCount() {
-  const { leads } = useLead();
+  const { leads, flaggedLeads } = useLead();
+  const {tasks} = useTask()
+
   const newCount = leads.filter((l) => l.stage === "New").length;
   const contactedCount = leads.filter((l) => l.stage === "Contacted").length;
   const f1AfterContactCount = leads.filter(
@@ -52,8 +55,17 @@ export default function useStatCount() {
   const noInterestCount = leads.filter(
     (l) => l.stage === "Not Interested",
   ).length;
-
+const totalLeadsCount = leads.length
+const totalTasksCount = tasks.length
+const todayCount = flaggedLeads.length
+const totalEarningsCount = leads.reduce((total, lead) => {
+return lead.earningsFromLead + total
+}, 0)
   return {
+    totalEarningsCount,
+    todayCount,
+    totalTasksCount,
+    totalLeadsCount,
     newCount,
     contactedCount,
     reviewCount,
