@@ -1,23 +1,20 @@
-import { MoveRight, MoveDown } from "lucide-react";
+import { MoveRight, MoveDown, CheckCircleIcon } from "lucide-react";
 import useAutoCheckLead from "../hooks/useAutoCheckLead";
 import { useLead } from "../context/LeadContext";
 import useDateFormater from "../hooks/useDateFormater";
 import useUpdateStatLast from "../hooks/useUpdateStatLast";
 import TodayViewCard from "../components/TodayViewCard";
-// import useGetFlaggedAction from "../hooks/useGetFlaggedAction";
+
 
 export default function Today() {
-  // const { getFlaggedAction } = useGetFlaggedAction();
+  
   const { checkDaysPassed } = useAutoCheckLead();
   const {isLoading, flaggedLeads } = useLead();
   const { formatAnyDate } = useDateFormater();
-  const { updateStatLastCont, leadToUpdate, setLeadToUpdate } =
+  const { updateStatLastCont, leadToUpdate, setLeadToUpdate, showToast } =
     useUpdateStatLast();
 
 
-  // const flaggedLeads = leads
-  //   .map((l) => ({ lead: l, action: getFlaggedAction(l, checkDaysPassed) }))
-  //   .filter((l) => l.action !== null);
 
   return (
     <div>
@@ -77,6 +74,16 @@ export default function Today() {
           </div>
         </div>
       )}
+
+
+            <div
+              className={`bg-slate-50 fixed shadow-md shadow-slate-700 bottom-0 transition-all duration-400 ${showToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-950`}
+            >
+              <p className="flex items-center gap-2">
+                <CheckCircleIcon className="text-green-800" />
+                <span className="font-light text-lg">Lead Updated Successfully!</span>
+              </p>
+            </div>
     </div>
   );
 }

@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { dbPromise } from "../config/indexedDB-config";
-// import { useLead } from "../context/LeadContext"
+
 
 export default function useUpdateStatLast() {
-  // const {setLeads, leads} = useLead()
+  
   const [leadToUpdate, setLeadToUpdate] = useState<string | null>(null);
+  const [showToast, setShowToast] = useState(false)
   const updateStatLastCont = async () => {
     const db = await dbPromise;
     const data = await db.get(
@@ -40,7 +41,13 @@ export default function useUpdateStatLast() {
       data.lastContacted = new Date();
     }
     await db.put("leads", data);
+
+    setShowToast(true)
+    setTimeout(() => {
+     setShowToast(false)
+    }, 3000)
+
     setLeadToUpdate(null);
   };
-  return { updateStatLastCont, leadToUpdate, setLeadToUpdate };
+  return { updateStatLastCont, leadToUpdate, setLeadToUpdate, showToast };
 }
