@@ -1,4 +1,4 @@
-import { MoveRight, MoveDown, CheckCircleIcon } from "lucide-react";
+import { MoveRight, MoveDown, CheckCircleIcon, PartyPopper } from "lucide-react";
 import useAutoCheckLead from "../hooks/useAutoCheckLead";
 import { useLead } from "../context/LeadContext";
 import useDateFormater from "../hooks/useDateFormater";
@@ -21,9 +21,9 @@ export default function Today() {
       <h1 className="font-bold text-xl">Welcome to the todays screen Brian,</h1>
 
      <div className={"flex justify-center my-30"}>
-{isLoading ? <div><h1>Loading...</h1></div> : flaggedLeads.length === 0 ?  <div className="bg-slate-900 rounded-lg py-5 px-10 text-xl flex flex-col items-center justify-center gap-2  shadow-md my-10 shadow-slate-600">
-            🎉🎉🎉
-            <span>Today you are free, no leads to follow up with!</span>
+{isLoading ? <div><h1>Loading...</h1></div> : flaggedLeads.length === 0 ?  <div className="bg-slate-900 text-[#10B981] rounded-lg py-5 px-10 text-xl flex flex-col items-center justify-center gap-2  shadow-md my-10 shadow-slate-600">
+            <PartyPopper size={30} />
+            <span >Today you are free, no leads to follow up with!</span>
           </div> :
       <main className="flex md:flex-row flex-col items-center my-10 justify-start gap-4">
         <div className="border text-lg  border-green-600 rounded-lg p-2">
