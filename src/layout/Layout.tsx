@@ -1,10 +1,10 @@
 import {
-  AlertTriangleIcon,
+  Sun,
   AlignJustifyIcon,
-  BookTemplate,
+  FileText,
   LayoutDashboard,
   Moon,
-  UserCheck2,
+  Users,
   
 } from "lucide-react";
 import React, { useState } from "react";
@@ -30,21 +30,21 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
           </h1>
         </Link>
-             <div className={`${sidebarOpen ? "" : ""}`}>
+             <div>
         <Link className="flex bg-slate-950 m-5 px-3 py-2 shadow-md shadow-slate-800 rounded-lg gap-2 text-lg items-center" to="/mydash">
         <LayoutDashboard size={18}/>
         <span>My Dashboard</span>
         </Link>
          <Link className="flex bg-slate-950 m-5 px-3 py-2 shadow-md shadow-slate-800 rounded-lg gap-2 text-lg items-center" to="/today">
-        <AlertTriangleIcon size={18}/>
+        <Sun size={18}/>
         <span>Today</span>
         </Link>
          <Link className="flex bg-slate-950 m-5 px-3 py-2 shadow-md shadow-slate-800 rounded-lg gap-2 text-lg items-center" to="/leads">
-        <UserCheck2 size={18}/>
+        <Users size={18}/>
         <span>Leads</span>
         </Link>
          <Link className="flex bg-slate-950 m-5 px-3 py-2 shadow-md shadow-slate-800 rounded-lg gap-2 text-lg items-center" to="/myscripts">
-        <BookTemplate size={18}/>
+        <FileText size={18}/>
         <span>My Scripts</span>
         </Link>
         </div>
@@ -69,15 +69,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <span>My Dashboard</span>
         </Link>
          <Link onClick={() => setIsOpenMobile(false)} className="flex bg-slate-950 m-5 px-3 py-2 shadow-md shadow-slate-800 rounded-lg gap-2 text-lg items-center" to="/today">
-        <AlertTriangleIcon size={18}/>
+        <Sun size={18}/>
         <span>Today</span>
         </Link>
          <Link onClick={() => setIsOpenMobile(false)} className="flex bg-slate-950 m-5 px-3 py-2 shadow-md shadow-slate-800 rounded-lg gap-2 text-lg items-center" to="/leads">
-        <UserCheck2 size={18}/>
+        <Users size={18}/>
         <span>Leads</span>
         </Link>
          <Link onClick={() => setIsOpenMobile(false)} className="flex bg-slate-950 m-5 px-3 py-2 shadow-md shadow-slate-800 rounded-lg gap-2 text-lg items-center" to="/myscripts">
-        <BookTemplate size={18}/>
+        <FileText size={18}/>
         <span>My Scripts</span>
         </Link>
         </div>
