@@ -11,10 +11,10 @@ interface AddTaskFormProps  {
 
 export default function AddTaskForm({addTask, taskText, setTaskText, deadline, setDeadline, modalIsOpen}: AddTaskFormProps) {
   return ( <div
-        className={`fixed border-t  flex border-slate-600 justify-center items-center duration-300 z-50  backdrop-blur-xl py-10 overflow-y-auto    shadow-md shadow-slate-700 ${modalIsOpen ? "bottom-0" : "-bottom-350"} rounded-t-4xl transition-all left-0  right-0`}
+        className={`fixed border-t   flex dark:border-slate-600 border-slate-100 justify-center items-center duration-300 z-50  backdrop-blur-xl py-10 overflow-y-auto    shadow-md shadow-slate-700 ${modalIsOpen ? "bottom-0" : "-bottom-350"} rounded-t-4xl transition-all left-0  right-0`}
       >
         <form onSubmit={addTask}>
-          <h1 className="text-center text-lg text-blue-600 font-bold pb-5">
+          <h1 className="text-center text-lg text-slate-100 dark:text-blue-600 font-bold pb-5">
             Add your Task
           </h1>
           <div>
@@ -32,7 +32,7 @@ export default function AddTaskForm({addTask, taskText, setTaskText, deadline, s
           </div>
           <div className="pt-5">
             <div>
-              <label htmlFor="taskText">Done By :</label>
+              <label htmlFor="taskText">Deadline :</label>
             </div>
             <input
               value={deadline as any}
@@ -44,7 +44,7 @@ export default function AddTaskForm({addTask, taskText, setTaskText, deadline, s
           </div>
 
           <div className="flex justify-center  pt-10">
-            <button className="bg-blue-600 hover:scale-105 transition-all text-slate-950 py-1.5 px-4 font-bold w-30 rounded-lg cursor-pointer">
+            <button className="bg-blue-600 hover:scale-105 transition-all text-slate-100 dark:text-slate-950 py-1.5 px-4 font-bold w-30 rounded-lg cursor-pointer">
               Add
             </button>
           </div>

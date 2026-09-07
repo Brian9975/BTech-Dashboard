@@ -138,7 +138,7 @@ export default function AddLeadForm({closeDialog,showToast, hideToast, addLead, 
                   </option>
                   {plan.map((p) => (
                     <option
-                      className="dark:bg-slate-950 bg-slate-100 text-slate-950 text-slate-100"
+                      className="dark:bg-slate-950 bg-slate-100 text-slate-950 dark:text-slate-100"
                       key={p.id}
                       value={p.name}
                     >

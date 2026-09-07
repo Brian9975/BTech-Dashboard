@@ -201,7 +201,7 @@ export default function Leads() {
           </div>
         ) : loading ? (
           <div>Loading...</div>
-        ) : leads.length == 0 ? (
+        ) : leads.length === 0 ? (
           <div className="dark:bg-slate-900 bg-slate-50 text-[#9CA3AF] rounded-lg py-5 px-10 text-xl flex flex-col items-center justify-center gap-2  shadow-md my-30 shadow-slate-600">
             <UserPlus  size={30} />
             <span>No added leads at the moment!</span>
@@ -282,7 +282,7 @@ export default function Leads() {
                       size={35}
                     />
                   </button>
-                  <span className="md:text-sm border text-xs  border-green-500 rounded-3xl py-1 px-3 text-green-700 font-bold">
+                  <span className="md:text-sm border text-xs  border-green-600 rounded-3xl py-1 px-3 dark:text-green-600  text-green-800 font-bold">
                     <span className="dark:text-slate-100 text-slate-950">TE :</span> Ksh{" "}
                     {l.earningsFromLead}
                   </span>
@@ -616,7 +616,7 @@ export default function Leads() {
           className={`dark:bg-slate-100 bg-slate-950 fixed shadow-md shadow-slate-700 bottom-0 transition-all duration-400 ${toastOn ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-100 dark:text-slate-950`}
         >
           <p className="flex items-center gap-2">
-            <CheckCircleIcon className="text-green-800" />
+            <CheckCircleIcon className="text-green-600 dark:text-green-800" />
             <span className="font-light text-lg">Lead Added Successfully!</span>
           </p>
         </div>
@@ -626,7 +626,7 @@ export default function Leads() {
         className={`dark:bg-slate-100 bg-slate-950 fixed shadow-md shadow-slate-700 bottom-0 transition-all duration-400 ${showUpdateToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-100 dark:text-slate-950`}
       >
         <p className="flex items-center gap-2">
-          <CheckCircleIcon className="text-green-800" />
+          <CheckCircleIcon className="text-green-600 dark:text-green-800" />
           <span className="font-light text-lg">Lead Updated Successfully!</span>
         </p>
       </div>
@@ -635,7 +635,7 @@ export default function Leads() {
         className={`dark:bg-slate-100 bg-slate-950 fixed shadow-md shadow-slate-700 bottom-0 transition-all duration-400 ${showDeleteToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-100 dark:text-slate-950`}
       >
         <p className="flex items-center gap-2">
-          <CheckCircleIcon className="text-green-800" />
+          <CheckCircleIcon className="text-green-600 dark:text-green-800" />
           <span className="font-light text-lg">Lead Deletion Completed!</span>
         </p>
       </div>

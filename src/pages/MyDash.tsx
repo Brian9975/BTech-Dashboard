@@ -244,7 +244,7 @@ export default function MyDash() {
           <div className="text-center pt-5">
             <Link
               to="/today"
-              className="bg-blue-600 hover:bg-blue-800 text-slate-950 rounded-lg text-lg font-bold p-2.5 hover:text-slate-50 transition-all"
+              className="bg-blue-600 hover:bg-blue-800 dark:text-slate-950 text-slate-100 rounded-lg text-lg font-bold p-2.5  transition-all"
             >
               Go To Today
             </Link>
@@ -279,7 +279,7 @@ export default function MyDash() {
               </div>
             ) : (
               tasks.map((t) => (
-                <div key={t.id} className="bg-slate-950 p-2 rounded-lg">
+                <div key={t.id} className="dark:bg-slate-950 bg-slate-100 shadow-md shadow-slate-400 p-2 rounded-lg">
                   <li
                     onClick={() => completeTask(t.id)}
                     className={`flex gap-2 ${t.isCompleted && "text-slate-600 line-through"}  cursor-pointer  hover:scale-95 transition-all items-start text-lg`}
@@ -298,7 +298,7 @@ export default function MyDash() {
                       <Edit />
                     </button>
 
-                    <div className="bg-amber-600 text-slate-950 rounded-lg px-1">
+                    <div className="bg-amber-500 text-slate-950 rounded-lg px-1">
                       <p className="flex flex-col items-center">
                         <span className="text-sm">Deadline</span>
                         <span>{t.deadline as React.ReactNode}</span>
@@ -338,10 +338,10 @@ export default function MyDash() {
         className={`fixed ${taskToUpdate ? "block" : "hidden"} bg-black/50 z-50 inset-0`}
       ></div>
       <div
-        className={`fixed border-t  flex border-slate-600 justify-center items-center duration-300 z-50  backdrop-blur-xl py-10 overflow-y-auto    shadow-md shadow-slate-700 ${taskToUpdate ? "bottom-0" : "-bottom-350"} rounded-t-4xl transition-all left-0  right-0`}
+        className={`fixed border-t  flex dark:border-slate-600 border-slate-100 justify-center items-center duration-300 z-50  backdrop-blur-xl py-10 overflow-y-auto    shadow-md shadow-slate-700 ${taskToUpdate ? "bottom-0" : "-bottom-350"} rounded-t-4xl transition-all left-0  right-0`}
       >
         <form onSubmit={editTask}>
-          <h1 className="text-center text-lg text-blue-600 font-bold pb-5">
+          <h1 className="text-center text-lg text-slate-100 dark:text-blue-600 font-bold pb-5">
             Update Task
           </h1>
           <div>
@@ -371,7 +371,7 @@ export default function MyDash() {
           </div>
 
           <div className="flex justify-center  pt-10">
-            <button className="bg-blue-600 hover:scale-105 transition-all text-slate-950 py-1.5 px-4 font-bold w-30 rounded-lg cursor-pointer">
+            <button className="bg-blue-600 hover:scale-105 transition-all dark:text-slate-950 text-slate-100 py-1.5 px-4 font-bold w-30 rounded-lg cursor-pointer">
               Update
             </button>
           </div>
@@ -383,17 +383,17 @@ export default function MyDash() {
         className={`fixed ${taskToDelete ? "block" : "hidden"} bg-black/50 z-50 inset-0`}
       ></div>
       <div
-        className={`fixed border-t  flex border-slate-600 justify-center items-center duration-300 z-50  backdrop-blur-xl py-10 overflow-y-auto shadow-md shadow-slate-700 ${taskToDelete ? "bottom-0" : "-bottom-350"} rounded-t-4xl transition-all left-0  right-0`}
+        className={`fixed border-t  flex dark:border-slate-600 border-slate-100 justify-center items-center duration-300 z-50  backdrop-blur-xl py-10 overflow-y-auto shadow-md shadow-slate-700 ${taskToDelete ? "bottom-0" : "-bottom-350"} rounded-t-4xl transition-all left-0  right-0`}
       >
         <div>
-          <p className="text-lg font-bold">
+          <p className="text-lg text-slate-100 dark:text-slate-950 font-bold">
             Are you sure you want to continue ?
           </p>
           <div className="flex justify-between  pt-10">
             <div>
               <button
                 onClick={() => setTaskToDelete(null)}
-                className="bg-slate-900 hover:scale-105 transition-all w-25 py-2 rounded-lg md:w-30 cursor-pointer font-bold"
+                className="dark:bg-slate-900 bg-slate-50 hover:scale-105 transition-all w-25 py-2 rounded-lg md:w-30 cursor-pointer font-bold"
               >
                 Cancel
               </button>
@@ -401,7 +401,7 @@ export default function MyDash() {
             <div>
               <button
                 onClick={deleteTask}
-                className="bg-slate-50 w-25 hover:scale-105 transition-all py-2 text-slate-950 cursor-pointer rounded-lg md:w-30 font-bold"
+                className="dark:bg-slate-100 bg-slate-950 w-25 hover:scale-105 transition-all py-2 text-slate-100 dark:text-slate-950 cursor-pointer rounded-lg md:w-30 font-bold"
               >
                 Sure
               </button>
@@ -412,28 +412,28 @@ export default function MyDash() {
 
       {/* Add Task Toast */}
       <div
-        className={`bg-slate-50 z-50 fixed shadow-md shadow-slate-700 top-0 transition-all duration-400 ${showAddToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-950`}
+        className={`dark:bg-slate-100 bg-slate-950 z-50 fixed shadow-md shadow-slate-700 top-0 transition-all duration-400 ${showAddToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-100 dark:text-slate-950`}
       >
         <p className="flex items-center gap-2">
-          <CheckCircleIcon className="text-green-800" />
+          <CheckCircleIcon className="dark:text-green-800 text-green-600" />
           <span className="font-light text-lg">Task Added Successfully!</span>
         </p>
       </div>
       {/*Edit Task Toast */}
       <div
-        className={`bg-slate-50 z-50 fixed shadow-md shadow-slate-700 top-0 transition-all duration-400 ${showEditToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-950`}
+        className={`dark:bg-slate-100 bg-slate-950 z-50 fixed shadow-md shadow-slate-700 top-0 transition-all duration-400 ${showEditToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-100 dark:text-slate-950`}
       >
         <p className="flex items-center gap-2">
-          <CheckCircleIcon className="text-green-800" />
+          <CheckCircleIcon className="dark:text-green-800 text-green-600" />
           <span className="font-light text-lg">Task Updated Successfully!</span>
         </p>
       </div>
       {/*Delete Task Toast */}
       <div
-        className={`bg-slate-50 z-50 fixed shadow-md shadow-slate-700 top-0 transition-all duration-400 ${showDelToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-950`}
+        className={`dark:bg-slate-100 bg-slate-950 z-50 fixed shadow-md shadow-slate-700 top-0 transition-all duration-400 ${showDelToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-100 dark:text-slate-950`}
       >
         <p className="flex items-center gap-2">
-          <CheckCircleIcon className="text-green-800" />
+          <CheckCircleIcon className="dark:text-green-800 text-green-600" />
           <span className="font-light text-lg">Task Deletion Completed!</span>
         </p>
       </div>
