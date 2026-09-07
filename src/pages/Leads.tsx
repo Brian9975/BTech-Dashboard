@@ -153,12 +153,12 @@ export default function Leads() {
       <div className="text-right">
         <button
           onClick={openDialog}
-          className="bg-blue-600  shadow-md text-slate-950 hover:scale-105 transition-all font-bold cursor-pointer  rounded-lg py-2 px-5 text-lg"
+          className="bg-blue-600  shadow-md text-slate-100 dark:text-slate-950 hover:scale-105 transition-all font-bold cursor-pointer  rounded-lg py-2 px-5 text-lg"
         >
           Add Lead
         </button>
       </div>
-      {leads.length != 0 && (
+      {leads.length !== 0 && (
         <div className="flex justify-center">
           <input
             onChange={(e) => setSearchVal(e.target.value)}
@@ -202,7 +202,7 @@ export default function Leads() {
         ) : loading ? (
           <div>Loading...</div>
         ) : leads.length == 0 ? (
-          <div className="bg-slate-900 text-[#9CA3AF] rounded-lg py-5 px-10 text-xl flex flex-col items-center justify-center gap-2  shadow-md my-30 shadow-slate-600">
+          <div className="dark:bg-slate-900 bg-slate-50 text-[#9CA3AF] rounded-lg py-5 px-10 text-xl flex flex-col items-center justify-center gap-2  shadow-md my-30 shadow-slate-600">
             <UserPlus  size={30} />
             <span>No added leads at the moment!</span>
           </div>
@@ -218,9 +218,9 @@ export default function Leads() {
                   {l.category}
                 </p>
                 <p className="md:text-lg font-bold">0{l.contact}</p>
-                <p className="text-amber-500 text-sm md:text-md">
+                <p className="dark:text-amber-500 text-slate-950 text-sm md:text-md">
                   Last Contact :
-                  <span className="bg-amber-500  ml-1 text-slate-950 rounded-3xl py-1 px-3 font-bold md:text-md text-xs">
+                  <span className="bg-amber-500  ml-1 text-slate-950 dark:text-slate-100 rounded-3xl py-1 px-3 font-bold md:text-md text-xs">
                     {formatAnyDate(l.lastContacted)}
                   </span>
                 </p>
@@ -274,29 +274,29 @@ export default function Leads() {
                 <div className="flex items-center gap-5">
                   <button
                     onClick={() => setLeadToUpdateEarnings(l.id)}
-                    className="bg-slate-50 px-3 cursor-pointer rounded-lg"
+                    className="dark:bg-slate-100 bg-slate-950 text-slate-100 px-3 cursor-pointer rounded-lg"
                   >
-                    <BadgeDollarSign className="text-slate-950 md:hidden" />
+                    <BadgeDollarSign className="dark:text-slate-950 text-slate-100 md:hidden" />
                     <BadgeDollarSign
-                      className="text-slate-950 md:block hidden"
+                      className="dark:text-slate-950 text-slate-100 md:block hidden"
                       size={35}
                     />
                   </button>
-                  <span className="md:text-sm border text-xs  border-green-500 rounded-3xl py-1 px-3 text-green-500 font-bold">
-                    <span className="text-slate-50">TE :</span> Ksh{" "}
+                  <span className="md:text-sm border text-xs  border-green-500 rounded-3xl py-1 px-3 text-green-700 font-bold">
+                    <span className="dark:text-slate-100 text-slate-950">TE :</span> Ksh{" "}
                     {l.earningsFromLead}
                   </span>
                 </div>
                 <div className="flex gap-5">
                   <button
                     onClick={() => setLeadToEdit(l.id)}
-                    className="bg-slate-900 cursor-pointer py-1 rounded-lg shadow-md shadow-slate-600 px-4"
+                    className="dark:bg-slate-900 bg-slate-50 cursor-pointer py-1 rounded-lg shadow-md shadow-slate-600 px-4"
                   >
                     Update
                   </button>
                   <button
                     onClick={() => setLeadToDelete(l.id)}
-                    className="bg-slate-900 py-1 rounded-lg shadow-md shadow-slate-600 cursor-pointer px-4"
+                    className="dark:bg-slate-900 bg-slate-50 py-1 rounded-lg shadow-md shadow-slate-600 cursor-pointer px-4"
                   >
                     Delete
                   </button>
@@ -316,7 +316,7 @@ export default function Leads() {
           <form
             onSubmit={updateLead}
             onClick={(e) => e.stopPropagation()}
-            className="bg-slate-900 rounded-2xl p-8 w-md"
+            className="dark:bg-slate-950 bg-slate-100 rounded-2xl p-8 w-md"
           >
             <h3 className="text-center text-lg font-bold text-blue-600 pb-8">
               Update Lead's Information
@@ -345,13 +345,13 @@ export default function Leads() {
                   className={`border text-blue-600 w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg`}
                   required
                 >
-                  <option value="" className="bg-slate-950" disabled>
+                  <option value="" className="dark:bg-slate-950 bg-slate-100" disabled>
                     Choose Business Category
                   </option>
                   {bCategoryOption.map((category) => (
                     <option
                       key={category.id}
-                      className="bg-slate-950 text-slate-50"
+                      className="dark:bg-slate-950 bg-slate-100 text-slate-950  dark:text-slate-100"
                       value={category.name}
                     >
                       {category.name}
@@ -385,13 +385,13 @@ export default function Leads() {
                   className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
                   required
                 >
-                  <option value="" className="bg-slate-950" disabled>
+                  <option value="" className="dark:bg-slate-950 bg-slate-100" disabled>
                     Select Stage
                   </option>
                   {leadStage.map((stage) => (
                     <option
                       key={stage.id}
-                      className={`bg-slate-950 ${stage.id === 1.1 ? "" : stage.id === 1.2 ? "" : stage.id === 1.3 ? "" : stage.id === 1.4 ? "" : stage.id === 1.5 ? "" : stage.id === 1.6 ? "" : stage.id === 1.7 ? "" : stage.id === 1.8 ? "" : stage.id === 1.9 ? "" : stage.id === 2.0 ? "" : stage.id === 2.1 ? "" : stage.id === 2.2 ? "" : stage.id === 2.3 ? "" : ""}`}
+                      className={`dark:bg-slate-950 bg-slate-100 ${stage.id === 1.1 ? "" : stage.id === 1.2 ? "" : stage.id === 1.3 ? "" : stage.id === 1.4 ? "" : stage.id === 1.5 ? "" : stage.id === 1.6 ? "" : stage.id === 1.7 ? "" : stage.id === 1.8 ? "" : stage.id === 1.9 ? "" : stage.id === 2.0 ? "" : stage.id === 2.1 ? "" : stage.id === 2.2 ? "" : stage.id === 2.3 ? "" : ""}`}
                       value={stage.name}
                     >
                       {stage.name}
@@ -411,12 +411,12 @@ export default function Leads() {
                   className={`border w-full border-slate-600 ${editClientPlan == "Growth Plan" ? "text-green-500" : editClientPlan == "Care Plan" ? "text-amber-500" : editClientPlan == "None" ? "text-gray-500" : "text-slate-700"} p-2 outline-0 placeholder-slate-700  rounded-lg`}
                   required
                 >
-                  <option value="" className="bg-slate-950" disabled>
+                  <option value="" className="dark:bg-slate-950 bg-slate-100" disabled>
                     Clients Plan
                   </option>
                   {plan.map((p) => (
                     <option
-                      className="bg-slate-950 text-slate-50"
+                      className="dark:bg-slate-950 bg-slate-100 text-slate-950 dark:text-slate-100"
                       key={p.id}
                       value={p.name}
                     >
@@ -446,13 +446,13 @@ export default function Leads() {
               <button
                 onClick={() => setLeadToEdit(null)}
                 type="button"
-                className="bg-slate-50 cursor-pointer text-slate-950 py-2 px-8 font-bold rounded-md"
+                className="dark:bg-slate-100 bg-slate-950 cursor-pointer dark:text-slate-950 text-slate-100 py-2 px-8 font-bold rounded-md"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="bg-blue-600 cursor-pointer text-slate-50 py-2 px-8 font-bold rounded-md"
+                className="bg-blue-600 cursor-pointer text-slate-100 py-2 px-8 font-bold rounded-md"
               >
                 Update
               </button>
@@ -464,20 +464,20 @@ export default function Leads() {
       {/* Delete Modal */}
       {leadToDelete && (
         <div className="inset-0 z-50  flex justify-center items-center fixed bg-black/50">
-          <div className="bg-slate-950 md:w-lg shadow-md shadow-slate-700 px-10 py-8 rounded-lg text-center">
+          <div className="dark:bg-slate-950 bg-slate-100 md:w-lg shadow-md shadow-slate-700 px-10 py-8 rounded-lg text-center">
             <p className="text-lg md:text-xl mb-5 font-bold text-blue-600">
               Complete Deletion!
             </p>
             <div className="flex justify-between gap-20">
               <button
                 onClick={() => setLeadToDelete(null)}
-                className="bg-slate-900 cursor-pointer rounded-lg font-bold py-2  text-slate-50 md:w-40 md:text-lg w-25"
+                className="dark:bg-slate-900 bg-slate-100 shadow-md shadow-slate-600 cursor-pointer rounded-lg font-bold py-2 text-slate-950  dark:text-slate-100 md:w-40 md:text-lg w-25"
               >
                 Cancel
               </button>
               <button
                 onClick={removeLead}
-                className="bg-slate-50 cursor-pointer md:text-lg md:w-40  rounded-lg font-bold py-2  text-slate-950 w-25"
+                className="dark:bg-slate-100 shadow-md shadow-slate-600 bg-slate-950 cursor-pointer md:text-lg md:w-40  rounded-lg font-bold py-2 text-slate-100  dark:text-slate-950 w-25"
               >
                 Yes
               </button>
@@ -494,7 +494,7 @@ export default function Leads() {
         {" "}
       </div>
       <div
-        className={`fixed  duration-300 z-50 bg-slate-950 py-5 overflow-y-auto  h-100  shadow-md shadow-slate-700   rounded-b-4xl transition-all  ${leadToUpdateStage ? "top-0" : "-top-350"} left-0  right-0`}
+        className={`fixed  duration-300 z-50 bg-slate-100 dark:bg-slate-950 py-5 overflow-y-auto  h-100  shadow-md shadow-slate-700   rounded-b-4xl transition-all  ${leadToUpdateStage ? "top-0" : "-top-350"} left-0  right-0`}
       >
         {leadStage.map((s) => (
           <div
@@ -522,12 +522,12 @@ export default function Leads() {
         {" "}
       </div>
       <div
-        className={`fixed  w-full flex-col gap-10 flex justify-center items-center duration-300 z-50 bg-slate-950 py-5 overflow-y-auto  h-50  shadow-md shadow-slate-700  ${leadLastContactedToUpdate ? "top-0" : "-top-350"}   rounded-b-4xl transition-all left-0  right-0`}
+        className={`fixed  w-full flex-col gap-10 flex justify-center items-center duration-300 z-50 bg-slate-100 dark:bg-slate-950 py-5 overflow-y-auto  h-50  shadow-md shadow-slate-700  ${leadLastContactedToUpdate ? "top-0" : "-top-350"}   rounded-b-4xl transition-all left-0  right-0`}
       >
         <input
           value={lastContactedValue as any}
           onChange={(e) => setLastContactedValue(e.target.value)}
-          className="w-lg  bg-slate-50 text-lg text-slate-950  border-slate-600 p-2 outline-0  rounded-lg border"
+          className="w-lg  dark:bg-slate-100 bg-slate-950 text-lg dark:text-slate-950 text-slate-100  border-slate-600 p-2 outline-0  rounded-lg border"
           type="date"
         />
         <button
@@ -538,7 +538,7 @@ export default function Leads() {
               setShowUpdateToast(false);
             }, 3000);
           }}
-          className="bg-slate-50 py-3 transition-all rounded-lg cursor-pointer font-bold hover:scale-105 w-3xs text-slate-950"
+          className="dark:bg-slate-100 bg-slate-950 py-3 transition-all rounded-lg cursor-pointer font-bold hover:scale-105 w-3xs text-slate-100 dark:text-slate-950"
         >
           Save
         </button>
@@ -552,7 +552,7 @@ export default function Leads() {
         {" "}
       </div>
       <div
-        className={`fixed ${leadToUpdatePlan ? "top-0" : "-top-350"} w-full duration-300 z-50 bg-slate-950 py-5 overflow-y-auto  shadow-md shadow-slate-700   rounded-b-4xl transition-all  left-0  right-0`}
+        className={`fixed ${leadToUpdatePlan ? "top-0" : "-top-350"} w-full duration-300 z-50 bg-slate-100 dark:bg-slate-950 py-5 overflow-y-auto  shadow-md shadow-slate-700   rounded-b-4xl transition-all  left-0  right-0`}
       >
         {plan.map((p) => (
           <div
@@ -582,7 +582,7 @@ export default function Leads() {
         {" "}
       </div>
       <div
-        className={`fixed ${leadToUpdateEarnings ? "top-0" : "-top-350"} flex flex-col justify-center items-center gap-10  w-full duration-300 z-50 bg-slate-950 py-5 overflow-y-auto  shadow-md shadow-slate-700   rounded-b-4xl transition-all  left-0  right-0`}
+        className={`fixed ${leadToUpdateEarnings ? "top-0" : "-top-350"} flex flex-col justify-center items-center gap-10  w-full duration-300 z-50 bg-slate-100 dark:bg-slate-950 py-5 overflow-y-auto  shadow-md shadow-slate-700   rounded-b-4xl transition-all  left-0  right-0`}
       >
         <div>
           <div>
@@ -613,7 +613,7 @@ export default function Leads() {
       {/* Toast Notification */}
       {
         <div
-          className={`bg-slate-50 fixed shadow-md shadow-slate-700 bottom-0 transition-all duration-400 ${toastOn ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-950`}
+          className={`dark:bg-slate-100 bg-slate-950 fixed shadow-md shadow-slate-700 bottom-0 transition-all duration-400 ${toastOn ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-100 dark:text-slate-950`}
         >
           <p className="flex items-center gap-2">
             <CheckCircleIcon className="text-green-800" />
@@ -623,7 +623,7 @@ export default function Leads() {
       }
 
       <div
-        className={`bg-slate-50 fixed shadow-md shadow-slate-700 bottom-0 transition-all duration-400 ${showUpdateToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-950`}
+        className={`dark:bg-slate-100 bg-slate-950 fixed shadow-md shadow-slate-700 bottom-0 transition-all duration-400 ${showUpdateToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-100 dark:text-slate-950`}
       >
         <p className="flex items-center gap-2">
           <CheckCircleIcon className="text-green-800" />
@@ -632,7 +632,7 @@ export default function Leads() {
       </div>
 
       <div
-        className={`bg-slate-50 fixed shadow-md shadow-slate-700 bottom-0 transition-all duration-400 ${showDeleteToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-950`}
+        className={`dark:bg-slate-100 bg-slate-950 fixed shadow-md shadow-slate-700 bottom-0 transition-all duration-400 ${showDeleteToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-100 dark:text-slate-950`}
       >
         <p className="flex items-center gap-2">
           <CheckCircleIcon className="text-green-800" />

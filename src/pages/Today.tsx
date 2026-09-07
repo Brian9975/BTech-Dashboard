@@ -21,7 +21,7 @@ export default function Today() {
       <h1 className="font-bold text-xl">Welcome to the todays screen Brian,</h1>
 
      <div className={"flex justify-center my-30"}>
-{isLoading ? <div><h1>Loading...</h1></div> : flaggedLeads.length === 0 ?  <div className="bg-slate-900 text-[#10B981] rounded-lg py-5 px-10 text-xl flex flex-col items-center justify-center gap-2  shadow-md my-10 shadow-slate-600">
+{isLoading ? <div><h1>Loading...</h1></div> : flaggedLeads.length === 0 ?  <div className="dark:bg-slate-900 bg-slate-50  text-[#10B981] rounded-lg py-5 px-10 text-xl flex flex-col items-center justify-center gap-2  shadow-md my-10 shadow-slate-600">
             <PartyPopper size={30} />
             <span >Today you are free, no leads to follow up with!</span>
           </div> :
@@ -52,7 +52,7 @@ export default function Today() {
       {/* Confirmation To Update Modal */}
       {leadToUpdate && (
         <div className="inset-0 bg-black/50 z-50 fixed flex justify-center items-center">
-          <div className="bg-slate-950 shadow-md shadow-slate-600 py-5 px-10 rounded-lg">
+          <div className="dark:bg-slate-950 bg-slate-100 shadow-md shadow-slate-600 py-5 px-10 rounded-lg">
             <h1 className="text-lg pt-5 font-bold">
               Do you want to continue updating lead?
             </h1>
@@ -60,13 +60,13 @@ export default function Today() {
             <div className="flex justify-between mt-5">
               <button
                 onClick={() => setLeadToUpdate(null)}
-                className="bg-slate-50 cursor-pointer text-slate-950 rounded-lg py-1.5 px-5 font-bold"
+                className="dark:bg-slate-100 bg-slate-950 text-slate-100  cursor-pointer dark:text-slate-950 rounded-lg py-1.5 px-5 font-bold"
               >
                 Nope
               </button>
               <button
                 onClick={updateStatLastCont}
-                className="bg-blue-600 cursor-pointer text-slate-950 rounded-lg py-1.5 px-5 font-bold"
+                className="bg-blue-600 cursor-pointer text-slate-100 dark:text-slate-950 rounded-lg py-1.5 px-5 font-bold"
               >
                 Sure
               </button>

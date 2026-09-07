@@ -25,12 +25,12 @@ export default function TodayViewCard({l, checkDaysPassed, formatAnyDate, setLea
               <p className="font-bold ">{l.stage}</p>
             </div>
             <div>
-              <p className="bg-amber-600 w-max text-slate-950 rounded-lg font-bold p-2">
+              <p className="bg-amber-600 w-max text-slate-100 dark:text-slate-950 rounded-lg font-bold p-2">
                 LC: {formatAnyDate(l.lastContacted)}
               </p>
             </div>
             <div>
-              <button onClick={() => setLeadToUpdate(l.id)} className="cursor-pointer bg-blue-600 rounded-lg p-1 text-slate-950">
+              <button onClick={() => setLeadToUpdate(l.id)} className="cursor-pointer bg-blue-600 rounded-lg p-1 text-slate-100 dark:text-slate-950">
                 Complete
               </button>
             </div>

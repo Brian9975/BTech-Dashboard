@@ -38,7 +38,7 @@ export default function AddLeadForm({closeDialog,showToast, hideToast, addLead, 
               }, 3000)
             }}
             onClick={(e) => e.stopPropagation()}
-            className="bg-slate-900 rounded-2xl p-8 w-md"
+            className="dark:bg-slate-900 bg-slate-50 rounded-2xl p-8 w-md"
           >
             <h3 className="text-center text-lg font-bold text-blue-600 pb-8">
               Enter Lead's Information
@@ -67,13 +67,13 @@ export default function AddLeadForm({closeDialog,showToast, hideToast, addLead, 
                   className={`border ${businessCategory ? "text-blue-600" : businessCategory == "" ? "text-slate-700" : ""} w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg`}
                   required
                 >
-                  <option value="" className="bg-slate-950" disabled>
+                  <option value="" className="dark:bg-slate-950 bg-slate-100" disabled>
                     Choose Business Category
                   </option>
                   {bCategoryOption.map((category) => (
                     <option
                       key={category.id}
-                      className="bg-slate-950 text-slate-50"
+                      className="dark:bg-slate-950 bg-slate-100 text-slate-950 dark:text-slate-100"
                       value={category.name}
                     >
                       {category.name}
@@ -107,13 +107,13 @@ export default function AddLeadForm({closeDialog,showToast, hideToast, addLead, 
                   className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
                   required
                 >
-                  <option value="" className="bg-slate-950" disabled>
+                  <option value="" className="dark:bg-slate-950 bg-slate-100" disabled>
                     Select Stage
                   </option>
                   {leadStage.map((stage) => (
                     <option
                       key={stage.id}
-                      className={`bg-slate-950 ${stage.id === 1.1 ? "" : stage.id === 1.2 ? "" : stage.id === 1.3 ? "" : stage.id === 1.4 ? "" : stage.id === 1.5 ? "" : stage.id === 1.6 ? "" : stage.id === 1.7 ? "" : stage.id === 1.8 ? "" : stage.id === 1.9 ? "" : stage.id === 2.0 ? "" : stage.id === 2.1 ? "" : stage.id === 2.2 ? "" : stage.id === 2.3 ? "" : ""}`}
+                      className={`dark:bg-slate-950 bg-slate-100 ${stage.id === 1.1 ? "" : stage.id === 1.2 ? "" : stage.id === 1.3 ? "" : stage.id === 1.4 ? "" : stage.id === 1.5 ? "" : stage.id === 1.6 ? "" : stage.id === 1.7 ? "" : stage.id === 1.8 ? "" : stage.id === 1.9 ? "" : stage.id === 2.0 ? "" : stage.id === 2.1 ? "" : stage.id === 2.2 ? "" : stage.id === 2.3 ? "" : ""}`}
                       value={stage.name}
                     >
                       {stage.name}
@@ -133,12 +133,12 @@ export default function AddLeadForm({closeDialog,showToast, hideToast, addLead, 
                   className={`border w-full border-slate-600 ${clientPlan == "Growth Plan" ? "text-green-500" : clientPlan == "Care Plan" ? "text-amber-500" : clientPlan == "None" ? "text-gray-500" : "text-slate-700"} p-2 outline-0 placeholder-slate-700  rounded-lg`}
                   required
                 >
-                  <option value="" className="bg-slate-950" disabled>
+                  <option value="" className="dark:bg-slate-950 bg-slate-100" disabled>
                     Clients Plan
                   </option>
                   {plan.map((p) => (
                     <option
-                      className="bg-slate-950 text-slate-50"
+                      className="dark:bg-slate-950 bg-slate-100 text-slate-950 text-slate-100"
                       key={p.id}
                       value={p.name}
                     >
@@ -167,13 +167,13 @@ export default function AddLeadForm({closeDialog,showToast, hideToast, addLead, 
               <button
                 onClick={closeDialog}
                 type="button"
-                className="bg-slate-50 cursor-pointer text-slate-950 py-2 px-8 font-bold rounded-md"
+                className="bg-slate-50 cursor-pointer dark:text-slate-950 text-slate-100 py-2 px-8 font-bold rounded-md"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="bg-blue-600 cursor-pointer text-slate-50 py-2 px-8 font-bold rounded-md"
+                className="bg-blue-600 cursor-pointer dark:text-slate-100 text-slate-950 py-2 px-8 font-bold rounded-md"
               >
                 Save
               </button>
