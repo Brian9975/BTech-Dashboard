@@ -279,7 +279,7 @@ export default function MyDash() {
               </div>
             ) : (
               tasks.map((t) => (
-                <div key={t.id} className="dark:bg-slate-950 bg-slate-100 shadow-md shadow-slate-400 p-2 rounded-lg">
+                <div key={t.id} className="dark:bg-slate-950 bg-slate-100 shadow-md shadow-slate-600 p-2 rounded-lg">
                   <li
                     onClick={() => completeTask(t.id)}
                     className={`flex gap-2 ${t.isCompleted && "text-slate-600 line-through"}  cursor-pointer  hover:scale-95 transition-all items-start text-lg`}

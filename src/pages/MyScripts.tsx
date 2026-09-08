@@ -11,7 +11,7 @@ const {copyText, scriptCopied} = useCopyToClipboard()
         <div>
           
           
-          <div className="dark:bg-slate-900 bg-slate-50 shadow-md shadow-slate-400 relative px-3 py-5 rounded-lg max-w-75">
+          <div className="dark:bg-slate-900 bg-slate-50 shadow-md shadow-slate-600 relative px-3 py-5 rounded-lg max-w-75">
             <p className="tracking-wider overflow-auto">{sc.message}</p>
 
           <div className="flex justify-end pt-4">

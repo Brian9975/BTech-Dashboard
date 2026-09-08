@@ -15,7 +15,7 @@ export default function IndividualStage() {
       </p>
 
       <div className=" flex sticky backdrop-blur-lg top-20 justify-center ">
-        <div className="dark:bg-slate-900 bg-slate-50 py-2 px-35 rounded-lg my-7 shadow-md shadow-slate-400">
+        <div className="dark:bg-slate-900 bg-slate-50 py-2 px-35 rounded-lg my-7 shadow-md shadow-slate-600">
           <h1 className="text-center text-2xl font-bold ">{name}</h1>
         </div>
       </div>
