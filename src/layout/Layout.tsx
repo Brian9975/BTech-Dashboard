@@ -8,13 +8,17 @@ import {
   SunIcon,
   
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [isOpenMobile, setIsOpenMobile] = useState(false) 
-  const [theme, setTheme] = useState("light")
-  
+  const [theme, setTheme] = useState(localStorage.getItem("theme") ?? "light")
+  console.log(theme)
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme)
+  }, [theme])
   return (
     <div className={`bg-slate-100 dark:bg-slate-950 ${theme} flex text-slate-950 dark:text-slate-100 min-h-screen`}>
 
@@ -99,7 +103,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           setIsOpenMobile(!isOpenMobile)
           
         }} className="cursor-pointer block md:hidden border border-slate-700 p-2 rounded-lg"><AlignJustifyIcon size={25}/></button>
-        </div> <div><button onClick={() => setTheme(theme === "light" ? "dark" : "light")} className="cursor-pointer border border-slate-700 p-2 rounded-lg">{theme === "light" ? <SunIcon size={25}/> : <Moon size={25}/>}</button></div></div>
+        </div> <div><button onClick={() => {
+          
+
+         setTheme(theme === "light" ? "dark" : "light")
+          
+        }} className="cursor-pointer border border-slate-700 p-2 rounded-lg">{theme === "light" ? <SunIcon size={25}/> : <Moon size={25}/>}</button></div></div>
         <main className="p-5">{children}</main>
       </div>
     </div>

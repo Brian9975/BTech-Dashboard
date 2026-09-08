@@ -24,7 +24,7 @@ export default function IndividualStage() {
      {leadsInStage.length == 0 ? <div className="flex justify-center"><div className="dark:bg-slate-900 bg-slate-50 rounded-lg py-5 px-10 text-xl flex flex-col items-center justify-center gap-2  shadow-md my-15 shadow-slate-600"><UserXIcon className="text-blue-600" size={35}/><span>No added leads in this stage at the moment!</span></div></div> : 
       <div className="grid my-10 grid-cols-2 gap-4">
         {leadsInStage.map((l) => (
-          <div className={`border  p-5 border-blue-600 text-center rounded-lg`}>
+          <div key={l.id} className={`border  p-5 border-blue-600 text-center rounded-lg`}>
             <h1 className="text-lg font-bold">{l.name}</h1>
           </div>
         ))}
