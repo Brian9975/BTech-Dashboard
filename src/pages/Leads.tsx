@@ -220,7 +220,7 @@ export default function Leads() {
                 <p className="md:text-lg font-bold">0{l.contact}</p>
                 <p className="dark:text-amber-500 text-slate-950 text-sm md:text-md">
                   Last Contact :
-                  <span className="bg-amber-500  ml-1 text-slate-950 dark:text-slate-100 rounded-3xl py-1 px-3 font-bold md:text-md text-xs">
+                  <span className="bg-amber-500  ml-1 text-slate-950  rounded-3xl py-1 px-3 font-bold md:text-md text-xs">
                     {formatAnyDate(l.lastContacted)}
                   </span>
                 </p>
@@ -527,7 +527,7 @@ export default function Leads() {
         <input
           value={lastContactedValue as any}
           onChange={(e) => setLastContactedValue(e.target.value)}
-          className="w-lg  dark:bg-slate-100 bg-slate-950 text-lg dark:text-slate-950 text-slate-100  border-slate-600 p-2 outline-0  rounded-lg border"
+          className="w-lg  dark:bg-slate-100  text-lg dark:text-slate-950   border-slate-600 p-2 outline-0  rounded-lg border"
           type="date"
         />
         <button
