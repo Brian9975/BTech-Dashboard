@@ -19,20 +19,20 @@ export default function AddTaskForm({addTask, taskText, setTaskText, deadline, s
           </h1>
           <div>
             <div>
-              <label htmlFor="taskText">Task :</label>
+              <label htmlFor="taskText" className="text-slate-100">Task :</label>
             </div>
             <input
               value={taskText}
               onChange={(e) => setTaskText(e.target.value)}
               placeholder="eg. Code a React Component"
               type="text"
-              className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
+              className="border w-full text-slate-100 border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
               required
             />
           </div>
           <div className="pt-5">
             <div>
-              <label htmlFor="taskText">Deadline :</label>
+              <label htmlFor="taskText" className="text-slate-100">Deadline :</label>
             </div>
             <input
               value={deadline as any}

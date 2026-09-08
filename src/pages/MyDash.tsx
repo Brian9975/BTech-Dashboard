@@ -346,20 +346,20 @@ export default function MyDash() {
           </h1>
           <div>
             <div>
-              <label htmlFor="taskText">Task :</label>
+              <label htmlFor="taskText" className="text-slate-100">Task :</label>
             </div>
             <input
               value={taskEdit}
               onChange={(e) => setTaskEdit(e.target.value)}
               placeholder="eg. Code a React Component"
               type="text"
-              className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
+              className="border text-slate-100 w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
               required
             />
           </div>
           <div className="pt-5">
             <div>
-              <label htmlFor="taskText">Done By :</label>
+              <label htmlFor="taskText" className="text-slate-100">Deadline :</label>
             </div>
             <input
               value={deadlineEdit as any}
@@ -386,7 +386,7 @@ export default function MyDash() {
         className={`fixed border-t  flex dark:border-slate-600 border-slate-100 justify-center items-center duration-300 z-50  backdrop-blur-xl py-10 overflow-y-auto shadow-md shadow-slate-700 ${taskToDelete ? "bottom-0" : "-bottom-350"} rounded-t-4xl transition-all left-0  right-0`}
       >
         <div>
-          <p className="text-lg text-slate-100 dark:text-slate-950 font-bold">
+          <p className="text-lg text-slate-100  font-bold">
             Are you sure you want to continue ?
           </p>
           <div className="flex justify-between  pt-10">
