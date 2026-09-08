@@ -5,6 +5,7 @@ import {
   LayoutDashboard,
   Moon,
   Users,
+  SunIcon,
   
 } from "lucide-react";
 import React, { useState } from "react";
@@ -98,7 +99,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           setIsOpenMobile(!isOpenMobile)
           
         }} className="cursor-pointer block md:hidden border border-slate-700 p-2 rounded-lg"><AlignJustifyIcon size={25}/></button>
-        </div> <div><button className="cursor-pointer border border-slate-700 p-2 rounded-lg"><Moon size={25}/></button></div></div>
+        </div> <div><button onClick={() => setTheme(theme === "light" ? "dark" : "light")} className="cursor-pointer border border-slate-700 p-2 rounded-lg">{theme === "light" ? <SunIcon size={25}/> : <Moon size={25}/>}</button></div></div>
         <main className="p-5">{children}</main>
       </div>
     </div>
