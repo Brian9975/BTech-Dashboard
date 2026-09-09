@@ -20,12 +20,13 @@ import { leadStage } from "../LeadStage";
 import useModal from "../hooks/useModal";
 import { useTask } from "../context/TaskContext";
 import useAddTask from "../hooks/useAddTask";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import useEditTask from "../hooks/useEditTask";
 import useStatCount from "../hooks/useStatCount";
 import useDeleteTask from "../hooks/useDeleteTask";
 import useCompleteTask from "../hooks/useCompleteTask";
 import AddTaskForm from "../components/AddTaskForm";
+import useTaskDeadlineInfo from "../hooks/useTaskDeadlineInfo";
 export default function MyDash() {
   const navigate = useNavigate();
   const { tasks, taskLoading } = useTask();
@@ -81,8 +82,18 @@ export default function MyDash() {
   const { deleteTask, taskToDelete, setTaskToDelete, showDelToast } =
     useDeleteTask();
   const { completeTask } = useCompleteTask();
+  const {taskDeadlineInfo} = useTaskDeadlineInfo()
   const taskToUpdateObject = tasks.find((t) => t.id === taskToUpdate);
 
+  const checkedTasks = tasks.map(t => ({
+    task: t,
+    message: taskDeadlineInfo(t),
+  })) 
+
+
+
+
+  console.log(checkedTasks)
   useEffect(() => {
     if (taskToUpdateObject) {
       setTaskEdit(taskToUpdateObject.task);
@@ -301,7 +312,7 @@ export default function MyDash() {
                     <div className="bg-amber-500 text-slate-950 rounded-lg px-1">
                       <p className="flex flex-col items-center">
                         <span className="text-sm">Deadline</span>
-                        <span>{t.deadline as React.ReactNode}</span>
+                        <span>{t.deadline.toString()}</span>
                       </p>
                     </div>
                     <button
