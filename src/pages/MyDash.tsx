@@ -85,15 +85,16 @@ export default function MyDash() {
   const {taskDeadlineInfo} = useTaskDeadlineInfo()
   const taskToUpdateObject = tasks.find((t) => t.id === taskToUpdate);
 
-  const checkedTasks = tasks.map(t => ({
+  const flaggedTasks = tasks
+  .map(t => ({
     task: t,
     message: taskDeadlineInfo(t),
   })) 
+ .filter(t => t.message !== null)
 
 
 
-
-  console.log(checkedTasks)
+  // console.log(flaggedTasks )
   useEffect(() => {
     if (taskToUpdateObject) {
       setTaskEdit(taskToUpdateObject.task);
@@ -134,7 +135,7 @@ export default function MyDash() {
           <div className="flex justify-between items-center">
             {/* <s.icon color={s.color} /> */}
             <AlarmClock color="#F59E0B" />
-            <span className="text-2xl font-bold">2</span>
+            <span className="text-2xl font-bold">{flaggedTasks.length}</span>
           </div>
         </div>
         <div className="dark:bg-slate-950 bg-slate-100 border-[#10B981] cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">
@@ -229,7 +230,7 @@ export default function MyDash() {
             ) : flaggedLeads.length === 0 ? (
               <div>
                 <div>
-                  <p className="pt-8 gap-2 font-bold text-lg text-[#10B981] tracking-wide flex flex-col items-center">
+                  <p className="py-3 border px-1 rounded-lg mb-3 gap-2 font-bold  text-[#10B981] tracking-wide flex flex-col items-center">
                     <Coffee size={30} color="#10B981" />
                     <span>No Leads to work on today!</span>
                   </p>
@@ -250,6 +251,11 @@ export default function MyDash() {
                 </div>
               ))
             )}
+
+            <div className={"text-center dark:text-slate-950 border-t border-amber-500 pt-2 pb-2"}>
+              {flaggedTasks.map( t => <div className="bg-amber-500 rounded-lg py-2 my-2 "><p className="font-bold mx-2">{t.task.task}</p><span className="bg-slate-100 p-1 mx-2  rounded-lg">{t.message}</span></div>)
+}
+            </div>
           </div>
 
           <div className="text-center pt-5">

@@ -19,7 +19,6 @@ export default function useTaskDeadlineInfo() {
             return `Task passed deadline by ${(days * -1).toFixed()} days`
         } 
         if (days <= 3 && !t.isCompleted) {
-
            return `Task deadline in ${days.toFixed()} days`
         }
 
