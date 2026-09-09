@@ -253,7 +253,7 @@ export default function MyDash() {
             )}
 
             <div className={"text-center dark:text-slate-950 border-t border-amber-500 pt-2 pb-2"}>
-              {flaggedTasks.map( t => <div className="bg-amber-500 rounded-lg py-2 my-2 "><p className="font-bold mx-2">{t.task.task}</p><span className="bg-slate-100 p-1 mx-2  rounded-lg">{t.message}</span></div>)
+              {flaggedTasks.map( t => <div key={t.task.id} className="bg-amber-500 rounded-lg py-2 my-2 "><p className="font-bold mx-2">{t.task.task}</p><span className="bg-slate-100 p-1 mx-2  rounded-lg">{t.message}</span></div>)
 }
             </div>
           </div>
