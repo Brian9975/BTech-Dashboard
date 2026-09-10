@@ -194,7 +194,7 @@ export default function Leads() {
       )}
 
       {/* Leads Display */}
-      <main className=" flex  overflow-x-auto justify-center gap-10 flex-col items-center">
+      <main className=" flex overflow-x-auto   justify-center gap-10 flex-col items-center">
         {isLoading ? (
           <div>
             <h1>Loading...</h1>
@@ -210,9 +210,9 @@ export default function Leads() {
           filteredLeads.map((l) => (
             <div
               key={l.id}
-              className="flex min-w-max md:gap-6 gap-4 border p-5 border-blue-600 rounded-lg"
-            >
-              <div className="flex shrink-0 flex-col gap-5">
+              className="flex max-w-85 md:min-w-max overflow-x-auto  md:gap-6 mx-2  gap-4 border p-5 border-blue-600 rounded-lg"
+            > 
+              <div className="flex  shrink-0 flex-col gap-5">
                 <h1 className="md:text-2xl text-lg font-bold">{l.name}</h1>
                 <p className="md:text-2xl text-lg text-blue-600">
                   {l.category}
@@ -316,7 +316,7 @@ export default function Leads() {
           <form
             onSubmit={updateLead}
             onClick={(e) => e.stopPropagation()}
-            className="dark:bg-slate-950 bg-slate-100 rounded-2xl p-8 w-md"
+            className="dark:bg-slate-950 bg-slate-100 rounded-2xl p-8 md:w-md"
           >
             <h3 className="text-center text-lg font-bold text-blue-600 pb-8">
               Update Lead's Information

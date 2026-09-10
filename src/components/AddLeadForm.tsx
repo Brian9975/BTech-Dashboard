@@ -38,7 +38,7 @@ export default function AddLeadForm({closeDialog,showToast, hideToast, addLead, 
               }, 3000)
             }}
             onClick={(e) => e.stopPropagation()}
-            className="dark:bg-slate-900 bg-slate-50 rounded-2xl p-8 w-md"
+            className="dark:bg-slate-900 bg-slate-50 rounded-2xl p-8 md:w-md"
           >
             <h3 className="text-center text-lg font-bold text-blue-600 pb-8">
               Enter Lead's Information
