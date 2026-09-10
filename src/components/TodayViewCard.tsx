@@ -9,11 +9,11 @@ action: string;
 }
 export default function TodayViewCard({l, checkDaysPassed, formatAnyDate, setLeadToUpdate, action}: ViewCardProps) {
   return (
-    <div key={l.id} className="border border-red-600 rounded-lg p-4 flex flex-col items-center gap-4">
+    <div key={l.id} className="border md:w-max w-70 border-red-600 rounded-lg p-4 flex flex-col items-center gap-4">
             <div>
-              <h1 className="font-bold textlg">{l.name}</h1>
+              <h1 className="font-bold  sm:text-lg">{l.name}</h1>
             </div>
-            <div className="border w-max rounded-lg p-2 border-red-600">
+            <div className="border  w-full text-center rounded-lg p-2 border-red-600">
               No contact in {checkDaysPassed(l.lastContacted).toFixed()} days
             </div>
             <div>

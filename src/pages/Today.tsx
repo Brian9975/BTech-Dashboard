@@ -18,15 +18,15 @@ export default function Today() {
 
   return (
     <div>
-      <h1 className="font-bold text-xl">Welcome to the todays screen Brian,</h1>
+      <h1 className="font-bold md:text-xl text-lg">Welcome to the todays screen Brian,</h1>
 
-     <div className={"flex justify-center my-30"}>
-{isLoading ? <div><h1>Loading...</h1></div> : flaggedLeads.length === 0 ?  <div className="dark:bg-slate-900 bg-slate-50  text-[#10B981] rounded-lg py-5 px-10 text-xl flex flex-col items-center justify-center gap-2  shadow-md my-10 shadow-slate-600">
+     <div className={"flex justify-center my-10 md:my-30"}>
+{isLoading ? <div><h1>Loading...</h1></div> : flaggedLeads.length === 0 ?  <div className="dark:bg-slate-900 bg-slate-50  text-[#10B981] rounded-lg py-5 px-10 md:text-xl text-center flex flex-col items-center justify-center gap-2  shadow-md my-10 shadow-slate-600">
             <PartyPopper size={30} />
             <span >Today you are free, no leads to follow up with!</span>
           </div> :
-      <main className="flex md:flex-row flex-col items-center my-10 justify-start gap-4">
-        <div className="border text-lg  border-green-600 rounded-lg p-2">
+      <main className="flex md:flex-row flex-col overflow-x-auto items-center my-2 justify-start gap-4">
+        <div className="border shrink-0  sm:text-lg  border-green-600 rounded-lg p-2">
           Check what you will be working on today right here
         </div>
 
@@ -35,7 +35,7 @@ export default function Today() {
           <MoveRight className="hidden md:block" size={75} />
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid shrink-0 md:grid-cols-2 gap-4">
           {flaggedLeads.map((l) => (
             <TodayViewCard
               key={l.lead.id}
@@ -53,7 +53,7 @@ export default function Today() {
       {leadToUpdate && (
         <div className="inset-0 bg-black/50 z-50 fixed flex justify-center items-center">
           <div className="dark:bg-slate-950 bg-slate-100 shadow-md shadow-slate-600 py-5 px-10 rounded-lg">
-            <h1 className="text-lg pt-5 font-bold">
+            <h1 className="sm:text-lg  font-bold">
               Do you want to continue updating lead?
             </h1>
 
