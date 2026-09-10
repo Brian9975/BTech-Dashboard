@@ -105,7 +105,7 @@ export default function MyDash() {
   return (
     <div>
       {/* Stats */}
-      <div className="grid grid-cols-4 items-start gap-4">
+      <div className="grid md:grid-cols-4 sm:grid-cols-2 items-start gap-4">
         <div className="dark:bg-slate-950 bg-slate-100 border-[#3B82F6] cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">
           <p style={{ color: "#3B82F6" }}>Total Leads</p>
           <div className="flex justify-between items-center">
@@ -217,7 +217,7 @@ export default function MyDash() {
       </div>
 
       {/* Todays view  */}
-      <div className="flex  items-center gap-15  py-10">
+      <div className="flex flex-col md:flex-row  items-center gap-15  py-10">
         <div className="p-5">
           <h1 className="text-xl pb-3 font-bold ">Today</h1>
           <div
@@ -269,7 +269,7 @@ export default function MyDash() {
         </div>
 
         {/* Task feature */}
-        <div className="dark:bg-slate-900 bg-slate-50 shadow-md shadow-slate-600 relative h-70 overflow-y-auto flex-1 rounded-lg">
+        <div className="dark:bg-slate-900 bg-slate-50 shadow-md shadow-slate-600 relative max-h-70 overflow-y-auto flex-1 rounded-lg">
           <div className="sticky p-3 top-0 backdrop-blur-xl">
             <div className="flex justify-end ">
               <button
