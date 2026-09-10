@@ -202,7 +202,7 @@ export default function Leads() {
         ) : loading ? (
           <div>Loading...</div>
         ) : leads.length === 0 ? (
-          <div className="dark:bg-slate-900 bg-slate-50 text-[#9CA3AF] rounded-lg py-5 px-10 text-xl flex flex-col items-center justify-center gap-2  shadow-md my-30 shadow-slate-600">
+          <div className="dark:bg-slate-900 bg-slate-50 text-[#9CA3AF] rounded-lg py-5 px-10 sm:text-xl flex flex-col items-center justify-center gap-2  shadow-md my-30 shadow-slate-600">
             <UserPlus  size={30} />
             <span>No added leads at the moment!</span>
           </div>
@@ -527,7 +527,7 @@ export default function Leads() {
         <input
           value={lastContactedValue as any}
           onChange={(e) => setLastContactedValue(e.target.value)}
-          className="w-lg  dark:bg-slate-100  text-lg dark:text-slate-950   border-slate-600 p-2 outline-0  rounded-lg border"
+          className="md:w-lg w-sm  dark:bg-slate-100  text-lg dark:text-slate-950   border-slate-600 p-2 outline-0  rounded-lg border"
           type="date"
         />
         <button
@@ -538,7 +538,7 @@ export default function Leads() {
               setShowUpdateToast(false);
             }, 3000);
           }}
-          className="dark:bg-slate-100 bg-slate-950 py-3 transition-all rounded-lg cursor-pointer font-bold hover:scale-105 w-3xs text-slate-100 dark:text-slate-950"
+          className="dark:bg-slate-100 bg-slate-950 md:py-3 py-2 transition-all rounded-lg cursor-pointer font-bold hover:scale-105 md:w-3xs w-30 text-slate-100 dark:text-slate-950"
         >
           Save
         </button>
@@ -591,7 +591,7 @@ export default function Leads() {
           <input
             value={amount}
             onChange={(e) => setAmount(Number(e.target.value))}
-            className="w-lg   text-lg text-green-600  border-slate-600 p-2 outline-0  rounded-lg border"
+            className="md:w-lg w-sm  text-lg text-green-600  border-slate-600 p-2 outline-0  rounded-lg border"
             type="number"
             required
           />
@@ -604,7 +604,7 @@ export default function Leads() {
               setShowUpdateToast(false);
             }, 3000);
           }}
-          className=" py-3 transition-all border border-green-600 rounded-lg cursor-pointer font-bold hover:scale-105 w-45 text-green-600"
+          className=" md:py-3 py-2 transition-all border border-green-600 rounded-lg cursor-pointer font-bold hover:scale-105 md:w-45 w-30 text-green-600"
         >
           Add
         </button>
