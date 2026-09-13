@@ -194,7 +194,7 @@ export default function Leads() {
       )}
 
       {/* Leads Display */}
-      <main className=" flex overflow-x-auto   justify-center gap-10 flex-col items-center">
+      <main className=" flex overflow-x-auto gap-10 flex-col items-center-safe">
         {isLoading ? (
           <div>
             <h1>Loading...</h1>
@@ -210,7 +210,7 @@ export default function Leads() {
           filteredLeads.map((l) => (
             <div
               key={l.id}
-              className="flex max-w-85 md:min-w-max overflow-x-auto  md:gap-6 mx-2  gap-4 border p-5 border-blue-600 rounded-lg"
+              className="flex w-max  md:gap-6 mx-2  gap-4 border p-5 border-blue-600 rounded-lg"
             > 
               <div className="flex  shrink-0 flex-col gap-5">
                 <h1 className="md:text-2xl text-lg font-bold">{l.name}</h1>
