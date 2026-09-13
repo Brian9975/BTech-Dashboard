@@ -370,7 +370,7 @@ export default function MyDash() {
               onChange={(e) => setTaskEdit(e.target.value)}
               placeholder="eg. Code a React Component"
               type="text"
-              className="border text-slate-100 w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
+              className="border text-slate-100 w-sm md:w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
               required
             />
           </div>
@@ -381,7 +381,7 @@ export default function MyDash() {
             <input
               value={deadlineEdit as any}
               onChange={(e) => setDeadlineEdit(e.target.value)}
-              className="w-lg  bg-slate-50 text-lg text-slate-950  border-slate-600 p-2 outline-0  rounded-lg border"
+              className="md:w-lg w-sm  bg-slate-50 text-lg text-slate-950  border-slate-600 p-2 outline-0  rounded-lg border"
               type="date"
               required
             />
