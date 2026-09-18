@@ -13,28 +13,37 @@ import LeadContextProvider from "./context/LeadContext";
 import Lead from "./pages/Lead";
 import IndividualStage from "./pages/IndividualStage";
 import TaskContextProvider from "./context/TaskContext";
+import Login from "./auth/Login";
+import ThemeContextProvider from "./context/ThemeContext";
 
 function App() {
   return (
     <Router>
       <TaskContextProvider>
         <LeadContextProvider>
-          <Layout>
+          <ThemeContextProvider>
+
             <Routes>
-              <Route path="/mydash" element={<MyDash />}></Route>
-              <Route path="/leads" element={<Leads />}></Route>
-              <Route path="/today" element={<Today />}></Route>
-              <Route path="/myscripts" element={<MyScripts />}></Route>
-              <Route path="/lead/:id" element={<Lead />} />
-              <Route path="/stage/:name" element={<IndividualStage />} />
+            
+              
+              <Route path="/login" element={<Login/>}></Route>
+          
+  
+              <Route path="/mydash" element={<Layout><MyDash /></Layout>}></Route>
+              <Route path="/leads" element={<Layout><Leads /></Layout>}></Route>
+              <Route path="/today" element={<Layout><Today /></Layout>}></Route>
+              <Route path="/myscripts" element={<Layout><MyScripts /></Layout>}></Route>
+              <Route path="/lead/:id" element={<Layout><Lead /></Layout>} />
+              <Route path="/stage/:name" element={<Layout><IndividualStage /></Layout>} />
 
               {/* Navigate / to mydash */}
               <Route path="/" element={<Navigate to="/mydash" />}></Route>
 
               {/* Navigate uknown routes to mydash */}
               <Route path="*" element={<Navigate to="/mydash" />}></Route>
+          
             </Routes>
-          </Layout>
+        </ThemeContextProvider>
         </LeadContextProvider>
       </TaskContextProvider>
     </Router>

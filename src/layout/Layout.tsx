@@ -7,16 +7,14 @@ import {
   Users,
   SunIcon,
 } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { Link } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [isOpenMobile, setIsOpenMobile] = useState(false);
-  const [theme, setTheme] = useState(localStorage.getItem("theme") ?? "light");
+  const {theme, setTheme} = useTheme()
 
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
-  }, [theme]);
   return (
     <div
       className={`bg-slate-100 dark:bg-slate-950 ${theme} flex text-slate-950 dark:text-slate-100 min-h-screen`}
