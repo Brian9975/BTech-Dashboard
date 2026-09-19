@@ -124,6 +124,10 @@ export default function Leads() {
     },
     {
       id: 2,
+      name: "Construction Company"
+    },
+    {
+      id: 3,
       name: "restaurant",
     },
   ];
