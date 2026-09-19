@@ -1,8 +1,25 @@
 import { Moon, SunIcon } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from "../config/firebase-config";
 
 export default function Login() {
   const { theme, setTheme } = useTheme();
+
+
+
+  const loginWithGoogle = async () => {
+
+    try {
+
+      const {user} = await signInWithPopup(auth, provider)
+
+      console.log(user)
+    } catch (err) {
+      console.log(err)
+    }
+
+  }
   return (
     <div
       className={`bg-slate-100 flex justify-center items-center text-slate-950 dark:text-slate-100 dark:bg-slate-950 min-h-screen ${theme}`}
@@ -54,7 +71,7 @@ export default function Login() {
         </p>
          <p className="text-center py-2">or</p>
         <div>
-          <button className="flex justify-center gap-2 bg-slate-950 text-slate-100 dark:bg-slate-100 dark:text-slate-950 w-full font-bold text-lg cursor-pointer rounded-lg  py-1.5 px-2">
+          <button onClick={() => loginWithGoogle()} className="flex justify-center gap-2 bg-slate-950 text-slate-100 dark:bg-slate-100 dark:text-slate-950 w-full font-bold text-lg cursor-pointer rounded-lg  py-1.5 px-2">
             <Moon /> <span>Continue With Google</span>
           </button>
         </div>
