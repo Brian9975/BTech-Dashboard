@@ -2,7 +2,7 @@ import { Moon, SunIcon } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../config/firebase-config";
-
+import GoogleLogo from "../assets/GoogleLogo.jpeg"
 export default function Login() {
   const { theme, setTheme } = useTheme();
 
@@ -16,7 +16,7 @@ export default function Login() {
 
       console.log(user)
     } catch (err) {
-      console.log(err)
+      console.log("An error occured while signing in, please check your internet connection and try again")
     }
 
   }
@@ -72,7 +72,7 @@ export default function Login() {
          <p className="text-center py-2">or</p>
         <div>
           <button onClick={() => loginWithGoogle()} className="flex justify-center gap-2 bg-slate-950 text-slate-100 dark:bg-slate-100 dark:text-slate-950 w-full font-bold text-lg cursor-pointer rounded-lg  py-1.5 px-2">
-            <Moon /> <span>Continue With Google</span>
+            <img className="w-20" src={GoogleLogo}/> <span>Continue With Google</span>
           </button>
         </div>
       </main>
