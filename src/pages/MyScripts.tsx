@@ -1,10 +1,12 @@
 // import useCopyToClipboard from "../hooks/useCopyToClipboard";
 
+import useAddScript from "../hooks/useAddScript";
 import type { BCategory } from "../types/planStageCateg";
 
 // import { scriptData } from "../ScriptData";
 export default function MyScripts() {
 // const {copyText, scriptCopied} = useCopyToClipboard()
+const {modalOpen, setModalOpen, addScript, setScriptMessage, niche, setNiche, scriptTitle, setScriptTitle, scriptMessage} = useAddScript()
  const scriptTitleOption: string[] = [
    "Hook A",
    "Hook B",
@@ -47,12 +49,16 @@ const bCategoryOption: BCategory[] = [
     <div className="">
 
       <div className="flex justify-end">
-        <button className="bg-blue-600 rounded-lg cursor-pointer text-slate-100 cursor-pointer dark:text-slate-950 py-2 px-4 text-lg font-bold">Add Script</button>
+        <button onClick={() => setModalOpen(true)} className="bg-blue-600 rounded-lg cursor-pointer text-slate-100 cursor-pointer dark:text-slate-950 py-2 px-4 text-lg font-bold">Add Script</button>
       </div>
 
       {/* Add Script Modal */}
-       <div className="fixed flex justify-center items-center inset-0 bg-black/50 z-50">
-          <form className="dark:bg-slate-900 bg-slate-50 rounded-2xl p-8 md:w-md">
+       <div onClick={() => {
+
+         setModalOpen(false)
+         
+       }} className={`fixed ${modalOpen ? "flex" : "hidden"}  justify-center items-center inset-0 bg-black/50 z-50`}>
+          <form onSubmit={addScript} onClick={(e) => e.stopPropagation()} className="dark:bg-slate-900 bg-slate-50 rounded-2xl p-8 md:w-md">
 
             <h3 className="text-center text-lg font-bold text-blue-600 pb-8">
               Enter Script Details
@@ -60,7 +66,7 @@ const bCategoryOption: BCategory[] = [
              <div>
               <label>Script Title:</label>
               <div>
-                <select   className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" required>
+                <select value={scriptTitle} onChange={e => setScriptTitle(e.target.value)}  className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" required>
                   <option value=""  className="dark:bg-slate-950 bg-slate-100" disabled>Select Title</option>
                   {scriptTitleOption.map(t => <option className={`dark:bg-slate-950 bg-slate-100`} value={t}>{t}</option>)}
                 </select>
@@ -69,8 +75,8 @@ const bCategoryOption: BCategory[] = [
              <div className="pt-5">
               <label>Niche:</label>
               <div>
-                <select   className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" required>
-                  <option value=""  className="dark:bg-slate-950 bg-slate-100" disabled>Select Title</option>
+                <select value={niche} onChange={e => setNiche(e.target.value)}  className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" required>
+                  <option value=""  className="dark:bg-slate-950 bg-slate-100" disabled>Select Niche</option>
                   {bCategoryOption.map(c => <option className={`dark:bg-slate-950 bg-slate-100`} value={c.name}>{c.name}</option>)}
                 </select>
               </div>
@@ -78,7 +84,7 @@ const bCategoryOption: BCategory[] = [
              <div className="py-5">
               <label>Message:</label>
               <div>
-                 <textarea className="max-h-30 resize-none border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" required/>
+                 <textarea value={scriptMessage} onChange={e => setScriptMessage(e.target.value)} className="max-h-30 resize-none border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" required/>
               </div>
              </div>
 
