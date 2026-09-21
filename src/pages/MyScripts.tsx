@@ -60,14 +60,31 @@ const bCategoryOption: BCategory[] = [
              <div>
               <label>Script Title:</label>
               <div>
-                <select  className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg">
+                <select   className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" required>
                   <option value=""  className="dark:bg-slate-950 bg-slate-100" disabled>Select Title</option>
                   {scriptTitleOption.map(t => <option className={`dark:bg-slate-950 bg-slate-100`} value={t}>{t}</option>)}
                 </select>
               </div>
              </div>
+             <div className="pt-5">
+              <label>Niche:</label>
+              <div>
+                <select   className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" required>
+                  <option value=""  className="dark:bg-slate-950 bg-slate-100" disabled>Select Title</option>
+                  {bCategoryOption.map(c => <option className={`dark:bg-slate-950 bg-slate-100`} value={c.name}>{c.name}</option>)}
+                </select>
+              </div>
+             </div>
+             <div className="py-5">
+              <label>Message:</label>
+              <div>
+                 <textarea className="max-h-30 resize-none border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" required/>
+              </div>
+             </div>
+
+             <div><button className="bg-slate-950 transition-all hover:opacity-80 hover:scale-95 text-slate-100 dark:bg-slate-100 dark:text-slate-950 px-3 py-1.5 rounded-lg cursor-pointer  text-lg font-bold w-full">Add</button></div>
           </form> 
-       </div> 
+       </div>
 
 
       <main className="grid  md:grid-cols-3 p-5  grid-cols-1 justify-items-center  gap-10">
