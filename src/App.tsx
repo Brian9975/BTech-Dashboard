@@ -15,12 +15,13 @@ import IndividualStage from "./pages/IndividualStage";
 import TaskContextProvider from "./context/TaskContext";
 import Login from "./auth/Login";
 import ThemeContextProvider from "./context/ThemeContext";
-
+import ScriptContextProvider from "./context/ScriptContext";
 function App() {
   return (
     <Router>
       <TaskContextProvider>
         <LeadContextProvider>
+          <ScriptContextProvider>
           <ThemeContextProvider>
 
             <Routes>
@@ -44,6 +45,7 @@ function App() {
           
             </Routes>
         </ThemeContextProvider>
+        </ScriptContextProvider>
         </LeadContextProvider>
       </TaskContextProvider>
     </Router>

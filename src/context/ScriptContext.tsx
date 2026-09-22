@@ -16,12 +16,15 @@ interface ScriptData {
 const ScriptContext = createContext<ScriptContextType | null>(null)
 export default function ScriptContextProvider({children}: {children: React.ReactNode}) {
 const [scripts, setScripts] = useState<ScriptData[]>([])
-  const contextValues = {scripts}
+const [scriptLoading, setScriptLoading] = useState(true)
+  const contextValues = {scripts, scriptLoading}
 const getAllScripts = async () => {
    const db = await dbPromise
    const data = await db.getAll("scripts")
 
    setScripts(data)
+
+   setScriptLoading(false)
 }
   useEffect(() => {
      getAllScripts()
