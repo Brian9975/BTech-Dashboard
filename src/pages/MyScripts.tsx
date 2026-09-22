@@ -1,11 +1,13 @@
-// import useCopyToClipboard from "../hooks/useCopyToClipboard";
+import useCopyToClipboard from "../hooks/useCopyToClipboard";
 
+import { useScript } from "../context/ScriptContext";
 import useAddScript from "../hooks/useAddScript";
 import type { BCategory } from "../types/planStageCateg";
 
 // import { scriptData } from "../ScriptData";
 export default function MyScripts() {
-// const {copyText, scriptCopied} = useCopyToClipboard()
+const {copyText, scriptCopied} = useCopyToClipboard()
+const {scripts} = useScript()
 const {modalOpen, setModalOpen, addScript, setScriptMessage, niche, setNiche, scriptTitle, setScriptTitle, scriptMessage} = useAddScript()
  const scriptTitleOption: string[] = [
    "Hook A",
@@ -43,7 +45,6 @@ const bCategoryOption: BCategory[] = [
       name: "restaurant",
     },
   ];
-
 
   return (
     <div className="">
@@ -94,9 +95,9 @@ const bCategoryOption: BCategory[] = [
 
 
       <main className="grid  md:grid-cols-3 p-5  grid-cols-1 justify-items-center  gap-10">
-        {/* {scriptData.map(sc => (
+        {scripts.map(sc => (
 
-        <div>
+        <div key={sc.id}>
           
           
           <div className="dark:bg-slate-900 bg-slate-50 shadow-md shadow-slate-600 relative px-3 py-5 rounded-lg max-w-75">
@@ -108,7 +109,7 @@ const bCategoryOption: BCategory[] = [
           <span className="border-blue-600 border left-1/2 top-0 -translate-y-1/2 -translate-x-1/2  absolute py-1 px-2 rounded-lg text-sm text-ellipsis font-bold">{sc.title}</span>
           </div>
         </div>
-        ))} */}
+        ))}
       </main>
     </div>
   )
