@@ -1,25 +1,13 @@
 import { Moon, SunIcon } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
-import { signInWithPopup } from "firebase/auth";
-import { auth, provider } from "../config/firebase-config";
 import GoogleLogo from "../assets/GoogleLogo.jpeg"
+import useLogin from "../hooks/useLogin";
 export default function Login() {
   const { theme, setTheme } = useTheme();
+ const {loginWithGoogle, email, setEmail, password, setPassword, confirmPassword, setConfirmPassword, loginWithEmailPassword} = useLogin()
 
 
-
-  const loginWithGoogle = async () => {
-
-    try {
-
-      const {user} = await signInWithPopup(auth, provider)
-
-      console.log(user)
-    } catch (err) {
-      console.log("An error occured while signing in, please check your internet connection and try again")
-    }
-
-  }
+ 
   return (
     <div
       className={`bg-slate-100 flex justify-center items-center text-slate-950 dark:text-slate-100 dark:bg-slate-950 min-h-screen ${theme}`}
@@ -36,28 +24,28 @@ export default function Login() {
       </div>
 
       <main className="dark:bg-slate-900 shadow-md shadow-slate-600 bg-slate-50 rounded-2xl p-8 md:w-md">
-        <form>
+        <form onSubmit={loginWithEmailPassword}>
           <h1 className="text-center text-lg font-bold text-blue-600 pb-8">
             Sign Up
           </h1>
           <div className="pb-5">
             <label htmlFor="email">Email:</label>
             <div>
-              <input id="email" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" type="email" required/>
+              <input value={email} onChange={e => setEmail(e.target.value)} id="email" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" type="email" required/>
             </div>
           </div>
 
           <div className="pb-5">
             {" "}
-            <label htmlFor="newPass">New Password:</label>
+            <label htmlFor="pass">New Password:</label>
             <div>
-              <input id="newPass" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" type="password" required/>
+              <input value={password} onChange={e => setPassword(e.target.value)} id="pass" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" type="password" required/>
             </div>
           </div>
           <div>
             <label htmlFor="newPassConfirm">Confirm New Password:</label>
             <div>
-              <input id="newPassConfirm" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" type="password" required/>
+              <input value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}  id="newPassConfirm" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" type="password" required/>
             </div>
           </div>
           <div className="flex justify-center  py-5">
