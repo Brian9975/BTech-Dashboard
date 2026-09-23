@@ -4,7 +4,7 @@ import GoogleLogo from "../assets/GoogleLogo.jpeg"
 import useLogin from "../hooks/useLogin";
 export default function Login() {
   const { theme, setTheme } = useTheme();
- const {loginWithGoogle, email, setEmail, password, setPassword, confirmPassword, setConfirmPassword, loginWithEmailPassword} = useLogin()
+ const {loginWithGoogle, email, signedUser, setSignedUser, setEmail, password, setPassword, confirmPassword, setConfirmPassword, loginWithEmailPassword} = useLogin()
 
 
  
@@ -26,7 +26,7 @@ export default function Login() {
       <main className="dark:bg-slate-900 shadow-md shadow-slate-600 bg-slate-50 rounded-2xl p-8 md:w-md">
         <form onSubmit={loginWithEmailPassword}>
           <h1 className="text-center text-lg font-bold text-blue-600 pb-8">
-            Sign Up
+            {signedUser ? "Login" : "Sign Up"}
           </h1>
           <div className="pb-5">
             <label htmlFor="email">Email:</label>
@@ -37,17 +37,22 @@ export default function Login() {
 
           <div className="pb-5">
             {" "}
-            <label htmlFor="pass">New Password:</label>
+            <label htmlFor="pass">{signedUser ? "Password" : "New Password"}:</label>
             <div>
               <input value={password} onChange={e => setPassword(e.target.value)} id="pass" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" type="password" required/>
             </div>
           </div>
+
+
+{
+    !signedUser &&
           <div>
             <label htmlFor="newPassConfirm">Confirm New Password:</label>
             <div>
               <input value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}  id="newPassConfirm" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" type="password" required/>
             </div>
           </div>
+}
           <div className="flex justify-center  py-5">
 <button className="bg-slate-950 dark:bg-slate-100 text-slate-100 dark:text-slate-950 py-1.5 cursor-pointer px-2 rounded-lg w-full text-lg">Continue</button>
           </div>
@@ -55,7 +60,7 @@ export default function Login() {
 
         <p className="text-center">
           Already have an account,{" "}
-          <span className="cursor-pointer font-bold text-blue-600">Login</span>
+          <span onClick={() => setSignedUser(!signedUser)} className="cursor-pointer font-bold text-blue-600">{signedUser ? "Sign up" : "Login"}</span>
         </p>
          <p className="text-center py-2">or</p>
         <div>
