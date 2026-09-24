@@ -7,15 +7,32 @@ import {
   Users,
   SunIcon,
 } from "lucide-react";
-import React, {  useState } from "react";
-import { Link } from "react-router-dom";
+import React, {  useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
+import  { useAuth } from "../context/AuthContext";
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [isOpenMobile, setIsOpenMobile] = useState(false);
   const {theme, setTheme} = useTheme()
+  const {isLoading, user} = useAuth()
+  const navigate = useNavigate()
 
+  useEffect(() => {
+    if (!user && !isLoading) {
+      navigate("/login")
+    }
+  }, [user])
+  if (isLoading) {
+  return <div className={`text-3xl ${theme} font-bold text-center dark:bg-slate-950 dark:text-slate-100 text-slate-950 bg-slate-100`}>Loading...</div>
+  }
+
+  if (!user) {
+  return null
+  
+  }
   return (
+    <>
     <div
       className={`bg-slate-100 dark:bg-slate-950 ${theme} flex text-slate-950 dark:text-slate-100 min-h-screen`}
     >
@@ -157,5 +174,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <main className="p-5">{children}</main>
       </div>
     </div>
+
+    </>
   );
 }

@@ -2,12 +2,32 @@ import { Moon, SunIcon } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 import GoogleLogo from "../assets/GoogleLogo.jpeg"
 import useLogin from "../hooks/useLogin";
+import { useAuth } from "../context/AuthContext";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 export default function Login() {
   const { theme, setTheme } = useTheme();
+  const {isLoading, user} = useAuth()
+  const navigate = useNavigate()
  const {loginWithGoogle, email, signedUser, setSignedUser, setEmail, password, setPassword, confirmPassword, setConfirmPassword, loginWithEmailPassword} = useLogin()
 
 
  
+
+ useEffect(() => {
+  if (user && !isLoading) {
+    navigate("/mydash")
+  }
+ }, [user])
+
+ if (isLoading) {
+   return <div className={`text-3xl ${theme} font-bold text-center dark:bg-slate-950 dark:text-slate-100 text-slate-950 bg-slate-100`}>Loading...</div>
+ }
+
+
+ if (user) {
+  return null
+ }
   return (
     <div
       className={`bg-slate-100 flex justify-center items-center text-slate-950 dark:text-slate-100 dark:bg-slate-950 min-h-screen ${theme}`}

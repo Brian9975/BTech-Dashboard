@@ -16,9 +16,11 @@ import TaskContextProvider from "./context/TaskContext";
 import Login from "./auth/Login";
 import ThemeContextProvider from "./context/ThemeContext";
 import ScriptContextProvider from "./context/ScriptContext";
+import AuthContextProvider from "./context/AuthContext";
 function App() {
   return (
     <Router>
+      <AuthContextProvider>
       <TaskContextProvider>
         <LeadContextProvider>
           <ScriptContextProvider>
@@ -48,6 +50,7 @@ function App() {
         </ScriptContextProvider>
         </LeadContextProvider>
       </TaskContextProvider>
+      </AuthContextProvider>
     </Router>
   );
 }
