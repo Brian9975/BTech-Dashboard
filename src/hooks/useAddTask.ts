@@ -2,6 +2,7 @@ import { useState } from "react";
 // import { useTask } from "../context/TaskContext";
 import useModal from "./useModal";
 import { dbPromise } from "../config/indexedDB-config";
+import { useAuth } from "../context/AuthContext";
 
 export default function useAddTask() {
   const [taskText, setTaskText] = useState("");
@@ -9,6 +10,8 @@ export default function useAddTask() {
   const [showAddToast, setShowAddToast] = useState(false)
   // const { setTasks } = useTask();
   const { closeDialog } = useModal();
+  const {user} = useAuth()
+
   const addTask = async (e: React.SubmitEvent) => {
     e.preventDefault();
     const taskObject = {
@@ -17,6 +20,10 @@ export default function useAddTask() {
       deadline,
       isCompleted: false,
       createdAt: new Date(),
+      lastModified: Date.now(),
+      synced: false,
+      userId: user?.uid
+      
     };
  const db = await dbPromise;
  await db.add("tasks", taskObject)
