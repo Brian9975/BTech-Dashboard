@@ -27,6 +27,7 @@ import useDeleteTask from "../hooks/useDeleteTask";
 import useCompleteTask from "../hooks/useCompleteTask";
 import AddTaskForm from "../components/AddTaskForm";
 import useTaskDeadlineInfo from "../hooks/useTaskDeadlineInfo";
+import useSyncData from "../hooks/useSyncData";
 export default function MyDash() {
   const navigate = useNavigate();
   const { tasks, taskLoading } = useTask();
@@ -83,6 +84,7 @@ export default function MyDash() {
     useDeleteTask();
   const { completeTask } = useCompleteTask();
   const {taskDeadlineInfo} = useTaskDeadlineInfo()
+  const {handleSyncing} = useSyncData()
   const taskToUpdateObject = tasks.find((t) => t.id === taskToUpdate);
 
   const flaggedTasks = tasks
@@ -93,7 +95,9 @@ export default function MyDash() {
  .filter(t => t.message !== null)
 
 
-
+useEffect(() => {
+  handleSyncing()
+}, [])
   // console.log(flaggedTasks )
   useEffect(() => {
     if (taskToUpdateObject) {
@@ -295,7 +299,7 @@ export default function MyDash() {
                 </p>
               </div>
             ) : (
-              tasks.map((t) => (
+              tasks.map((t) => !t.isDeleted && (
                 <div key={t.id} className="dark:bg-slate-950 bg-slate-100 shadow-md shadow-slate-600 p-2 rounded-lg">
                   <li
                     onClick={() => completeTask(t.id)}

@@ -21,9 +21,9 @@ export default function useAddTask() {
       isCompleted: false,
       createdAt: new Date(),
       lastModified: Date.now(),
-      synced: false,
-      userId: user?.uid
-      
+      isSynced: false,
+      userId: user?.uid,
+      isDeleted: false
     };
  const db = await dbPromise;
  await db.add("tasks", taskObject)

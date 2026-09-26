@@ -8,8 +8,12 @@ export default function useDeleteTask() {
   // const { tasks, setTasks } = useTask();
   const deleteTask = async () => {
     const db = await dbPromise;
-    await db.delete("tasks", taskToDelete as IDBKeyRange | IDBValidKey)
+    // await db.delete("tasks", taskToDelete as IDBKeyRange | IDBValidKey)
+   const taskData = await db.get("tasks", taskToDelete as IDBKeyRange | IDBValidKey)
 
+   taskData.isDeleted = true
+   taskData.lastModified = Date.now()
+   db.put("tasks", taskData)
     setShowDelToast(true)
     setTimeout(() => {
       setShowDelToast(false)
