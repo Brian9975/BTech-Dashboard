@@ -18,7 +18,7 @@ export default function useEditTask() {
 
     data.task = taskEdit,
     data.deadline = deadlineEdit,
-
+    data.lastModified = Date.now()
     await db.put("tasks", data)
 
 
