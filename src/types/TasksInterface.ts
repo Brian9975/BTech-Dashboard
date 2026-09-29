@@ -4,7 +4,7 @@ export interface TaskInterface {
   deadline: Date | string;
   isCompleted: boolean;
   createdAt: Date;
-  lastModified: string;
+  lastModified: number;
   isSynced: boolean;
   userId: string;
   isDeleted: boolean;

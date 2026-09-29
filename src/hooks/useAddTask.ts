@@ -3,6 +3,7 @@ import { useState } from "react";
 import useModal from "./useModal";
 import { dbPromise } from "../config/indexedDB-config";
 import { useAuth } from "../context/AuthContext";
+import { useTask } from "../context/TaskContext";
 
 export default function useAddTask() {
   const [taskText, setTaskText] = useState("");
@@ -11,6 +12,7 @@ export default function useAddTask() {
   // const { setTasks } = useTask();
   const { closeDialog } = useModal();
   const {user} = useAuth()
+  const {setTasks} = useTask()
 
   const addTask = async (e: React.SubmitEvent) => {
     e.preventDefault();
@@ -22,13 +24,13 @@ export default function useAddTask() {
       createdAt: new Date(),
       lastModified: Date.now(),
       isSynced: false,
-      userId: user?.uid,
-      isDeleted: false
+      userId: user!.uid ,
+      isDeleted: falseP
     };
  const db = await dbPromise;
  await db.add("tasks", taskObject)
 
-    
+  setTasks(prev => ([...prev, taskObject])) 
   setShowAddToast(true)
   setTimeout(() => {
    setShowAddToast(false)
