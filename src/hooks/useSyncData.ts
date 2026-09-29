@@ -1,8 +1,8 @@
-import React from 'react'
+
 import { useAuth } from '../context/AuthContext'
 import { dbPromise } from '../config/indexedDB-config'
 import { firestoreDb } from '../config/firebase-config'
-import {collection, deleteDoc, doc, getDoc, setDoc} from "firebase/firestore"
+import { deleteDoc, doc, getDoc, setDoc} from "firebase/firestore"
 
 export default function useSyncData() {
   const {user} = useAuth()
@@ -38,7 +38,7 @@ export default function useSyncData() {
 
           if (docData.lastModified > item.lastModified ) {
              await db.put("tasks", docData)
-            console.log("Server data was newer : Conlict resolved")
+            console.log("Server data was newer : Conflict resolved")
              continue
           }
          }

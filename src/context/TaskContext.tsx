@@ -26,7 +26,7 @@ export default function TaskContextProvider({
 
   useEffect(() => {
     getAllTasks()
-  }, [tasks])
+  }, [])
   return <TaskContext value={contextValues}>{children}</TaskContext>;
 }
 

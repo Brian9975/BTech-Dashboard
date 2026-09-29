@@ -97,7 +97,8 @@ export default function LeadContextProvider({
  useEffect(() => {
     
       getAllLeads()
-  }, [leads]);
+      
+  }, []);
   return <LeadContext value={contextValues}>{children}</LeadContext>;
 }
 export const useLead = () => {
