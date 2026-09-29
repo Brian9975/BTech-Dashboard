@@ -5,7 +5,6 @@ export interface TaskInterface {
   isCompleted: boolean;
   createdAt: Date;
   lastModified: number;
-  isSynced: boolean;
   userId: string;
   isDeleted: boolean;
 }
