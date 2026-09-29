@@ -3,21 +3,22 @@ import { dbPromise } from '../config/indexedDB-config'
 
 interface ScriptContextType {
    scripts: ScriptData[],
-
-
+   scriptLoading: boolean,
+   setScripts: React.Dispatch<React.SetStateAction<ScriptData[]>>,
 }
 
-interface ScriptData {
-  id: number,
+interface ScriptData { 
   message: string,
   niche: string,
-  title: string
+  title: string,
+  userId: string, 
+  lastModified: number
 }
 const ScriptContext = createContext<ScriptContextType | null>(null)
 export default function ScriptContextProvider({children}: {children: React.ReactNode}) {
 const [scripts, setScripts] = useState<ScriptData[]>([])
 const [scriptLoading, setScriptLoading] = useState(true)
-  const contextValues = {scripts, scriptLoading}
+  const contextValues = {scripts, scriptLoading, setScripts}
 const getAllScripts = async () => {
    const db = await dbPromise
    const data = await db.getAll("scripts")
@@ -28,7 +29,7 @@ const getAllScripts = async () => {
 }
   useEffect(() => {
      getAllScripts()
-  }, [scripts])
+  }, [])
   return (
     <ScriptContext value={contextValues}>{children}</ScriptContext>
   )
