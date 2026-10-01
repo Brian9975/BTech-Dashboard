@@ -1,66 +1,71 @@
+import { useAuth } from "../context/AuthContext";
 import { useLead } from "../context/LeadContext";
 import { useTask } from "../context/TaskContext";
 
 export default function useStatCount() {
   const { leads, flaggedLeads } = useLead();
-  const {tasks} = useTask()
+  const { tasks } = useTask();
+  const { user } = useAuth();
+  const activeLeads = leads.filter(
+    (l) => l.userId === user!.uid && !l.isDeleted,
+  );
 
-  const newCount = leads.filter((l) => l.stage === "New").length;
-  const contactedCount = leads.filter((l) => l.stage === "Contacted").length;
-  const f1AfterContactCount = leads.filter(
+  const newCount = activeLeads.filter((l) => l.stage === "New").length;
+  const contactedCount = activeLeads.filter((l) => l.stage === "Contacted").length;
+  const f1AfterContactCount = activeLeads.filter(
     (l) => l.stage === "Follow up 1 after Contact",
   ).length;
-  const lastFAfterContactCount = leads.filter(
+  const lastFAfterContactCount = activeLeads.filter(
     (l) => l.stage === "Last Follow up after Contact",
   ).length;
-  const repliedCount = leads.filter((l) => l.stage === "Replied").length;
-  const previewCount = leads.filter((l) => l.stage === "Preview Sent").length;
-  const f1AfterPreviewCount = leads.filter(
+  const repliedCount = activeLeads.filter((l) => l.stage === "Replied").length;
+  const previewCount = activeLeads.filter((l) => l.stage === "Preview Sent").length;
+  const f1AfterPreviewCount = activeLeads.filter(
     (l) => l.stage === "Follow up 1 after Preview",
   ).length;
-  const lastFAfterPreviewCount = leads.filter(
+  const lastFAfterPreviewCount = activeLeads.filter(
     (l) => l.stage === "Last Follow up after Preview",
   ).length;
-  const priceCount = leads.filter((l) => l.stage === "Price Sent").length;
-  const f1AfterPriceCount = leads.filter(
+  const priceCount = activeLeads.filter((l) => l.stage === "Price Sent").length;
+  const f1AfterPriceCount = activeLeads.filter(
     (l) => l.stage === "Follow up 1 after Price",
   ).length;
-  const lastFAPriceCount = leads.filter(
+  const lastFAPriceCount = activeLeads.filter(
     (l) => l.stage === "Last Follow up after Price",
   ).length;
-  const negotiatingCount = leads.filter(
+  const negotiatingCount = activeLeads.filter(
     (l) => l.stage === "Negotiating",
   ).length;
-  const depositCount = leads.filter((l) => l.stage === "Deposit paid").length;
-  const checklistCount = leads.filter(
+  const depositCount = activeLeads.filter((l) => l.stage === "Deposit paid").length;
+  const checklistCount = activeLeads.filter(
     (l) => l.stage === "Checklist Sent",
   ).length;
-  const fAfterChecklistCount = leads.filter(
+  const fAfterChecklistCount = activeLeads.filter(
     (l) => l.stage === "Follow up after Checklist",
   ).length;
-  const buildingCount = leads.filter(
+  const buildingCount = activeLeads.filter(
     (l) => l.stage === "Building Phase",
   ).length;
-  const reviewCount = leads.filter((l) => l.stage === "Review Phase").length;
-  const paymentDoneCount = leads.filter(
+  const reviewCount = activeLeads.filter((l) => l.stage === "Review Phase").length;
+  const paymentDoneCount = activeLeads.filter(
     (l) => l.stage === "Payment Complete + Pitch Care Plan",
   ).length;
-  const closedOnPlanCount = leads.filter(
+  const closedOnPlanCount = activeLeads.filter(
     (l) => l.stage === "Closed + On Plan",
   ).length;
-  const closedOffPlanCount = leads.filter(
+  const closedOffPlanCount = activeLeads.filter(
     (l) => l.stage === "Closed + Off Plan",
   ).length;
-  const deadCount = leads.filter((l) => l.stage === "Dead").length;
-  const noInterestCount = leads.filter(
+  const deadCount = activeLeads.filter((l) => l.stage === "Dead").length;
+  const noInterestCount = activeLeads.filter(
     (l) => l.stage === "Not Interested",
   ).length;
-const totalLeadsCount = leads.length
-const totalTasksCount = tasks.length
-const todayCount = flaggedLeads.length
-const totalEarningsCount = leads.reduce((total, lead) => {
-return lead.earningsFromLead + total
-}, 0)
+  const totalLeadsCount = activeLeads.length;
+  const totalTasksCount = tasks.length;
+  const todayCount = flaggedLeads.length;
+  const totalEarningsCount = activeLeads.reduce((total, lead) => {
+    return lead.earningsFromLead + total;
+  }, 0);
   return {
     totalEarningsCount,
     todayCount,

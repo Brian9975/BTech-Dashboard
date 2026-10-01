@@ -15,7 +15,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [isOpenMobile, setIsOpenMobile] = useState(false);
   const {theme, setTheme} = useTheme()
-  const {authLoading, user} = useAuth()
+  const {authLoading, user, logOut} = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -136,6 +136,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <FileText size={18} />
             <span>My Scripts</span>
           </Link>
+        </div>
+
+        <div className="flex pt-10 justify-center">
+          <button onClick={logOut} className="text-lg cursor-pointer hover:scale-102 transition-all border-0 bg-white w-xs rounded-lg text-slate-950 p-4 font-bold">Logout</button>
         </div>
       </div>
 

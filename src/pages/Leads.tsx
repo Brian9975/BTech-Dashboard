@@ -92,9 +92,8 @@ export default function Leads() {
     (l) => l.id == leadLastContactedToUpdate,
   );
   const leadToUpdateStageObject = leads.find((l) => l.id === leadToUpdateStage);
-  const filteredLeads = leads
-  .filter(l => l.userId === user!.uid && !l.isDeleted )
-  .filter(
+  const activeLeads = leads.filter(l => l.userId === user!.uid && !l.isDeleted )
+  const filteredLeads = activeLeads.filter(
     (l) =>
       l.stage.toLowerCase().includes(searchVal.toLowerCase()) ||
       l.name.toLowerCase().includes(searchVal.toLowerCase()),
@@ -210,7 +209,7 @@ export default function Leads() {
           </div>
         ) : loading ? (
           <div>Loading...</div>
-        ) : leads.length === 0 ? (
+        ) : activeLeads.length === 0 ? (
           <div className="dark:bg-slate-900 bg-slate-50 text-[#9CA3AF] rounded-lg py-5 px-10 sm:text-xl flex flex-col items-center justify-center gap-2  shadow-md my-30 shadow-slate-600">
             <UserPlus  size={30} />
             <span>No added leads at the moment!</span>

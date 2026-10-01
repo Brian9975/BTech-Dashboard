@@ -1,17 +1,23 @@
-import { onAuthStateChanged, type User } from 'firebase/auth'
+import { onAuthStateChanged, type User, signOut } from 'firebase/auth'
 import React, {createContext, useEffect, useState, useContext} from 'react'
 import { auth } from '../config/firebase-config'
 
 
 interface AuthContextType {
- user: User | null
- authLoading: boolean
+ user: User | null,
+ authLoading: boolean,
+ logOut: () => Promise<void>
 }
 const AuthContext = createContext<AuthContextType | null>(null)
 export default function AuthContextProvider({children}: {children: React.ReactNode}) {
 const [user, setUser] = useState<User | null>(null)
 const [authLoading, setAuthIsLoading] = useState(true)
-    const contextValues = {user, authLoading}
+
+const logOut = async () => {
+    await signOut(auth)
+
+}
+    const contextValues = {user, authLoading, logOut}
 
 
 
@@ -24,6 +30,7 @@ const [authLoading, setAuthIsLoading] = useState(true)
    return () =>  unsubscribe()
     }, [])
   return (
+
  <AuthContext value={contextValues}>{children}</AuthContext>
   )
 }
