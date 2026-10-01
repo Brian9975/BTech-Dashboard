@@ -4,11 +4,12 @@ import { useScript } from "../context/ScriptContext";
 import useAddScript from "../hooks/useAddScript";
 import type { BCategory } from "../types/planStageCateg";
 import { useAuth } from "../context/AuthContext";
+import { UserPlus } from "lucide-react";
 
 // import { scriptData } from "../ScriptData";
 export default function MyScripts() {
 const {copyText, scriptCopied} = useCopyToClipboard()
-const {scripts} = useScript()
+const {scripts, scriptLoading} = useScript()
 const {modalOpen, setModalOpen, addScript, setScriptMessage, niche, setNiche, scriptTitle, setScriptTitle, scriptMessage} = useAddScript()
 const {user} = useAuth()
 const activeScripts = scripts.filter(s => s.userId === user!.uid && !s.isDeleted)
@@ -96,9 +97,14 @@ const bCategoryOption: BCategory[] = [
           </form> 
        </div>
 
-
+  {/* Render Scripts */}
       <main className="grid  md:grid-cols-3 p-5  grid-cols-1 justify-items-center  gap-10">
-        {activeScripts.map(sc => (
+        {scriptLoading ? <div>Loading...</div> : activeScripts.length === 0 ? (
+          <div className="dark:bg-slate-900 bg-slate-50 text-[#9CA3AF] rounded-lg py-5 px-10 sm:text-xl flex flex-col items-center justify-center gap-2  shadow-md my-30 shadow-slate-600">
+            <UserPlus  size={30} />
+            <span>No added scripts at the moment!</span>
+          </div>
+        ) : activeScripts.map(sc => (
 
         <div key={sc.id}>
           
