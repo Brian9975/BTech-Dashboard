@@ -10,8 +10,16 @@ export default function useStatCount() {
     (l) => l.userId === user!.uid && !l.isDeleted,
   );
 
+  const activeTasks = tasks.filter(
+    (t) => t.userId === user!.uid && !t.isDeleted,
+  );
+ const activeFlaggedLeads = flaggedLeads.filter(
+    (l) => l.lead.userId === user!.uid && !l.lead.isDeleted,
+  );
   const newCount = activeLeads.filter((l) => l.stage === "New").length;
-  const contactedCount = activeLeads.filter((l) => l.stage === "Contacted").length;
+  const contactedCount = activeLeads.filter(
+    (l) => l.stage === "Contacted",
+  ).length;
   const f1AfterContactCount = activeLeads.filter(
     (l) => l.stage === "Follow up 1 after Contact",
   ).length;
@@ -19,7 +27,9 @@ export default function useStatCount() {
     (l) => l.stage === "Last Follow up after Contact",
   ).length;
   const repliedCount = activeLeads.filter((l) => l.stage === "Replied").length;
-  const previewCount = activeLeads.filter((l) => l.stage === "Preview Sent").length;
+  const previewCount = activeLeads.filter(
+    (l) => l.stage === "Preview Sent",
+  ).length;
   const f1AfterPreviewCount = activeLeads.filter(
     (l) => l.stage === "Follow up 1 after Preview",
   ).length;
@@ -36,7 +46,9 @@ export default function useStatCount() {
   const negotiatingCount = activeLeads.filter(
     (l) => l.stage === "Negotiating",
   ).length;
-  const depositCount = activeLeads.filter((l) => l.stage === "Deposit paid").length;
+  const depositCount = activeLeads.filter(
+    (l) => l.stage === "Deposit paid",
+  ).length;
   const checklistCount = activeLeads.filter(
     (l) => l.stage === "Checklist Sent",
   ).length;
@@ -46,7 +58,9 @@ export default function useStatCount() {
   const buildingCount = activeLeads.filter(
     (l) => l.stage === "Building Phase",
   ).length;
-  const reviewCount = activeLeads.filter((l) => l.stage === "Review Phase").length;
+  const reviewCount = activeLeads.filter(
+    (l) => l.stage === "Review Phase",
+  ).length;
   const paymentDoneCount = activeLeads.filter(
     (l) => l.stage === "Payment Complete + Pitch Care Plan",
   ).length;
@@ -61,8 +75,8 @@ export default function useStatCount() {
     (l) => l.stage === "Not Interested",
   ).length;
   const totalLeadsCount = activeLeads.length;
-  const totalTasksCount = tasks.length;
-  const todayCount = flaggedLeads.length;
+  const totalTasksCount = activeTasks.length;
+  const todayCount = activeFlaggedLeads.length;
   const totalEarningsCount = activeLeads.reduce((total, lead) => {
     return lead.earningsFromLead + total;
   }, 0);

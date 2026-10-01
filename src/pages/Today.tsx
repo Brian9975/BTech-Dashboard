@@ -4,6 +4,7 @@ import { useLead } from "../context/LeadContext";
 import useDateFormater from "../hooks/useDateFormater";
 import useUpdateStatLast from "../hooks/useUpdateStatLast";
 import TodayViewCard from "../components/TodayViewCard";
+import { useAuth } from "../context/AuthContext";
 
 
 export default function Today() {
@@ -11,17 +12,20 @@ export default function Today() {
   const { checkDaysPassed } = useAutoCheckLead();
   const {isLoading, flaggedLeads } = useLead();
   const { formatAnyDate } = useDateFormater();
+  const {user} = useAuth()
   const { updateStatLastCont, leadToUpdate, setLeadToUpdate, showToast } =
     useUpdateStatLast();
 
-
+ const activeFlaggedLeads = flaggedLeads.filter(
+    (l) => l.lead.userId === user!.uid && !l.lead.isDeleted,
+  );
 
   return (
     <div>
       <h1 className="font-bold md:text-xl text-lg">Welcome to the todays screen Brian,</h1>
 
      <div className={"flex justify-center my-10 md:my-30"}>
-{isLoading ? <div><h1>Loading...</h1></div> : flaggedLeads.length === 0 ?  <div className="dark:bg-slate-900 bg-slate-50  text-[#10B981] rounded-lg py-5 px-10 md:text-xl text-center flex flex-col items-center justify-center gap-2  shadow-md my-10 shadow-slate-600">
+{isLoading ? <div><h1>Loading...</h1></div> : activeFlaggedLeads.length === 0 ?  <div className="dark:bg-slate-900 bg-slate-50  text-[#10B981] rounded-lg py-5 px-10 md:text-xl text-center flex flex-col items-center justify-center gap-2  shadow-md my-10 shadow-slate-600">
             <PartyPopper size={30} />
             <span >Today you are free, no leads to follow up with!</span>
           </div> :
@@ -36,7 +40,7 @@ export default function Today() {
         </div>
 
         <div className="grid shrink-0 md:grid-cols-2 gap-4">
-          {flaggedLeads.map((l) => (
+          {activeFlaggedLeads.map((l) => (
             <TodayViewCard
               key={l.lead.id}
               l={l.lead}

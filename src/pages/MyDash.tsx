@@ -28,6 +28,7 @@ import useCompleteTask from "../hooks/useCompleteTask";
 import AddTaskForm from "../components/AddTaskForm";
 import useTaskDeadlineInfo from "../hooks/useTaskDeadlineInfo";
 import useSyncData from "../hooks/useSyncData";
+import { useAuth } from "../context/AuthContext";
 export default function MyDash() {
   const navigate = useNavigate();
   const { tasks, taskLoading } = useTask();
@@ -83,22 +84,25 @@ export default function MyDash() {
   const { deleteTask, taskToDelete, setTaskToDelete, showDelToast } =
     useDeleteTask();
   const { completeTask } = useCompleteTask();
-  const {taskDeadlineInfo} = useTaskDeadlineInfo()
-  const {handleSyncing} = useSyncData()
-  const taskToUpdateObject = tasks.find((t) => t.id === taskToUpdate);
+  const { taskDeadlineInfo } = useTaskDeadlineInfo();
+  const {user} = useAuth()
+  const { handleSyncing } = useSyncData();
+    const activeTasks = tasks.filter(
+    (t) => t.userId === user!.uid && !t.isDeleted,
+  );
 
-  const flaggedTasks = tasks
-  .map(t => ({
-    task: t,
-    message: taskDeadlineInfo(t),
-  })) 
- .filter(t => t.message !== null)
+   const activeFlaggedLeads = flaggedLeads.filter(
+    (l) => l.lead.userId === user!.uid && !l.lead.isDeleted,
+  );
+  const taskToUpdateObject = activeTasks.find((t) => t.id === taskToUpdate);
 
+  const flaggedTasks = activeTasks
+    .map((t) => ({
+      task: t,
+      message: taskDeadlineInfo(t),
+    }))
+    .filter((t) => t.message !== null);
 
-// useEffect(() => {
-//   handleSyncing()
-// }, [tasks])
-  // console.log(flaggedTasks )
   useEffect(() => {
     if (taskToUpdateObject) {
       setTaskEdit(taskToUpdateObject.task);
@@ -108,8 +112,12 @@ export default function MyDash() {
 
   return (
     <div>
-
-      <button className="p-10 w-md bg-white font-bold rounded-lg text-black" onClick={handleSyncing}>Sync</button >
+      <button
+        className="p-10 w-md bg-white font-bold rounded-lg text-black"
+        onClick={handleSyncing}
+      >
+        Sync
+      </button>
       {/* Stats */}
       <div className="grid md:grid-cols-4 sm:grid-cols-2 items-start gap-4">
         <div className="dark:bg-slate-950 bg-slate-100 border-[#3B82F6] cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">
@@ -233,7 +241,7 @@ export default function MyDash() {
               <div>
                 <h1>Loading...</h1>
               </div>
-            ) : flaggedLeads.length === 0 ? (
+            ) : activeFlaggedLeads.length === 0 ? (
               <div>
                 <div>
                   <p className="py-3 border px-1 rounded-lg mb-3 gap-2 font-bold  text-[#10B981] tracking-wide flex flex-col items-center">
@@ -243,7 +251,7 @@ export default function MyDash() {
                 </div>
               </div>
             ) : (
-              flaggedLeads.map(({ lead }) => (
+              activeFlaggedLeads.map(({ lead }) => (
                 <div key={lead.id}>
                   <p className="flex gap-15 items-center">
                     <span className="text-lg">{lead.name}</span>{" "}
@@ -258,9 +266,22 @@ export default function MyDash() {
               ))
             )}
 
-            <div className={"text-center dark:text-slate-950 border-t border-amber-500 pt-2 pb-2"}>
-              {flaggedTasks.map( t => <div key={t.task.id} className="bg-amber-500 rounded-lg py-2 my-2 "><p className="font-bold mx-2">{t.task.task}</p><span className="bg-slate-100 p-1 mx-2  rounded-lg">{t.message}</span></div>)
-}
+            <div
+              className={
+                "text-center dark:text-slate-950 border-t border-amber-500 pt-2 pb-2"
+              }
+            >
+              {flaggedTasks.map((t) => (
+                <div
+                  key={t.task.id}
+                  className="bg-amber-500 rounded-lg py-2 my-2 "
+                >
+                  <p className="font-bold mx-2">{t.task.task}</p>
+                  <span className="bg-slate-100 p-1 mx-2  rounded-lg">
+                    {t.message}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -301,41 +322,47 @@ export default function MyDash() {
                 </p>
               </div>
             ) : (
-              tasks.map((t) => !t.isDeleted && (
-                <div key={t.id} className="dark:bg-slate-950 bg-slate-100 shadow-md shadow-slate-600 p-2 rounded-lg">
-                  <li
-                    onClick={() => completeTask(t.id)}
-                    className={`flex gap-2 ${t.isCompleted && "text-slate-600 line-through"}  cursor-pointer  hover:scale-95 transition-all items-start text-lg`}
-                  >
-                    <CheckCircle2 className="hidden md:block" size={25} />{" "}
-                    <CheckCircle2 className="md:hidden" size={30} />
-                    <span>{t.task}</span>{" "}
-                  </li>
-                  <span className="flex justify-between pt-3">
-                    <button
-                      onClick={() => {
-                        setTaskToUpdate(t.id);
-                      }}
-                      className="cursor-pointer hover:scale-110"
+              tasks.map(
+                (t) =>
+                  !t.isDeleted && (
+                    <div
+                      key={t.id}
+                      className="dark:bg-slate-950 bg-slate-100 shadow-md shadow-slate-600 p-2 rounded-lg"
                     >
-                      <Edit />
-                    </button>
+                      <li
+                        onClick={() => completeTask(t.id)}
+                        className={`flex gap-2 ${t.isCompleted && "text-slate-600 line-through"}  cursor-pointer  hover:scale-95 transition-all items-start text-lg`}
+                      >
+                        <CheckCircle2 className="hidden md:block" size={25} />{" "}
+                        <CheckCircle2 className="md:hidden" size={30} />
+                        <span>{t.task}</span>{" "}
+                      </li>
+                      <span className="flex justify-between pt-3">
+                        <button
+                          onClick={() => {
+                            setTaskToUpdate(t.id);
+                          }}
+                          className="cursor-pointer hover:scale-110"
+                        >
+                          <Edit />
+                        </button>
 
-                    <div className="bg-amber-500 text-slate-950 rounded-lg px-1">
-                      <p className="flex flex-col items-center">
-                        <span className="text-sm">Deadline</span>
-                        <span>{t.deadline.toString()}</span>
-                      </p>
+                        <div className="bg-amber-500 text-slate-950 rounded-lg px-1">
+                          <p className="flex flex-col items-center">
+                            <span className="text-sm">Deadline</span>
+                            <span>{t.deadline.toString()}</span>
+                          </p>
+                        </div>
+                        <button
+                          onClick={() => setTaskToDelete(t.id)}
+                          className="cursor-pointer hover:scale-110"
+                        >
+                          <DeleteIcon />
+                        </button>
+                      </span>
                     </div>
-                    <button
-                      onClick={() => setTaskToDelete(t.id)}
-                      className="cursor-pointer hover:scale-110"
-                    >
-                      <DeleteIcon />
-                    </button>
-                  </span>
-                </div>
-              ))
+                  ),
+              )
             )}
           </ul>
         </div>
@@ -369,7 +396,9 @@ export default function MyDash() {
           </h1>
           <div>
             <div>
-              <label htmlFor="taskText" className="text-slate-100">Task :</label>
+              <label htmlFor="taskText" className="text-slate-100">
+                Task :
+              </label>
             </div>
             <input
               value={taskEdit}
@@ -382,7 +411,9 @@ export default function MyDash() {
           </div>
           <div className="pt-5">
             <div>
-              <label htmlFor="taskText" className="text-slate-100">Deadline :</label>
+              <label htmlFor="taskText" className="text-slate-100">
+                Deadline :
+              </label>
             </div>
             <input
               value={deadlineEdit as any}

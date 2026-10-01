@@ -4,14 +4,14 @@ import { useState } from "react"
 
 export default function useRemoveLead() {
 const [showDeleteToast, setShowDeleteToast] = useState(false)
-const {  leadToDelete, setLeadToDelete} = useLead()
+const {  leadToDelete, setLeadToDelete, setLeads, leads} = useLead()
 
     const removeLead = async () => {
 const db = await dbPromise
 
 await db.delete("leads", leadToDelete as IDBKeyRange | IDBValidKey)
 
-    //  setLeads(leads.filter(l => l.id != leadToDelete))
+     setLeads(leads.filter(l => l.id != leadToDelete))
     setShowDeleteToast(true)
     setTimeout(() => {
      setShowDeleteToast(false)
