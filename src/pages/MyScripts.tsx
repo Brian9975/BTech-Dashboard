@@ -3,12 +3,15 @@ import useCopyToClipboard from "../hooks/useCopyToClipboard";
 import { useScript } from "../context/ScriptContext";
 import useAddScript from "../hooks/useAddScript";
 import type { BCategory } from "../types/planStageCateg";
+import { useAuth } from "../context/AuthContext";
 
 // import { scriptData } from "../ScriptData";
 export default function MyScripts() {
 const {copyText, scriptCopied} = useCopyToClipboard()
 const {scripts} = useScript()
 const {modalOpen, setModalOpen, addScript, setScriptMessage, niche, setNiche, scriptTitle, setScriptTitle, scriptMessage} = useAddScript()
+const {user} = useAuth()
+const activeScripts = scripts.filter(s => s.userId === user!.uid && !s.isDeleted)
  const scriptTitleOption: string[] = [
    "Hook A",
    "Hook B",
@@ -69,7 +72,7 @@ const bCategoryOption: BCategory[] = [
               <div>
                 <select value={scriptTitle} onChange={e => setScriptTitle(e.target.value)}  className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" required>
                   <option value=""  className="dark:bg-slate-950 bg-slate-100" disabled>Select Title</option>
-                  {scriptTitleOption.map(t => <option className={`dark:bg-slate-950 bg-slate-100`} value={t}>{t}</option>)}
+                  {scriptTitleOption.map(t => <option key={t} className={`dark:bg-slate-950 bg-slate-100`} value={t}>{t}</option>)}
                 </select>
               </div>
              </div>
@@ -95,7 +98,7 @@ const bCategoryOption: BCategory[] = [
 
 
       <main className="grid  md:grid-cols-3 p-5  grid-cols-1 justify-items-center  gap-10">
-        {scripts.map(sc => (
+        {activeScripts.map(sc => (
 
         <div key={sc.id}>
           

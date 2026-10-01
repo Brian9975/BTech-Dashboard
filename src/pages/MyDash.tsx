@@ -314,7 +314,7 @@ export default function MyDash() {
               <div>
                 <p>Loading...</p>
               </div>
-            ) : tasks.length === 0 ? (
+            ) : activeTasks.length === 0 ? (
               <div>
                 <p className="text-lg font-bold tracking-wide text-[#9CA3AF] flex flex-col items-center gap-2">
                   <ClipboardList size={30} color="#9CA3AF" />
@@ -322,7 +322,7 @@ export default function MyDash() {
                 </p>
               </div>
             ) : (
-              tasks.map(
+              activeTasks.map(
                 (t) =>
                   !t.isDeleted && (
                     <div

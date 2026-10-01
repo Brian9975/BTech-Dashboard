@@ -14,11 +14,13 @@ export default function useAddScript() {
         e.preventDefault()
       const db = await dbPromise
       const scriptObject = {
+        id: Date.now(),
         title: scriptTitle,
         niche: niche,
         message: scriptMessage,
         userId: user!.uid,
-        lastModified: Date.now()
+        lastModified: Date.now(),
+        isDeleted: false,
       }   
       
       

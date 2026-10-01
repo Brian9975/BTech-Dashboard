@@ -13,7 +13,8 @@ interface ScriptData {
   niche: string,
   title: string,
   userId: string, 
-  lastModified: number
+  lastModified: number,
+  isDeleted: boolean
 }
 const ScriptContext = createContext<ScriptContextType | null>(null)
 export default function ScriptContextProvider({children}: {children: React.ReactNode}) {

@@ -8,8 +8,10 @@ const {  leadToDelete, setLeadToDelete, setLeads, leads} = useLead()
 
     const removeLead = async () => {
 const db = await dbPromise
-
-await db.delete("leads", leadToDelete as IDBKeyRange | IDBValidKey)
+  const leadData = await db.get("leads", leadToDelete as IDBKeyRange | IDBValidKey)
+   leadData.isDeleted = true
+   leadData.lastModified = Date.now()
+   db.put("tasks", leadData)
 
      setLeads(leads.filter(l => l.id != leadToDelete))
     setShowDeleteToast(true)
