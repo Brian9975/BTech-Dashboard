@@ -1,6 +1,7 @@
 import { useLead } from "../context/LeadContext";
 import { dbPromise } from "../config/indexedDB-config";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 export default function useUpdateLead() {
   const [showUpdateToast, setShowUpdateToast] = useState(false)
   const {
@@ -12,22 +13,14 @@ export default function useUpdateLead() {
     editStage,
     editClientPlan,
     editLastContacted,
+    leads,
+    setLeads,
   } = useLead();
-
+  const {user} = useAuth()
+const activeLeads = leads.filter(l => l.userId === user!.uid && !l.isDeleted )
   const updateLead = async (e: React.SubmitEvent) => {
     e.preventDefault();
-    // const leadToEditIndex = leads.findIndex((l) => l.id == leadToEdit);
 
-    // leads[leadToEditIndex] = {
-    //   ...leads[leadToEditIndex],
-    //   name: editBusinessName,
-    //   category: editBusinessCategory,
-    //   contact: editContactNo,
-    //   stage: editStage,
-    //   plan: editClientPlan,
-    //   lastContacted: editLastContacted,
-    // };
-    // saveToStorage();
 
 const db = await dbPromise;
 const leadObject = await db.get("leads", leadToEdit as IDBKeyRange | IDBValidKey)
@@ -37,19 +30,20 @@ leadObject.contact = editContactNo
 leadObject.stage = editStage
 leadObject.plan = editClientPlan
 leadObject.lastContacted = editLastContacted
+leadObject.lastModified = Date.now()
 
 await db.put("leads", leadObject)
 
-    // setLeads(leads.map(l => l.id == leadToEdit ? ({
-    //   ...l,
-    //   name: editBusinessName,
-    //   category: editBusinessCategory,
-    //   contact: editContactNo,
-    //   stage: editStage,
-    //   plan: editClientPlan,
-    //   lastContacted: editLastContacted,
+    setLeads(activeLeads.map(l => l.id == leadToEdit ? ({
+      ...l,
+      name: editBusinessName,
+      category: editBusinessCategory,
+      contact: editContactNo,
+      stage: editStage,
+      plan: editClientPlan,
+      lastContacted: editLastContacted,
 
-    // }) : l))
+    }) : l))
     setShowUpdateToast(true)
     setTimeout(() => {
       setShowUpdateToast(false)
