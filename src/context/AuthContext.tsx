@@ -5,20 +5,20 @@ import { auth } from '../config/firebase-config'
 
 interface AuthContextType {
  user: User | null
- isLoading: boolean
+ authLoading: boolean
 }
 const AuthContext = createContext<AuthContextType | null>(null)
 export default function AuthContextProvider({children}: {children: React.ReactNode}) {
 const [user, setUser] = useState<User | null>(null)
-const [isLoading, setIsLoading] = useState(true)
-    const contextValues = {user, isLoading}
+const [authLoading, setAuthIsLoading] = useState(true)
+    const contextValues = {user, authLoading}
 
 
 
     useEffect(() => {
    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
        setUser(firebaseUser)
-       setIsLoading(false)
+       setAuthIsLoading(false)
    })
 
    return () =>  unsubscribe()

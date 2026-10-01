@@ -8,6 +8,7 @@ interface ScriptContextType {
 }
 
 interface ScriptData { 
+  id: number,
   message: string,
   niche: string,
   title: string,

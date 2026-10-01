@@ -3,11 +3,13 @@ import { useLead } from "../context/LeadContext";
 import { dbPromise } from "../config/indexedDB-config";
 import useModal from "./useModal";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 
 export default function useAddLead() {
   const [loading, setLoading] = useState(false)
-
+  const {user} = useAuth()
+  const {setLeads} = useLead()
   const {
     businessName,
     setBusinessName,
@@ -25,10 +27,11 @@ export default function useAddLead() {
 
   const { closeDialog } = useModal();
   const addLead = async (e: React.SubmitEvent) => {
-
+    
     try {
     e.preventDefault();
 setLoading(true)
+if (!user) return
     const leadInfo = {
       id: Date.now().toString(),
       name: businessName,
@@ -40,11 +43,14 @@ setLoading(true)
       dateAdded: new Date(),
       notes: "",
       earningsFromLead: 0,
+      userId: user.uid,
+      lastModified: Date.now(),
+      isDeleted: false,
     };
    const db = await dbPromise
    await db.add("leads", leadInfo)
    
-    // setLeads((prev) => [...prev, leadInfo]);
+    setLeads((prev) => [...prev, leadInfo]);
   } catch (err) {
     console.log("An error occured while adding lead! Please try again")
   } finally {

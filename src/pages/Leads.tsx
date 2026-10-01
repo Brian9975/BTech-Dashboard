@@ -26,6 +26,7 @@ import useDateFormater from "../hooks/useDateFormater";
 import type { PlanInterface, BCategory } from "../types/planStageCateg";
 import AddLeadForm from "../components/AddLeadForm";
 import useToast from "../hooks/useToast";
+import { useAuth } from "../context/AuthContext";
 export default function Leads() {
   const [searchVal, setSearchVal] = useState("");
   const { leadToUpdateStage, setLeadToUpdateStage, updateStage } =
@@ -85,16 +86,20 @@ export default function Leads() {
   const { updateLead, showUpdateToast, setShowUpdateToast } = useUpdateLead();
   const { removeLead, showDeleteToast } = useRemoveLead();
   const { toastOn, showToast, hideToast } = useToast();
+  const {user} = useAuth()
   const leadToEditObject = leads.find((l) => l.id === leadToEdit);
   const leadToUpdateLastContactedObject = leads.find(
     (l) => l.id == leadLastContactedToUpdate,
   );
   const leadToUpdateStageObject = leads.find((l) => l.id === leadToUpdateStage);
-  const filteredLeads = leads.filter(
+  const filteredLeads = leads
+  .filter(l => l.userId === user!.uid && !l.isDeleted )
+  .filter(
     (l) =>
       l.stage.toLowerCase().includes(searchVal.toLowerCase()) ||
       l.name.toLowerCase().includes(searchVal.toLowerCase()),
-  );
+  )
+  
   const plan: PlanInterface[] = [
     {
       id: 1,

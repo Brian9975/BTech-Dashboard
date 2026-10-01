@@ -15,15 +15,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [isOpenMobile, setIsOpenMobile] = useState(false);
   const {theme, setTheme} = useTheme()
-  const {isLoading, user} = useAuth()
+  const {authLoading, user} = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (!user && !isLoading) {
+    if (!user && !authLoading) {
       navigate("/login")
     }
   }, [user])
-  if (isLoading) {
+  if (authLoading) {
   return <div className={`text-3xl ${theme} font-bold text-center dark:bg-slate-950 dark:text-slate-100 text-slate-950 bg-slate-100`}>Loading...</div>
   }
 

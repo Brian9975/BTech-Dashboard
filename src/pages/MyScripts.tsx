@@ -50,7 +50,7 @@ const bCategoryOption: BCategory[] = [
     <div className="">
 
       <div className="flex justify-end">
-        <button onClick={() => setModalOpen(true)} className="bg-blue-600 rounded-lg cursor-pointer text-slate-100 cursor-pointer dark:text-slate-950 py-2 px-4 text-lg font-bold">Add Script</button>
+        <button onClick={() => setModalOpen(true)} className="bg-blue-600 rounded-lg cursor-pointer text-slate-100  dark:text-slate-950 py-2 px-4 text-lg font-bold">Add Script</button>
       </div>
 
       {/* Add Script Modal */}

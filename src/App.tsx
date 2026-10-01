@@ -21,8 +21,8 @@ function App() {
   return (
     <Router>
       <AuthContextProvider>
-      <TaskContextProvider>
         <LeadContextProvider>
+      <TaskContextProvider>
           <ScriptContextProvider>
           <ThemeContextProvider>
 
@@ -48,8 +48,8 @@ function App() {
             </Routes>
         </ThemeContextProvider>
         </ScriptContextProvider>
-        </LeadContextProvider>
       </TaskContextProvider>
+        </LeadContextProvider>
       </AuthContextProvider>
     </Router>
   );

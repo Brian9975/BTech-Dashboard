@@ -10,4 +10,7 @@ export interface LeadsInterface {
   dateAdded: Date;
   notes: string;
   earningsFromLead: number;
+  userId: string;
+  lastModified: number;
+  isDeleted: boolean;
 }
