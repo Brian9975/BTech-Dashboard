@@ -12,6 +12,7 @@ const activeLeads = leads.filter(l => l.userId === user!.uid)
      const db = await dbPromise
      const data = await db.get("leads", leadToUpdateStage as IDBKeyRange | IDBValidKey)
      data.stage = value
+     data.lastModified = Date.now()
      await db.put("leads", data)
       setLeads(activeLeads.map(l => l.id == leadToUpdateStage ? {
         ...l,
