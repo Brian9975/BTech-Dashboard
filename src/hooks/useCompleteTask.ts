@@ -1,10 +1,12 @@
-// import { useTask } from "../context/TaskContext";
+import { useTask } from "../context/TaskContext";
 
 import { dbPromise } from "../config/indexedDB-config";
+import { useAuth } from "../context/AuthContext";
 
 export default function useCompleteTask() {
-  // const {tasks, setTasks} = useTask();
-
+  const {tasks, setTasks} = useTask();
+  const {user} = useAuth()
+  const activeTasks = tasks.filter(t => t.userId === user!.uid)
   const completeTask = async (id: string) => {
     
 
@@ -17,21 +19,16 @@ export default function useCompleteTask() {
     await db.put("tasks", data)
 
 
-
-
-
-
-
-    // setTasks(
-    //   tasks.map((t) =>
-    //     t.id === id
-    //       ? {
-    //           ...t,
-    //           isCompleted: !t.isCompleted,
-    //         }
-    //       : t,
-    //   ),
-    // );
+    setTasks(
+      activeTasks.map((t) =>
+        t.id === id
+          ? {
+              ...t,
+              isCompleted: !t.isCompleted,
+            }
+          : t,
+      ),
+    );
   };
   return { completeTask };
 }
