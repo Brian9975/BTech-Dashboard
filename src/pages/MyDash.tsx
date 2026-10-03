@@ -86,7 +86,7 @@ export default function MyDash() {
   const { completeTask } = useCompleteTask();
   const { taskDeadlineInfo } = useTaskDeadlineInfo();
   const {user} = useAuth()
-  const { handleTaskSyncing, handleLeadSyncing, handleScriptSyncing } = useSyncData();
+  const {handleAllSync } = useSyncData();
     const activeTasks = tasks.filter(
     (t) => t.userId === user!.uid && !t.isDeleted,
   );
@@ -115,9 +115,7 @@ export default function MyDash() {
       <button
         className="p-10 w-md bg-white font-bold rounded-lg text-black"
         onClick={() => {
-          // handleTaskSyncing()
-          // handleLeadSyncing()
-          handleScriptSyncing()
+         handleAllSync()
         }}
       >
         Sync
