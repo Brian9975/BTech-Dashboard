@@ -14,7 +14,7 @@ export default function useAddScript() {
         e.preventDefault()
       const db = await dbPromise
       const scriptObject = {
-        id: Date.now(),
+        id: Date.now().toString(),
         title: scriptTitle,
         niche: niche,
         message: scriptMessage,

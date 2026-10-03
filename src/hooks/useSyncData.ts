@@ -5,11 +5,13 @@ import { firestoreDb } from '../config/firebase-config'
 import { collection, deleteDoc, doc, getDoc, getDocs, setDoc} from "firebase/firestore"
 import { useTask } from '../context/TaskContext'
 import { useLead } from '../context/LeadContext'
+import { useScript } from '../context/ScriptContext'
 
 export default function useSyncData() {
   const {user} = useAuth()
   const {setLeads} = useLead()
   const {setTasks} = useTask()
+  const {setScripts} = useScript()
   const handleTaskSyncing = async () => {
     // Handle Task Syncing
     if (!user && !navigator.onLine) {
@@ -141,10 +143,10 @@ const serverRef = collection(firestoreDb, "users", user.uid, "leads")
        const serverData = docSnap.data()
        if(serverData.userId === user.uid) {
        await db.put("leads", serverData)
-       const updatedLeads = await db.getAll("leads")
-       setLeads(updatedLeads)
        alert("Pulled Lead Data Successfully")
-       }
+      }
+      const updatedLeads = await db.getAll("leads")
+      setLeads(updatedLeads)
     }
   }
   
@@ -214,10 +216,10 @@ const serverRef = collection(firestoreDb, "users", user.uid, "scripts")
        const serverData = docSnap.data()
        if(serverData.userId === user.uid) {
        await db.put("scripts", serverData)
-       const updatedLeads = await db.getAll("scripts")
-       setLeads(updatedLeads)
        alert("Pulled Script Data Successfully")
-       }
+      }
+      const updatedScripts = await db.getAll("scripts")
+      setScripts(updatedScripts)
     }
   }
   
