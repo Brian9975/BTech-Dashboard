@@ -2,11 +2,11 @@
 import { useAuth } from '../context/AuthContext'
 import { dbPromise } from '../config/indexedDB-config'
 import { firestoreDb } from '../config/firebase-config'
-import { deleteDoc, doc, getDoc, setDoc} from "firebase/firestore"
+import { collection, deleteDoc, doc, getDoc, getDocs, setDoc} from "firebase/firestore"
 
 export default function useSyncData() {
   const {user} = useAuth()
-  const handleSyncing = async () => {
+  const handleTaskSyncing = async () => {
     // Handle Task Syncing
     if (!user && !navigator.onLine) {
        return 
@@ -53,9 +53,24 @@ export default function useSyncData() {
       }
     }
 
-
      
-
+    try{
+if (user) {
+const serverRef = collection(firestoreDb, "users", user.uid, "tasks")
+     const querySnapShot = await getDocs(serverRef)
+    
+    for (const docSnap of querySnapShot.docs) {
+       const serverData = docSnap.data()
+       if(serverData.userId === user.uid) {
+       await db.put("tasks", serverData)
+       alert("Pulled Data Successfully")
+       }
+    }
   }
-  return {handleSyncing}
+  
+  } catch (err) {
+     alert(`An error occured while pulling data, ${err}`)
+  }
+  }
+  return {handleTaskSyncing}
 }
