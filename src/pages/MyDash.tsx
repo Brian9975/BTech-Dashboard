@@ -112,14 +112,7 @@ export default function MyDash() {
 
   return (
     <div>
-      <button
-        className="p-10 w-md bg-white font-bold rounded-lg text-black"
-        onClick={() => {
-         
-        }}
-      >
-        Sync
-      </button>
+     
       {/* Stats */}
       <div className="grid md:grid-cols-4 sm:grid-cols-2 items-start gap-4">
         <div className="dark:bg-slate-950 bg-slate-100 border-[#3B82F6] cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">

@@ -40,7 +40,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     
      window.addEventListener("online", handleAllSync)
 
-    // Clean up event listeners when the dashboard unmounts
+    // Clean up event listeners when the components unmounts
     return () => window.removeEventListener("online", handleAllSync);
 
 
@@ -58,7 +58,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div
       className={`bg-slate-100 dark:bg-slate-950 ${theme} flex text-slate-950 dark:text-slate-100 min-h-screen`}
     >
-      <button onClick={handleAllSync}>Syncing</button>
+      
       {isOpenMobile && (
         <div
           onClick={() => {
