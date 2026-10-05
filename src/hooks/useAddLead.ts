@@ -4,6 +4,7 @@ import { dbPromise } from "../config/indexedDB-config";
 import useModal from "./useModal";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import useSyncData from "./useSyncData";
 
 
 export default function useAddLead() {
@@ -26,6 +27,7 @@ export default function useAddLead() {
   } = useLead();
 
   const { closeDialog } = useModal();
+  const {handleAllSync} = useSyncData()
   const addLead = async (e: React.SubmitEvent) => {
     
     try {
@@ -50,7 +52,7 @@ if (!user) return
    const db = await dbPromise
    await db.add("leads", leadInfo)
    
-    setLeads((prev) => [...prev, leadInfo]);
+   setLeads((prev) => [...prev, leadInfo]);
   } catch (err) {
     console.log("An error occured while adding lead! Please try again")
   } finally {
@@ -62,6 +64,7 @@ if (!user) return
     setContactNo("");
     setStage("");
     setClientPlan("");
+    handleAllSync()
   }
 
   };

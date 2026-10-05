@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import useSyncData from "../hooks/useSyncData";
+
 
 interface ThemeContextType {
   theme: string;
