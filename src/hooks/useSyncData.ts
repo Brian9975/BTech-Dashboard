@@ -212,13 +212,12 @@ export default function useSyncData() {
     }
   };
 
-  const handleAllSync = () => {
-    handleLeadSyncing();
-    handleTaskSyncing();
-    handleScriptSyncing();
+  const handleAllSync = async () => {
+    await handleLeadSyncing();
+    await handleTaskSyncing();
+    await handleScriptSyncing();
 
-
-    console.log("Sync complete")
+    console.log("Sync complete");
   };
 
   return { handleAllSync };

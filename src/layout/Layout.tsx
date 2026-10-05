@@ -11,17 +11,39 @@ import React, {  useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import  { useAuth } from "../context/AuthContext";
+import useSyncData from "../hooks/useSyncData";
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [isOpenMobile, setIsOpenMobile] = useState(false);
   const {theme, setTheme} = useTheme()
   const {authLoading, user, logOut} = useAuth()
+  const {handleAllSync} = useSyncData()
+
+  
   const navigate = useNavigate()
 
   useEffect(() => {
     if (!user && !authLoading) {
       navigate("/login")
+     
     }
+  }, [user])
+
+
+  useEffect(() => {
+   if (!user) return
+
+
+
+
+   handleAllSync()
+    
+    //  window.addEventListener("online", handleAllSync)
+
+    // Clean up event listeners when the dashboard unmounts
+    // return () => window.removeEventListener("online", handleAllSync);
+
+
   }, [user])
   if (authLoading) {
   return <div className={`text-3xl ${theme} font-bold text-center dark:bg-slate-950 dark:text-slate-100 text-slate-950 bg-slate-100`}>Loading...</div>
@@ -36,6 +58,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div
       className={`bg-slate-100 dark:bg-slate-950 ${theme} flex text-slate-950 dark:text-slate-100 min-h-screen`}
     >
+      <button onClick={handleAllSync}>Syncing</button>
       {isOpenMobile && (
         <div
           onClick={() => {

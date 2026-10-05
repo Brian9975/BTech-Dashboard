@@ -27,7 +27,7 @@ import useDeleteTask from "../hooks/useDeleteTask";
 import useCompleteTask from "../hooks/useCompleteTask";
 import AddTaskForm from "../components/AddTaskForm";
 import useTaskDeadlineInfo from "../hooks/useTaskDeadlineInfo";
-import useSyncData from "../hooks/useSyncData";
+
 import { useAuth } from "../context/AuthContext";
 export default function MyDash() {
   const navigate = useNavigate();
@@ -86,7 +86,7 @@ export default function MyDash() {
   const { completeTask } = useCompleteTask();
   const { taskDeadlineInfo } = useTaskDeadlineInfo();
   const {user} = useAuth()
-  const {handleAllSync } = useSyncData();
+  
     const activeTasks = tasks.filter(
     (t) => t.userId === user!.uid && !t.isDeleted,
   );
@@ -115,7 +115,7 @@ export default function MyDash() {
       <button
         className="p-10 w-md bg-white font-bold rounded-lg text-black"
         onClick={() => {
-         handleAllSync()
+         
         }}
       >
         Sync

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+import useSyncData from "../hooks/useSyncData";
 
 interface ThemeContextType {
   theme: string;
@@ -11,11 +12,13 @@ export default function ThemeContextProvider({
   children: React.ReactNode;
 }) {
   const [theme, setTheme] = useState(localStorage.getItem("theme") ?? "light");
+  
   const contextValues = { theme, setTheme };
 
   useEffect(() => {
     localStorage.setItem("theme", theme);
   }, [theme]);
+  
   return <ThemeContext value={contextValues}>{children}</ThemeContext>;
 }
 export const useTheme = () => {
