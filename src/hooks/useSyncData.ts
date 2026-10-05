@@ -20,7 +20,7 @@ export default function useSyncData() {
   const { setScripts } = useScript();
   const handleTaskSyncing = async () => {
     // Handle Task Syncing
-    if (!user && !navigator.onLine) {
+    if (!user) {
       return;
     }
 
@@ -84,7 +84,7 @@ export default function useSyncData() {
 
   const handleLeadSyncing = async () => {
     // Handle Task Syncing
-    if (!user && !navigator.onLine) {
+    if (!user) {
       return;
     }
 
@@ -146,7 +146,7 @@ export default function useSyncData() {
 
   const handleScriptSyncing = async () => {
     // Handle Task Syncing
-    if (!user && !navigator.onLine) {
+    if (!user) {
       return;
     }
 
@@ -154,7 +154,7 @@ export default function useSyncData() {
     const allScripts = await db.getAll("scripts");
 
     for (const item of allScripts) {
-      if (user) {
+      // if (user) {
         if (item.userId === user.uid) {
           const docRef = doc(
             firestoreDb,
@@ -189,7 +189,7 @@ export default function useSyncData() {
             console.log("An Error occured whilst syncing data", err);
           }
         }
-      }
+      // }
     }
 
     try {
@@ -213,6 +213,7 @@ export default function useSyncData() {
   };
 
   const handleAllSync = async () => {
+    if (!navigator.onLine) return
     await handleLeadSyncing();
     await handleTaskSyncing();
     await handleScriptSyncing();

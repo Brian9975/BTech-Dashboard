@@ -38,10 +38,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
    handleAllSync()
     
-    //  window.addEventListener("online", handleAllSync)
+     window.addEventListener("online", handleAllSync)
 
     // Clean up event listeners when the dashboard unmounts
-    // return () => window.removeEventListener("online", handleAllSync);
+    return () => window.removeEventListener("online", handleAllSync);
 
 
   }, [user])
