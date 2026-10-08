@@ -2,24 +2,34 @@ import  { useState } from 'react'
 import { useLead } from '../context/LeadContext'
 import { dbPromise } from '../config/indexedDB-config'
 import { useAuth } from '../context/AuthContext'
+import useSyncData from './useSyncData'
 
 export default function useUpdatePlan() {
 const [leadToUpdatePlan, setLeadToUpdatePlan] = useState<string | null>(null)
 const {leads, setLeads} = useLead()
 const {user} = useAuth()
+const {handleAllSync} = useSyncData()
 const activeLeads = leads.filter(l => l.userId === user!.uid)
     const updatePlan = async (value: string) => {
      const db = await dbPromise
-     const data = await db.get("leads", leadToUpdatePlan as IDBKeyRange | IDBValidKey)
-     data.plan = value
-     data.lastModified = Date.now()
+     try {
+       const data = await db.get("leads", leadToUpdatePlan as IDBKeyRange | IDBValidKey)
+       data.plan = value
+       data.lastModified = Date.now()
+     
      await db.put("leads", data)
-      
-      setLeads(activeLeads.map(l => l.id == leadToUpdatePlan ? {
-        ...l,
-        plan: value
-      } : l))
+       
+       setLeads(activeLeads.map(l => l.id == leadToUpdatePlan ? {
+         ...l,
+         plan: value
+       } : l))
+     } catch (err) {
+
+      console.log("An error occured while updating plan! Please try agin")
+     } finally {
         setLeadToUpdatePlan(null)
+        handleAllSync()
+     }
     }
   return {updatePlan, leadToUpdatePlan, setLeadToUpdatePlan}
 }

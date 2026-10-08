@@ -2,6 +2,7 @@ import { useLead } from "../context/LeadContext";
 import { dbPromise } from "../config/indexedDB-config";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import useSyncData from "./useSyncData";
 export default function useUpdateLead() {
   const [showUpdateToast, setShowUpdateToast] = useState(false)
   const {
@@ -16,6 +17,7 @@ export default function useUpdateLead() {
     leads,
     setLeads,
   } = useLead();
+  const {handleAllSync} = useSyncData()
   const {user} = useAuth()
 const activeLeads = leads.filter(l => l.userId === user!.uid && !l.isDeleted )
   const updateLead = async (e: React.SubmitEvent) => {
@@ -31,24 +33,32 @@ leadObject.stage = editStage
 leadObject.plan = editClientPlan
 leadObject.lastContacted = editLastContacted
 leadObject.lastModified = Date.now()
+try {
 
-await db.put("leads", leadObject)
+  await db.put("leads", leadObject)
+  
+      setLeads(activeLeads.map(l => l.id == leadToEdit ? ({
+        ...l,
+        name: editBusinessName,
+        category: editBusinessCategory,
+        contact: editContactNo,
+        stage: editStage,
+        plan: editClientPlan,
+        lastContacted: editLastContacted,
+  
+      }) : l))
+      setShowUpdateToast(true)
+      setTimeout(() => {
+        setShowUpdateToast(false)
+      }, 3000)
+} catch (err) {
+  console.log("An Error Occured while editing lead! Please try again")
+} finally {
 
-    setLeads(activeLeads.map(l => l.id == leadToEdit ? ({
-      ...l,
-      name: editBusinessName,
-      category: editBusinessCategory,
-      contact: editContactNo,
-      stage: editStage,
-      plan: editClientPlan,
-      lastContacted: editLastContacted,
+  setLeadToEdit(null);
 
-    }) : l))
-    setShowUpdateToast(true)
-    setTimeout(() => {
-      setShowUpdateToast(false)
-    }, 3000)
-    setLeadToEdit(null);
+  handleAllSync()
+} 
   };
   return { updateLead, showUpdateToast, setShowUpdateToast };
 }
