@@ -1,8 +1,8 @@
 import  { useState } from 'react'
 
 export default function useCopyToClipboard() {
- const [scriptCopied, setScriptCopied] = useState<number | null>(null)
- const copyText = async (val: string, id: number) => {
+ const [scriptCopied, setScriptCopied] = useState<string | null>(null)
+ const copyText = async (val: string, id: string) => {
   try{
   await navigator.clipboard.writeText(val)
  setScriptCopied(id)

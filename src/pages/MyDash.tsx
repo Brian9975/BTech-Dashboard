@@ -53,7 +53,7 @@ export default function MyDash() {
   } = useEditTask();
   const { openDialog, closeDialog, modalIsOpen } = useModal();
 
-  const { isLoading, flaggedLeads } = useLead();
+  const { isLoading, flaggedLeads, leads } = useLead();
   const {
     newCount,
     contactedCount,
@@ -88,7 +88,8 @@ export default function MyDash() {
   const { taskDeadlineInfo } = useTaskDeadlineInfo();
   const {user} = useAuth()
   const {syncLoading} = useTheme()
-  
+    const activeLeads = leads.filter(l => l.userId === user!.uid && !l.isDeleted )
+
     const activeTasks = tasks.filter(
     (t) => t.userId === user!.uid && !t.isDeleted,
   );
@@ -122,7 +123,7 @@ export default function MyDash() {
           <div className="flex justify-between items-center">
             {/* <s.icon color={s.color} /> */}
             <Users color={"#3B82F6"} />
-            <span className="text-2xl font-bold">{syncLoading ? <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div> : totalLeadsCount}</span>
+            <span className="text-2xl font-bold">{syncLoading && activeLeads.length === 0 ? <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div> : totalLeadsCount}</span>
           </div>
         </div>
         <div className="dark:bg-slate-950 bg-slate-100 border-[#6366F1] cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">
@@ -130,7 +131,7 @@ export default function MyDash() {
           <div className="flex justify-between items-center">
             {/* <s.icon color={s.color} /> */}
             <ListChecks color={"#6366F1"} />
-            <span className="text-2xl font-bold">{syncLoading ? <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div> : totalTasksCount}</span>
+            <span className="text-2xl font-bold">{syncLoading && activeTasks.length === 0 ? <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div> : totalTasksCount}</span>
           </div>
         </div>
         <div className="dark:bg-slate-950 bg-slate-100 border-[#E8A33D] cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">
@@ -138,7 +139,7 @@ export default function MyDash() {
           <div className="flex justify-between items-center">
             {/* <s.icon color={s.color} /> */}
             <Sun color="#E8A33D" />
-            <span className="text-2xl font-bold">{syncLoading ? <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div> : todayCount}</span>
+            <span className="text-2xl font-bold">{syncLoading && activeLeads.length === 0 ? <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div> : todayCount}</span>
           </div>
         </div>
         <div className="dark:bg-slate-950 bg-slate-100 border-[#F59E0B] cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">
@@ -146,7 +147,7 @@ export default function MyDash() {
           <div className="flex justify-between items-center">
             {/* <s.icon color={s.color} /> */}
             <AlarmClock color="#F59E0B" />
-            <span className="text-2xl font-bold">{syncLoading ? <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div> : flaggedTasks.length}</span>
+            <span className="text-2xl font-bold">{syncLoading && activeTasks.length === 0 ? <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div> : flaggedTasks.length}</span>
           </div>
         </div>
         <div className="dark:bg-slate-950 bg-slate-100 border-[#10B981] cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">
@@ -156,7 +157,7 @@ export default function MyDash() {
             <Wallet color="#10B981" />
             <span className=" flex flex-col  font-bold ">
               <span>KSH </span>
-              {syncLoading ? <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div> : totalEarningsCount}
+              {syncLoading && activeLeads.length === 0 ? <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div> : totalEarningsCount}
             </span>
           </div>
         </div>
@@ -171,7 +172,7 @@ export default function MyDash() {
             <div className="flex justify-between items-center">
               <s.icon color={s.color} />
               <span className="text-2xl font-bold">
-                {s.name == "New"
+                {syncLoading && activeLeads.length === 0 ? <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div> : s.name == "New"
                   ? newCount
                   : s.name == "Contacted"
                     ? contactedCount

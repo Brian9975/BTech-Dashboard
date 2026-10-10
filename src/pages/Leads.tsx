@@ -202,7 +202,7 @@ export default function Leads() {
 
       {/* Leads Display */}
       <main className=" flex overflow-x-auto gap-10 flex-col items-center-safe">
-        {syncLoading ? (
+        {syncLoading && activeLeads.length === 0 ? (
           <div>
             <div className={`text-3xl  font-bold text-center h-screen flex justify-center items-center dark:bg-slate-950  dark:text-slate-100 text-slate-950  bg-slate-100`}><div className={`h-20 w-20 animate-spin rounded-full border-8    border-t-transparent`}></div>
 </div>

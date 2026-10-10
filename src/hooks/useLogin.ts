@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithP
 import { auth, provider } from "../config/firebase-config"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useTheme } from "../context/ThemeContext"
 
 export default function useLogin() {
     const [email, setEmail] = useState("")
@@ -9,8 +10,9 @@ export default function useLogin() {
     const [confirmPassword, setConfirmPassword] = useState("")
     const [signedUser, setSignedUser] = useState(true)
     const navigate = useNavigate()
+    const {setSyncLoading} = useTheme()
      const loginWithGoogle = async () => {
-
+      setSyncLoading(true)
     try {
      await signInWithPopup(auth, provider)
 
@@ -22,6 +24,8 @@ export default function useLogin() {
   }
 
   const loginWithEmailPassword = async (e: React.SubmitEvent) => {
+
+    setSyncLoading(true)
     e.preventDefault()
     try{
         if (signedUser) {

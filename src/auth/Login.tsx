@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 export default function Login() {
   const { theme, setTheme } = useTheme();
-  const {isLoading, user} = useAuth()
+  const {authLoading, user} = useAuth()
   const navigate = useNavigate()
  const {loginWithGoogle, email, signedUser, setSignedUser, setEmail, password, setPassword, confirmPassword, setConfirmPassword, loginWithEmailPassword} = useLogin()
 
@@ -15,13 +15,14 @@ export default function Login() {
  
 
  useEffect(() => {
-  if (user && !isLoading) {
+  if (user && !authLoading) {
     navigate("/mydash")
   }
  }, [user])
 
- if (isLoading) {
-   return <div className={`text-3xl ${theme} font-bold text-center dark:bg-slate-950 dark:text-slate-100 text-slate-950 bg-slate-100`}>Loading...</div>
+ if (authLoading) {
+   return <div className={`text-3xl ${theme} font-bold text-center h-screen flex justify-center items-center dark:bg-slate-950  dark:text-slate-100 text-slate-950  bg-slate-100`}><div className={`h-20 w-20 animate-spin rounded-full border-8    border-t-transparent`}></div>
+</div>
  }
 
 

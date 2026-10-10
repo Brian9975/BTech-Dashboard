@@ -1,5 +1,5 @@
 import { openDB } from "idb";
-export const dbPromise = openDB("btech-dash", 3, {
+export const dbPromise = openDB("btech-dash", 4, {
   upgrade(db) {
     db.createObjectStore("leads", { keyPath: "id" });
     db.createObjectStore("tasks", { keyPath: "id" });
