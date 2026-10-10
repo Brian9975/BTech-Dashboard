@@ -27,8 +27,10 @@ import type { PlanInterface, BCategory } from "../types/planStageCateg";
 import AddLeadForm from "../components/AddLeadForm";
 import useToast from "../hooks/useToast";
 import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
 export default function Leads() {
   const [searchVal, setSearchVal] = useState("");
+  const {syncLoading} = useTheme()
   const { leadToUpdateStage, setLeadToUpdateStage, updateStage } =
     useUpdateStage();
   const {
@@ -80,7 +82,7 @@ export default function Leads() {
     setEditLastContacted,
     leadToDelete,
     setLeadToDelete,
-    isLoading,
+    // isLoading,
   } = useLead();
   const { addLead, loading } = useAddLead();
   const { updateLead, showUpdateToast, setShowUpdateToast } = useUpdateLead();
@@ -152,10 +154,7 @@ export default function Leads() {
       setEditLastContacted(leadToEditObject.lastContacted);
     }
   }, [leadToEdit]);
-  // useEffect(() => {
-  //   // saveToStorage();
-  //     getAllLeads()
-  // }, []);
+  
   return (
     <div>
       <div className="text-right">
@@ -166,7 +165,7 @@ export default function Leads() {
           Add Lead
         </button>
       </div>
-      {leads.length !== 0 && (
+      {activeLeads.length !== 0 && (
         <div className="flex justify-center">
           <input
             onChange={(e) => setSearchVal(e.target.value)}
@@ -203,12 +202,14 @@ export default function Leads() {
 
       {/* Leads Display */}
       <main className=" flex overflow-x-auto gap-10 flex-col items-center-safe">
-        {isLoading ? (
+        {syncLoading ? (
           <div>
-            <h1>Loading...</h1>
+            <div className={`text-3xl  font-bold text-center h-screen flex justify-center items-center dark:bg-slate-950  dark:text-slate-100 text-slate-950  bg-slate-100`}><div className={`h-20 w-20 animate-spin rounded-full border-8    border-t-transparent`}></div>
+</div>
           </div>
         ) : loading ? (
-          <div>Loading...</div>
+          <div className={`text-3xl  font-bold text-center h-screen flex justify-center items-center dark:bg-slate-950  dark:text-slate-100 text-slate-950  bg-slate-100`}><div className={`h-20 w-20 animate-spin rounded-full border-8    border-t-transparent`}></div>
+</div>
         ) : activeLeads.length === 0 ? (
           <div className="dark:bg-slate-900 bg-slate-50 text-[#9CA3AF] rounded-lg py-5 px-10 sm:text-xl flex flex-col items-center justify-center gap-2  shadow-md my-30 shadow-slate-600">
             <UserPlus  size={30} />

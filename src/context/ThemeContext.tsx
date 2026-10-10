@@ -4,6 +4,8 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 interface ThemeContextType {
   theme: string;
   setTheme: React.Dispatch<React.SetStateAction<string>>;
+  syncLoading: boolean;
+  setSyncLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const ThemeContext = createContext<ThemeContextType | null>(null);
 export default function ThemeContextProvider({
@@ -12,8 +14,8 @@ export default function ThemeContextProvider({
   children: React.ReactNode;
 }) {
   const [theme, setTheme] = useState(localStorage.getItem("theme") ?? "light");
-  
-  const contextValues = { theme, setTheme };
+  const [syncLoading, setSyncLoading] = useState(true)
+  const contextValues = { theme, setTheme, syncLoading, setSyncLoading };
 
   useEffect(() => {
     localStorage.setItem("theme", theme);

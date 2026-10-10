@@ -15,7 +15,7 @@ import useSyncData from "../hooks/useSyncData";
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [isOpenMobile, setIsOpenMobile] = useState(false);
-  const {theme, setTheme} = useTheme()
+  const {theme, setTheme, setSyncLoading} = useTheme()
   const {authLoading, user, logOut} = useAuth()
   const {handleAllSync} = useSyncData()
 
@@ -29,7 +29,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     }
   }, [user])
 
+useEffect(() => {
+if (!navigator.onLine) {
 
+  setSyncLoading(false)
+}
+}, [])
   useEffect(() => {
    if (!user) return
 
@@ -46,7 +51,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   }, [user])
   if (authLoading) {
-  return <div className={`text-3xl ${theme} font-bold text-center dark:bg-slate-950 dark:text-slate-100 text-slate-950 bg-slate-100`}>Loading...</div>
+  return <div className={`text-3xl ${theme} font-bold text-center h-screen flex justify-center items-center dark:bg-slate-950  dark:text-slate-100 text-slate-950  bg-slate-100`}><div className={`h-20 w-20 animate-spin rounded-full border-8    border-t-transparent`}></div>
+</div>
   }
 
   if (!user) {

@@ -12,8 +12,11 @@ import {
 import { useTask } from "../context/TaskContext";
 import { useLead } from "../context/LeadContext";
 import { useScript } from "../context/ScriptContext";
+import { useTheme } from "../context/ThemeContext";
 
 export default function useSyncData() {
+  const {setSyncLoading} = useTheme()
+  
   const { user } = useAuth();
   const { setLeads } = useLead();
   const { setTasks } = useTask();
@@ -141,7 +144,9 @@ export default function useSyncData() {
       }
     } catch (err) {
       console.log(`An error occured while pulling data, ${err}`);
-    }
+    } 
+
+    
   };
 
   const handleScriptSyncing = async () => {
@@ -217,7 +222,7 @@ export default function useSyncData() {
     await handleLeadSyncing();
     await handleTaskSyncing();
     await handleScriptSyncing();
-
+    setSyncLoading(false)
     console.log("Sync complete");
   };
 
