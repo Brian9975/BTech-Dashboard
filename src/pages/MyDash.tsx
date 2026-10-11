@@ -30,6 +30,7 @@ import useTaskDeadlineInfo from "../hooks/useTaskDeadlineInfo";
 
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
+import type { LeadsInterface } from "../types/LeadsInterface";
 export default function MyDash() {
   const navigate = useNavigate();
   const { tasks, taskLoading } = useTask();
@@ -94,7 +95,10 @@ export default function MyDash() {
     (t) => t.userId === user!.uid && !t.isDeleted,
   );
 
-   const activeFlaggedLeads = flaggedLeads.filter(
+   const activeFlaggedLeads: {
+    lead: LeadsInterface,
+    action: string | null
+   }[] = flaggedLeads.filter(
     (l) => l.lead.userId === user!.uid && !l.lead.isDeleted,
   );
   const taskToUpdateObject = activeTasks.find((t) => t.id === taskToUpdate);
@@ -235,10 +239,12 @@ export default function MyDash() {
           <div
             className={`h-35 border p-3 rounded-lg border-slate-600  overflow-y-auto`}
           >
-            {isLoading ? (
-              <div>
-                <h1>Loading...</h1>
-              </div>
+            {syncLoading && activeLeads.length === 0 ? 
+           (
+          <div>
+            <div className={`text-3xl  font-bold text-center h-screen flex justify-center items-center dark:bg-slate-950  dark:text-slate-100 text-slate-950  bg-slate-100`}><div className={`h-20 w-20 animate-spin rounded-full border-8    border-t-transparent`}></div>
+</div>
+          </div>
             ) : activeFlaggedLeads.length === 0 ? (
               <div>
                 <div>
@@ -308,10 +314,11 @@ export default function MyDash() {
             <h1 className="text-xl font-bold  text-blue-600">Your Tasks</h1>
           </div>
           <ul className="flex p-5 text-center flex-col gap-5">
-            {taskLoading ? (
-              <div>
-                <p>Loading...</p>
-              </div>
+            {syncLoading && activeTasks.length === 0 ? (
+          <div>
+            <div className={`text-3xl  font-bold text-center h-screen flex justify-center items-center dark:bg-slate-950  dark:text-slate-100 text-slate-950  bg-slate-100`}><div className={`h-20 w-20 animate-spin rounded-full border-8    border-t-transparent`}></div>
+</div>
+          </div>
             ) : activeTasks.length === 0 ? (
               <div>
                 <p className="text-lg font-bold tracking-wide text-[#9CA3AF] flex flex-col items-center gap-2">
