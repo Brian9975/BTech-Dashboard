@@ -33,7 +33,7 @@ import { useTheme } from "../context/ThemeContext";
 import type { LeadsInterface } from "../types/LeadsInterface";
 export default function MyDash() {
   const navigate = useNavigate();
-  const { tasks, taskLoading } = useTask();
+  const { tasks } = useTask();
   const {
     addTask,
     setDeadline,
@@ -54,7 +54,7 @@ export default function MyDash() {
   } = useEditTask();
   const { openDialog, closeDialog, modalIsOpen } = useModal();
 
-  const { isLoading, flaggedLeads, leads } = useLead();
+  const { flaggedLeads, leads } = useLead();
   const {
     newCount,
     contactedCount,
@@ -87,18 +87,20 @@ export default function MyDash() {
     useDeleteTask();
   const { completeTask } = useCompleteTask();
   const { taskDeadlineInfo } = useTaskDeadlineInfo();
-  const {user} = useAuth()
-  const {syncLoading} = useTheme()
-    const activeLeads = leads.filter(l => l.userId === user!.uid && !l.isDeleted )
+  const { user } = useAuth();
+  const { syncLoading } = useTheme();
+  const activeLeads = leads.filter(
+    (l) => l.userId === user!.uid && !l.isDeleted,
+  );
 
-    const activeTasks = tasks.filter(
+  const activeTasks = tasks.filter(
     (t) => t.userId === user!.uid && !t.isDeleted,
   );
 
-   const activeFlaggedLeads: {
-    lead: LeadsInterface,
-    action: string | null
-   }[] = flaggedLeads.filter(
+  const activeFlaggedLeads: {
+    lead: LeadsInterface;
+    action: string | null;
+  }[] = flaggedLeads.filter(
     (l) => l.lead.userId === user!.uid && !l.lead.isDeleted,
   );
   const taskToUpdateObject = activeTasks.find((t) => t.id === taskToUpdate);
@@ -119,7 +121,6 @@ export default function MyDash() {
 
   return (
     <div>
-     
       {/* Stats */}
       <div className="grid md:grid-cols-4 sm:grid-cols-2 items-start gap-4">
         <div className="dark:bg-slate-950 bg-slate-100 border-[#3B82F6] cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">
@@ -127,7 +128,13 @@ export default function MyDash() {
           <div className="flex justify-between items-center">
             {/* <s.icon color={s.color} /> */}
             <Users color={"#3B82F6"} />
-            <span className="text-2xl font-bold">{syncLoading && activeLeads.length === 0 ? <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div> : totalLeadsCount}</span>
+            <span className="text-2xl font-bold">
+              {syncLoading && activeLeads.length === 0 ? (
+                <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div>
+              ) : (
+                totalLeadsCount
+              )}
+            </span>
           </div>
         </div>
         <div className="dark:bg-slate-950 bg-slate-100 border-[#6366F1] cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">
@@ -135,7 +142,13 @@ export default function MyDash() {
           <div className="flex justify-between items-center">
             {/* <s.icon color={s.color} /> */}
             <ListChecks color={"#6366F1"} />
-            <span className="text-2xl font-bold">{syncLoading && activeTasks.length === 0 ? <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div> : totalTasksCount}</span>
+            <span className="text-2xl font-bold">
+              {syncLoading && activeTasks.length === 0 ? (
+                <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div>
+              ) : (
+                totalTasksCount
+              )}
+            </span>
           </div>
         </div>
         <div className="dark:bg-slate-950 bg-slate-100 border-[#E8A33D] cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">
@@ -143,7 +156,13 @@ export default function MyDash() {
           <div className="flex justify-between items-center">
             {/* <s.icon color={s.color} /> */}
             <Sun color="#E8A33D" />
-            <span className="text-2xl font-bold">{syncLoading && activeLeads.length === 0 ? <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div> : todayCount}</span>
+            <span className="text-2xl font-bold">
+              {syncLoading && activeLeads.length === 0 ? (
+                <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div>
+              ) : (
+                todayCount
+              )}
+            </span>
           </div>
         </div>
         <div className="dark:bg-slate-950 bg-slate-100 border-[#F59E0B] cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">
@@ -151,7 +170,13 @@ export default function MyDash() {
           <div className="flex justify-between items-center">
             {/* <s.icon color={s.color} /> */}
             <AlarmClock color="#F59E0B" />
-            <span className="text-2xl font-bold">{syncLoading && activeTasks.length === 0 ? <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div> : flaggedTasks.length}</span>
+            <span className="text-2xl font-bold">
+              {syncLoading && activeTasks.length === 0 ? (
+                <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div>
+              ) : (
+                flaggedTasks.length
+              )}
+            </span>
           </div>
         </div>
         <div className="dark:bg-slate-950 bg-slate-100 border-[#10B981] cursor-pointer hover:scale-105 transition-all shadow-md shadow-slate-600 border-l-3 rounded-lg  py-2 px-4 flex flex-col justify-between gap-2">
@@ -161,7 +186,11 @@ export default function MyDash() {
             <Wallet color="#10B981" />
             <span className=" flex flex-col  font-bold ">
               <span>KSH </span>
-              {syncLoading && activeLeads.length === 0 ? <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div> : totalEarningsCount}
+              {syncLoading && activeLeads.length === 0 ? (
+                <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div>
+              ) : (
+                totalEarningsCount
+              )}
             </span>
           </div>
         </div>
@@ -176,56 +205,53 @@ export default function MyDash() {
             <div className="flex justify-between items-center">
               <s.icon color={s.color} />
               <span className="text-2xl font-bold">
-                {syncLoading && activeLeads.length === 0 ? <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div> : s.name == "New"
-                  ? newCount
-                  : s.name == "Contacted"
-                    ? contactedCount
-                    : s.name == "Follow up 1 after Contact"
-                      ? f1AfterContactCount
-                      : s.name == "Last Follow up after Contact"
-                        ? lastFAfterContactCount
-                        : s.name == "Replied"
-                          ? repliedCount
-                          : s.name == "Preview Sent"
-                            ? previewCount
-                            : s.name == "Follow up 1 after Preview"
-                              ? f1AfterPreviewCount
-                              : s.name == "Last Follow up after Preview"
-                                ? lastFAfterPreviewCount
-                                : s.name == "Price Sent"
-                                  ? priceCount
-                                  : s.name == "Follow up 1 after Price"
-                                    ? f1AfterPriceCount
-                                    : s.name == "Last Follow up after Price"
-                                      ? lastFAPriceCount
-                                      : s.name == "Negotiating"
-                                        ? negotiatingCount
-                                        : s.name == "Deposit paid"
-                                          ? depositCount
-                                          : s.name == "Checklist Sent"
-                                            ? checklistCount
-                                            : s.name ==
-                                                "Follow up after Checklist"
-                                              ? fAfterChecklistCount
-                                              : s.name == "Building Phase"
-                                                ? buildingCount
-                                                : s.name == "Review Phase"
-                                                  ? reviewCount
-                                                  : s.name ==
-                                                      "Payment Complete + Pitch Care Plan"
-                                                    ? paymentDoneCount
-                                                    : s.name ==
-                                                        "Closed + On Plan"
-                                                      ? closedOnPlanCount
-                                                      : s.name ==
-                                                          "Closed + Off Plan"
-                                                        ? closedOffPlanCount
-                                                        : s.name == "Dead"
-                                                          ? deadCount
-                                                          : s.name ==
-                                                              "Not Interested"
-                                                            ? noInterestCount
-                                                            : null}
+                {syncLoading && activeLeads.length === 0 ? (
+                  <div className="h-6 w-6 rounded-full border-4 border-t-transparent animate-spin"></div>
+                ) : s.name == "New" ? (
+                  newCount
+                ) : s.name == "Contacted" ? (
+                  contactedCount
+                ) : s.name == "Follow up 1 after Contact" ? (
+                  f1AfterContactCount
+                ) : s.name == "Last Follow up after Contact" ? (
+                  lastFAfterContactCount
+                ) : s.name == "Replied" ? (
+                  repliedCount
+                ) : s.name == "Preview Sent" ? (
+                  previewCount
+                ) : s.name == "Follow up 1 after Preview" ? (
+                  f1AfterPreviewCount
+                ) : s.name == "Last Follow up after Preview" ? (
+                  lastFAfterPreviewCount
+                ) : s.name == "Price Sent" ? (
+                  priceCount
+                ) : s.name == "Follow up 1 after Price" ? (
+                  f1AfterPriceCount
+                ) : s.name == "Last Follow up after Price" ? (
+                  lastFAPriceCount
+                ) : s.name == "Negotiating" ? (
+                  negotiatingCount
+                ) : s.name == "Deposit paid" ? (
+                  depositCount
+                ) : s.name == "Checklist Sent" ? (
+                  checklistCount
+                ) : s.name == "Follow up after Checklist" ? (
+                  fAfterChecklistCount
+                ) : s.name == "Building Phase" ? (
+                  buildingCount
+                ) : s.name == "Review Phase" ? (
+                  reviewCount
+                ) : s.name == "Payment Complete + Pitch Care Plan" ? (
+                  paymentDoneCount
+                ) : s.name == "Closed + On Plan" ? (
+                  closedOnPlanCount
+                ) : s.name == "Closed + Off Plan" ? (
+                  closedOffPlanCount
+                ) : s.name == "Dead" ? (
+                  deadCount
+                ) : s.name == "Not Interested" ? (
+                  noInterestCount
+                ) : null}
               </span>
             </div>
           </div>
@@ -239,12 +265,16 @@ export default function MyDash() {
           <div
             className={`h-35 border p-3 rounded-lg border-slate-600  overflow-y-auto`}
           >
-            {syncLoading && activeLeads.length === 0 ? 
-           (
-          <div>
-            <div className={`text-3xl  font-bold text-center h-screen flex justify-center items-center dark:bg-slate-950  dark:text-slate-100 text-slate-950  bg-slate-100`}><div className={`h-20 w-20 animate-spin rounded-full border-8    border-t-transparent`}></div>
-</div>
-          </div>
+            {syncLoading && activeLeads.length === 0 ? (
+              <div>
+                <div
+                  className={`text-3xl  font-bold text-center h-screen flex justify-center items-center dark:bg-slate-950  dark:text-slate-100 text-slate-950  bg-slate-100`}
+                >
+                  <div
+                    className={`h-20 w-20 animate-spin rounded-full border-8    border-t-transparent`}
+                  ></div>
+                </div>
+              </div>
             ) : activeFlaggedLeads.length === 0 ? (
               <div>
                 <div>
@@ -315,10 +345,15 @@ export default function MyDash() {
           </div>
           <ul className="flex p-5 text-center flex-col gap-5">
             {syncLoading && activeTasks.length === 0 ? (
-          <div>
-            <div className={`text-3xl  font-bold text-center h-screen flex justify-center items-center dark:bg-slate-950  dark:text-slate-100 text-slate-950  bg-slate-100`}><div className={`h-20 w-20 animate-spin rounded-full border-8    border-t-transparent`}></div>
-</div>
-          </div>
+              <div>
+                <div
+                  className={`text-3xl  font-bold text-center h-screen flex justify-center items-center dark:bg-slate-950  dark:text-slate-100 text-slate-950  bg-slate-100`}
+                >
+                  <div
+                    className={`h-20 w-20 animate-spin rounded-full border-8    border-t-transparent`}
+                  ></div>
+                </div>
+              </div>
             ) : activeTasks.length === 0 ? (
               <div>
                 <p className="text-lg font-bold tracking-wide text-[#9CA3AF] flex flex-col items-center gap-2">
