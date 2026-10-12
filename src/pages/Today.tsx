@@ -6,11 +6,14 @@ import useUpdateStatLast from "../hooks/useUpdateStatLast";
 import TodayViewCard from "../components/TodayViewCard";
 import { useAuth } from "../context/AuthContext";
 
+import { useTheme } from "../context/ThemeContext";
+
 
 export default function Today() {
   
   const { checkDaysPassed } = useAutoCheckLead();
-  const {isLoading, flaggedLeads } = useLead();
+  const { flaggedLeads, leads } = useLead();
+  const {syncLoading} = useTheme()
   const { formatAnyDate } = useDateFormater();
   const {user} = useAuth()
   const { updateStatLastCont, leadToUpdate, setLeadToUpdate, showToast } =
@@ -19,13 +22,18 @@ export default function Today() {
  const activeFlaggedLeads = flaggedLeads.filter(
     (l) => l.lead.userId === user!.uid && !l.lead.isDeleted,
   );
-
+  const activeLeads = leads.filter(l => l.userId === user!.uid && !l.isDeleted )
   return (
     <div>
-      <h1 className="font-bold md:text-xl text-lg">Welcome to the todays screen Brian,</h1>
+      <h1 className="font-bold md:text-xl text-lg">Welcome to the todays screen,</h1>
 
      <div className={"flex justify-center my-10 md:my-30"}>
-{isLoading ? <div><h1>Loading...</h1></div> : activeFlaggedLeads.length === 0 ?  <div className="dark:bg-slate-900 bg-slate-50  text-[#10B981] rounded-lg py-5 px-10 md:text-xl text-center flex flex-col items-center justify-center gap-2  shadow-md my-10 shadow-slate-600">
+{syncLoading && activeLeads.length === 0 ? (
+          <div>
+            <div className={`text-3xl  font-bold text-center h-screen flex justify-center items-center dark:bg-slate-950  dark:text-slate-100 text-slate-950  bg-slate-100`}><div className={`h-20 w-20 animate-spin rounded-full border-8    border-t-transparent`}></div>
+</div>
+          </div>
+        )  : activeFlaggedLeads.length === 0 ?  <div className="dark:bg-slate-900 bg-slate-50  text-[#10B981] rounded-lg py-5 px-10 md:text-xl text-center flex flex-col items-center justify-center gap-2  shadow-md my-10 shadow-slate-600">
             <PartyPopper size={30} />
             <span >Today you are free, no leads to follow up with!</span>
           </div> :

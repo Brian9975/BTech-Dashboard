@@ -174,8 +174,9 @@ export default function MyScripts() {
       </div>
 
       {/* Render Scripts */}
-      <main className="grid  md:grid-cols-3 p-5  grid-cols-1 justify-items-center  gap-10">
-        {syncLoading && activeScripts.length === 0 ? (
+      {
+
+syncLoading && activeScripts.length === 0 ? (
           <div>
             <div
               className={`text-3xl  font-bold text-center h-screen flex justify-center items-center dark:bg-slate-950  dark:text-slate-100 text-slate-950  bg-slate-100`}
@@ -186,11 +187,16 @@ export default function MyScripts() {
             </div>
           </div>
         ) : activeScripts.length === 0 ? (
+          <div className="flex justify-center ">
           <div className="dark:bg-slate-900 bg-slate-50 text-[#9CA3AF] rounded-lg py-5 px-10 sm:text-xl flex flex-col items-center justify-center gap-2  shadow-md my-30 shadow-slate-600">
             <UserPlus size={30} />
             <span>No added scripts at the moment!</span>
           </div>
-        ) : (
+          </div>
+        ) : 
+      
+      <main className="grid  md:grid-cols-3 p-5  grid-cols-1  justify-items-center  gap-10">
+        {(
           activeScripts.map((sc) => (
             <div key={sc.id}>
               <div className="dark:bg-slate-900 bg-slate-50 shadow-md shadow-slate-600 relative px-3 py-5 rounded-lg max-w-75">
@@ -212,7 +218,7 @@ export default function MyScripts() {
           ))
         )}
       </main>
-
+}
 
 
        {/* Toast Notification */}
