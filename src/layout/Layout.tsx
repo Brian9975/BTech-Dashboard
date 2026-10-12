@@ -6,6 +6,7 @@ import {
   Moon,
   Users,
   SunIcon,
+  LogOut,
 } from "lucide-react";
 import React, {  useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -74,7 +75,7 @@ if (!navigator.onLine) {
         ></div>
       )}
       <div
-        className={`dark:bg-slate-900 bg-slate-50 z-50 transition-all hidden md:block  ${sidebarOpen ? "md:w-xs" : "w-0"} border-r border-blue-500 overflow-y-auto h-screen`}
+        className={`dark:bg-slate-900 bg-slate-50 z-50 relative transition-all hidden md:block  ${sidebarOpen ? "md:w-xs" : "w-0"} border-r border-blue-500 overflow-y-auto h-screen`}
       >
         <Link to="/mydash" className={`${sidebarOpen ? "block" : "hidden"}`}>
           <h1 className="text-3xl">
@@ -115,6 +116,14 @@ if (!navigator.onLine) {
             <FileText size={18} />
             <span>My Scripts</span>
           </Link>
+        </div>
+
+
+        <div className="flex absolute bottom-10 w-full justify-center">
+         <div className="w-xxs flex items-center gap-10 justify-between dark:bg-slate-950 bg-slate-200 text-slate-100 p-3 rounded-lg">
+            <div className="h-10 w-10 bg-slate-600 rounded-full items-center flex justify-center font-bold text-lg"><div>{user?.email?.[0]?.toUpperCase() ?? "U"}</div></div>
+            <div><button onClick={logOut} className="text-slate-950 dark:text-slate-100 items-center gap-1 hover:scale-95 hover:text-slate-600 transition-all flex rounded-lg p-1 cursor-pointer text-lg"><LogOut/><span>Logout</span></button></div>
+         </div>
         </div>
       </div>
 
@@ -167,13 +176,16 @@ if (!navigator.onLine) {
           </Link>
         </div>
 
-        <div className="flex pt-10 justify-center">
-          <button onClick={logOut} className="text-lg cursor-pointer hover:scale-102 transition-all border-0 bg-white w-xs rounded-lg text-slate-950 p-4 font-bold">Logout</button>
+        <div className="flex absolute bottom-10 w-full justify-center">
+         <div className="w-xxs flex items-center gap-10 justify-between dark:bg-slate-950 bg-slate-200 text-slate-100 p-3 rounded-lg">
+            <div className="h-10 w-10 bg-slate-600 rounded-full items-center flex justify-center font-bold text-lg"><div>{user!.email![0].toUpperCase()}</div></div>
+            <div><button onClick={logOut} className="text-slate-950 dark:text-slate-100 items-center gap-1 hover:scale-95 hover:text-slate-600 transition-all flex rounded-lg p-1 cursor-pointer text-lg"><LogOut/><span>Logout</span></button></div>
+         </div>
         </div>
       </div>
 
       <div className="overflow-y-auto h-screen flex-1 flex-col">
-        <div className="sticky z-50 bg-slate-50   dark:bg-slate-900 top-0 flex items-center p-5 justify-between ">
+        <div className="sticky z-50 bg-slate-50   dark:bg-slate-900 top-0 flex items-center p-5 justify-between "> 
           <div>
             <button
               onClick={() => {
