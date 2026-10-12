@@ -266,14 +266,12 @@ export default function MyDash() {
             className={`h-35 border p-3 rounded-lg border-slate-600  overflow-y-auto`}
           >
             {syncLoading && activeLeads.length === 0 ? (
-              <div>
-                <div
-                  className={`text-3xl  font-bold text-center h-screen flex justify-center items-center dark:bg-slate-950  dark:text-slate-100 text-slate-950  bg-slate-100`}
-                >
+              <div className="flex justify-center itemns-center">
+                
                   <div
-                    className={`h-20 w-20 animate-spin rounded-full border-8    border-t-transparent`}
+                    className={`h-6 w-6 animate-spin rounded-full border-4  border-t-transparent`}
                   ></div>
-                </div>
+                
               </div>
             ) : activeFlaggedLeads.length === 0 ? (
               <div>
@@ -345,14 +343,12 @@ export default function MyDash() {
           </div>
           <ul className="flex p-5 text-center flex-col gap-5">
             {syncLoading && activeTasks.length === 0 ? (
-              <div>
-                <div
-                  className={`text-3xl  font-bold text-center h-screen flex justify-center items-center dark:bg-slate-950  dark:text-slate-100 text-slate-950  bg-slate-100`}
-                >
+              <div className={"flex justify-center items-center"}>
+                
                   <div
                     className={`h-20 w-20 animate-spin rounded-full border-8    border-t-transparent`}
                   ></div>
-                </div>
+                
               </div>
             ) : activeTasks.length === 0 ? (
               <div>
