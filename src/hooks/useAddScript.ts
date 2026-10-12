@@ -27,6 +27,10 @@ export default function useAddScript() {
           }   
             await db.add("scripts", scriptObject)
             setScripts(prev => ([...prev, scriptObject]))
+
+            setScriptTitle("")
+            setNiche("")
+            setScriptMessage("")
         } catch( err) {
             console.log("An Error occured whilst Adding script! Please try again")
 

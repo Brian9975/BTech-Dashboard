@@ -4,13 +4,15 @@ import { useScript } from "../context/ScriptContext";
 import useAddScript from "../hooks/useAddScript";
 import type { BCategory } from "../types/planStageCateg";
 import { useAuth } from "../context/AuthContext";
-import { UserPlus } from "lucide-react";
+import { CheckCircleIcon, UserPlus } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
+import useToast from "../hooks/useToast";
 
 // import { scriptData } from "../ScriptData";
 export default function MyScripts() {
   const { copyText, scriptCopied } = useCopyToClipboard();
   const { scripts } = useScript();
+  const {showToast, hideToast, toastOn} = useToast()
   const { syncLoading } = useTheme();
   const {
     modalOpen,
@@ -83,7 +85,13 @@ export default function MyScripts() {
         className={`fixed ${modalOpen ? "flex" : "hidden"}  justify-center items-center inset-0 bg-black/50 z-50`}
       >
         <form
-          onSubmit={addScript}
+          onSubmit={(e) => {
+            addScript(e)
+            showToast()
+          setTimeout(() => {
+           hideToast() 
+          }, 3000)
+          }}
           onClick={(e) => e.stopPropagation()}
           className="dark:bg-slate-900 bg-slate-50 rounded-2xl p-8 md:w-md"
         >
@@ -204,6 +212,22 @@ export default function MyScripts() {
           ))
         )}
       </main>
+
+
+
+       {/* Toast Notification */}
+            {
+              <div
+                className={`dark:bg-slate-100 bg-slate-950 fixed shadow-md shadow-slate-700 bottom-0 transition-all duration-400 ${toastOn ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-100 dark:text-slate-950`}
+              >
+                <p className="flex items-center gap-2">
+                  <CheckCircleIcon className="text-green-600 dark:text-green-800" />
+                  <span className="font-light text-lg">Script Added Successfully!</span>
+                </p>
+              </div>
+            }
+      
+           
     </div>
   );
 }
