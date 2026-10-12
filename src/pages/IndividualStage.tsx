@@ -21,7 +21,7 @@ export default function IndividualStage() {
       </div>
 
       {/* <p className="text-center  text-xl flex my-3 justify-center gap-2 items-center"><span>Total Earnings</span><ArrowRight/><span className="text-green-600 font-bold border border-green-600 px-4 rounded-lg">Ksh {leadData?.earningsFromLead}</span></p> */}
-     {leadsInStage.length == 0 ? <div className="flex justify-center"><div className="dark:bg-slate-900 bg-slate-50 rounded-lg py-5 px-10 md:text-xl flex flex-col items-center justify-center gap-2  shadow-md my-15 shadow-slate-600"><UserXIcon className="text-blue-600" size={35}/><span>No added leads in this stage at the moment!</span></div></div> : 
+     {leadsInStage.length == 0 ? <div className="flex justify-center"><div className="dark:bg-slate-900 bg-slate-50 rounded-lg py-5 px-10 md:text-xl flex flex-col text-[#9CA3AF] items-center justify-center gap-2  shadow-md my-15 shadow-slate-600"><UserXIcon  size={35}/><span>No added leads in this stage at the moment!</span></div></div> : 
       <div className="grid my-10 md:grid-cols-2 gap-4">
         {leadsInStage.map((l) => (
           <div key={l.id} className={`border  p-5 border-blue-600 text-center rounded-lg`}>
