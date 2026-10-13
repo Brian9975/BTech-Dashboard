@@ -1,11 +1,12 @@
-import { Moon, SunIcon } from "lucide-react";
+import { Eye, EyeOff, Moon, SunIcon } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 import GoogleLogo from "../assets/GoogleLogo.jpeg"
 import useLogin from "../hooks/useLogin";
 import { useAuth } from "../context/AuthContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 export default function Login() {
+  const [showPassword, setShowPassword] = useState(false)
   const { theme, setTheme } = useTheme();
   const {authLoading, user} = useAuth()
   const navigate = useNavigate()
@@ -59,8 +60,9 @@ export default function Login() {
           <div className="pb-5">
             {" "}
             <label htmlFor="pass">{signedUser ? "Password" : "New Password"}:</label>
-            <div>
-              <input value={password} onChange={e => setPassword(e.target.value)} id="pass" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" type="password" required/>
+            <div className="relative">
+              <input value={password} onChange={e => setPassword(e.target.value)} id="pass" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" type={showPassword ? "text" : "password"} required/>
+              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-2 cursor-pointer -translate-y-1/2 top-1/2">{showPassword ? <Eye className="cursor-pointer"/> : <EyeOff className="text-gray-600"/>}</button>
             </div>
           </div>
 
@@ -69,19 +71,25 @@ export default function Login() {
     !signedUser &&
           <div>
             <label htmlFor="newPassConfirm">Confirm New Password:</label>
-            <div>
-              <input value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}  id="newPassConfirm" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" type="password" required/>
+            <div className="relative">
+              <input value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}  id="newPassConfirm" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" type={showPassword ? "text" : "password"} required/>
+              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-2 cursor-pointer -translate-y-1/2 top-1/2">{showPassword ? <Eye /> : <EyeOff className="text-gray-600"/>}</button>
             </div>
           </div>
 }
           <div className="flex justify-center  py-5">
-<button className="bg-slate-950 dark:bg-slate-100 text-slate-100 dark:text-slate-950 py-1.5 cursor-pointer px-2 rounded-lg w-full text-lg">Continue</button>
+<button type="submit" className="bg-slate-950 dark:bg-slate-100 text-slate-100 dark:text-slate-950 py-1.5 cursor-pointer px-2 rounded-lg w-full text-lg">Continue</button>
           </div>
         </form>
 
         <p className="text-center">
           Already have an account,{" "}
-          <span onClick={() => setSignedUser(!signedUser)} className="cursor-pointer font-bold text-blue-600">{signedUser ? "Sign up" : "Login"}</span>
+          <span  onClick={() => {
+            setSignedUser(!signedUser)
+            setEmail("")
+            setPassword("")
+            setConfirmPassword("")
+            }} className="cursor-pointer font-bold text-blue-600">{signedUser ? "Sign up" : "Login"}</span>
         </p>
          <p className="text-center py-2">or</p>
         <div>
