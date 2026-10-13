@@ -219,11 +219,17 @@ export default function useSyncData() {
 
   const handleAllSync = async () => {
     if (!navigator.onLine) return
-    await handleLeadSyncing();
-    await handleTaskSyncing();
-    await handleScriptSyncing();
-    setSyncLoading(false)
-    console.log("Sync complete");
+    try {
+      
+      await handleLeadSyncing();
+      await handleTaskSyncing();
+      await handleScriptSyncing();
+      setSyncLoading(false)
+      alert("Sync complete");
+    } catch (err: any) {
+      alert(`An error occured while syncing data,please try again ${err}`)
+    }
+      
   };
 
   return { handleAllSync };
