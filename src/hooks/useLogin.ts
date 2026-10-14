@@ -41,7 +41,15 @@ export default function useLogin() {
         
      navigate("/mydash") 
     } catch(err: any) {
-        alert(`Oops, something went wrong while logging in, please try again [${err.code}]`)
+        
+        if (err.code.includes("auth/invalid-credential")) {
+
+          alert("Wrong credentials, please sign up to be logged in")
+        } else if (err.code.includes("auth/network-request-failed")) {
+          alert("Failed to login, please check your internet connection and try again")
+        } else(
+          alert("Oops, something went wrong while logging in, please try again")
+        )
     }
   }
     return {loginWithGoogle, signedUser, setSignedUser, loginWithEmailPassword, setEmail, setPassword, setConfirmPassword, email, password, confirmPassword}
