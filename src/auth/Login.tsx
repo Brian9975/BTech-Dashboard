@@ -1,35 +1,52 @@
-import { Eye, EyeOff, Moon, SunIcon } from "lucide-react";
+import { Eye, EyeOff, Moon, SunIcon, X } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
-import GoogleLogo from "../assets/GoogleLogo.jpeg"
+import GoogleLogo from "../assets/GoogleLogo.jpeg";
 import useLogin from "../hooks/useLogin";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 export default function Login() {
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
   const { theme, setTheme } = useTheme();
-  const {authLoading, user} = useAuth()
-  const navigate = useNavigate()
- const {loginWithGoogle, email, signedUser, setSignedUser, setEmail, password, setPassword, confirmPassword, setConfirmPassword, loginWithEmailPassword} = useLogin()
+  const { authLoading, user } = useAuth();
+  const navigate = useNavigate();
+  const {
+    display,
+    errorMessage, 
+    loginWithGoogle,
+    email,
+    signedUser,
+    setSignedUser,
+    setEmail,
+    password,
+    setPassword,
+    confirmPassword,
+    setConfirmPassword,
+    loginWithEmailPassword,
+  } = useLogin();
 
+  console.log(display)
+  useEffect(() => {
+    if (user && !authLoading) {
+      navigate("/mydash");
+    }
+  }, [user]);
 
- 
-
- useEffect(() => {
-  if (user && !authLoading) {
-    navigate("/mydash")
+  if (authLoading) {
+    return (
+      <div
+        className={`text-3xl ${theme} font-bold text-center h-screen flex justify-center items-center dark:bg-slate-950  dark:text-slate-100 text-slate-950  bg-slate-100`}
+      >
+        <div
+          className={`h-20 w-20 animate-spin rounded-full border-8    border-t-transparent`}
+        ></div>
+      </div>
+    );
   }
- }, [user])
 
- if (authLoading) {
-   return <div className={`text-3xl ${theme} font-bold text-center h-screen flex justify-center items-center dark:bg-slate-950  dark:text-slate-100 text-slate-950  bg-slate-100`}><div className={`h-20 w-20 animate-spin rounded-full border-8    border-t-transparent`}></div>
-</div>
- }
-
-
- if (user) {
-  return null
- }
+  if (user) {
+    return null;
+  }
   return (
     <div
       className={`bg-slate-100 flex justify-center items-center text-slate-950 dark:text-slate-100 dark:bg-slate-950 min-h-screen ${theme}`}
@@ -53,51 +70,115 @@ export default function Login() {
           <div className="pb-5">
             <label htmlFor="email">Email:</label>
             <div>
-              <input value={email} onChange={e => setEmail(e.target.value)} id="email" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" type="email" required/>
+              <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                id="email"
+                className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
+                type="email"
+                required
+              />
             </div>
           </div>
 
           <div className="pb-5">
             {" "}
-            <label htmlFor="pass">{signedUser ? "Password" : "New Password"}:</label>
+            <label htmlFor="pass">
+              {signedUser ? "Password" : "New Password"}:
+            </label>
             <div className="relative">
-              <input value={password} onChange={e => setPassword(e.target.value)} id="pass" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" type={showPassword ? "text" : "password"} required/>
-              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-2 cursor-pointer -translate-y-1/2 top-1/2">{showPassword ? <Eye className="cursor-pointer"/> : <EyeOff className="text-gray-600"/>}</button>
+              <input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                id="pass"
+                className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
+                type={showPassword ? "text" : "password"}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-2 cursor-pointer -translate-y-1/2 top-1/2"
+              >
+                {showPassword ? (
+                  <Eye className="cursor-pointer" />
+                ) : (
+                  <EyeOff className="text-gray-600" />
+                )}
+              </button>
             </div>
           </div>
 
-
-{
-    !signedUser &&
-          <div>
-            <label htmlFor="newPassConfirm">Confirm New Password:</label>
-            <div className="relative">
-              <input value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}  id="newPassConfirm" className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg" type={showPassword ? "text" : "password"} required/>
-              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-2 cursor-pointer -translate-y-1/2 top-1/2">{showPassword ? <Eye /> : <EyeOff className="text-gray-600"/>}</button>
+          {!signedUser && (
+            <div>
+              <label htmlFor="newPassConfirm">Confirm New Password:</label>
+              <div className="relative">
+                <input
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  id="newPassConfirm"
+                  className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
+                  type={showPassword ? "text" : "password"}
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-2 cursor-pointer -translate-y-1/2 top-1/2"
+                >
+                  {showPassword ? (
+                    <Eye />
+                  ) : (
+                    <EyeOff className="text-gray-600" />
+                  )}
+                </button>
+              </div>
             </div>
-          </div>
-}
+          )}
           <div className="flex justify-center  py-5">
-<button type="submit" className="bg-slate-950 dark:bg-slate-100 text-slate-100 dark:text-slate-950 py-1.5 cursor-pointer px-2 rounded-lg w-full text-lg">Continue</button>
+            <button
+              type="submit"
+              className="bg-slate-950 dark:bg-slate-100 text-slate-100 dark:text-slate-950 py-1.5 cursor-pointer px-2 rounded-lg w-full text-lg"
+            >
+              Continue
+            </button>
           </div>
         </form>
 
         <p className="text-center">
           Already have an account,{" "}
-          <span  onClick={() => {
-            setSignedUser(!signedUser)
-            setEmail("")
-            setPassword("")
-            setConfirmPassword("")
-            }} className="cursor-pointer font-bold text-blue-600">{signedUser ? "Sign up" : "Login"}</span>
+          <span
+            onClick={() => {
+              setSignedUser(!signedUser);
+              setEmail("");
+              setPassword("");
+              setConfirmPassword("");
+            }}
+            className="cursor-pointer font-bold text-blue-600"
+          >
+            {signedUser ? "Sign up" : "Login"}
+          </span>
         </p>
-         <p className="text-center py-2">or</p>
+        <p className="text-center py-2">or</p>
         <div>
-          <button onClick={() => loginWithGoogle()} className="flex justify-center gap-2 bg-slate-950 text-slate-100 dark:bg-slate-100 dark:text-slate-950 w-full font-bold text-lg cursor-pointer rounded-lg  py-1.5 px-2">
-            <img className="w-20" src={GoogleLogo}/> <span>Continue With Google</span>
+          <button
+            onClick={() => loginWithGoogle()}
+            className="flex justify-center gap-2 bg-slate-950 text-slate-100 dark:bg-slate-100 dark:text-slate-950 w-full font-bold text-lg cursor-pointer rounded-lg  py-1.5 px-2"
+          >
+            <img className="w-20" src={GoogleLogo} />{" "}
+            <span>Continue With Google</span>
           </button>
         </div>
       </main>
+
+      <div
+        className={`dark:bg-slate-100 bg-slate-950 z-50 fixed shadow-md shadow-slate-700  transition-all duration-400 ${display ? "top-0" : "-top-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-100 dark:text-slate-950`}
+      >
+        <p className="flex items-center gap-2">
+          <X className="dark:text-green-800 text-green-600" />
+          <span className="font-light text-lg">{errorMessage}</span>
+        </p>
+      </div>
     </div>
   );
 }
