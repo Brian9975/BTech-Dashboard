@@ -49,16 +49,16 @@ export default function useSyncData() {
 
               if (docData.lastModified > item.lastModified) {
                 await db.put("tasks", docData);
-                console.log("Server data was newer : Conflict resolved");
+                // console.log("Server data was newer : Conflict resolved");
                 continue;
               }
             }
 
             await setDoc(docRef, item);
 
-            console.log("Tasks synced successfully");
+            // console.log("Tasks synced successfully");
           } catch (err) {
-            console.log("An Error occured whilst syncing data", err);
+            // console.log("An Error occured whilst syncing data");
           }
         }
       }
@@ -74,14 +74,14 @@ export default function useSyncData() {
           const serverData = docSnap.data();
           if (serverData.userId === user.uid) {
             await db.put("tasks", serverData);
-            console.log("Pulled Task Data Successfully");
+            // console.log("Pulled Task Data Successfully");
           }
           const pulledTasks = await db.getAll("tasks");
           setTasks(pulledTasks);
         }
       }
     } catch (err) {
-      console.log(`An error occured while pulling data, ${err}`);
+      // console.log(`An error occured while pulling data`);
     }
   };
 
@@ -113,15 +113,15 @@ export default function useSyncData() {
 
               if (docData.lastModified > item.lastModified) {
                 await db.put("leads", docData);
-                console.log("Server data was newer : Conflict resolved");
+                // console.log("Server data was newer : Conflict resolved");
                 continue;
               }
             }
 
             await setDoc(docRef, item);
-            console.log("Leads synced successfully");
+            // console.log("Leads synced successfully");
           } catch (err) {
-            console.log("An Error occured whilst syncing data", err);
+            // console.log("An Error occured whilst syncing data");
           }
         }
       }
@@ -136,14 +136,14 @@ export default function useSyncData() {
           const serverData = docSnap.data();
           if (serverData.userId === user.uid) {
             await db.put("leads", serverData);
-            console.log("Pulled Lead Data Successfully");
+            // console.log("Pulled Lead Data Successfully");
           }
           const updatedLeads = await db.getAll("leads");
           setLeads(updatedLeads);
         }
       }
     } catch (err) {
-      console.log(`An error occured while pulling data, ${err}`);
+      // console.log(`An error occured while pulling data, ${err}`);
     } 
 
     
@@ -183,15 +183,15 @@ export default function useSyncData() {
 
               if (docData.lastModified > item.lastModified) {
                 await db.put("scripts", docData);
-                console.log("Server data was newer : Conflict resolved");
+                // console.log("Server data was newer : Conflict resolved");
                 continue;
               }
             }
 
             await setDoc(docRef, item);
-            console.log("Scripts synced successfully");
+            // console.log("Scripts synced successfully");
           } catch (err) {
-            console.log("An Error occured whilst syncing data", err);
+            // console.log("An Error occured whilst syncing data");
           }
         }
       // }
@@ -206,14 +206,14 @@ export default function useSyncData() {
           const serverData = docSnap.data();
           if (serverData.userId === user.uid) {
             await db.put("scripts", serverData);
-            console.log("Pulled Script Data Successfully");
+            // console.log("Pulled Script Data Successfully");
           }
           const updatedScripts = await db.getAll("scripts");
           setScripts(updatedScripts);
         }
       }
     } catch (err) {
-      console.log(`An error occured while pulling data, ${err}`);
+      // console.log(`An error occured while pulling data`);
     }
   };
 
@@ -225,9 +225,9 @@ export default function useSyncData() {
       await handleTaskSyncing();
       await handleScriptSyncing();
       setSyncLoading(false)
-      alert("Sync complete");
+      console.log("Sync complete");
     } catch (err: any) {
-      alert(`An error occured while syncing data,please try again ${err}`)
+      console.log(`An error occured while syncing data!`)
     }
       
   };
