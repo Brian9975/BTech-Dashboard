@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { useLead } from "../context/LeadContext";
 import type { LeadsInterface } from "../types/LeadsInterface";
 import useSyncData from "./useSyncData";
+import useHandleToast from "./useHandleToast";
 
 
 export default function useUpdateStatLast() {
@@ -12,6 +13,11 @@ export default function useUpdateStatLast() {
   const [showToast, setShowToast] = useState(false)
   const {leads, setLeads} = useLead()
   const {user} = useAuth()
+  const [errorToastDisplay, errorToastMessage, handleToast] = useHandleToast() as [
+        boolean, 
+        string,
+        (message: string) => void,
+      ]
   const {handleAllSync} = useSyncData()
 
   const activeLeads = leads.filter(l => l.userId === user!.uid)
@@ -116,12 +122,12 @@ export default function useUpdateStatLast() {
        setShowToast(false)
       }, 3000)
     } catch (err) {
-      console.log("An Error Occurd while completing lead! Please try again")
+      handleToast("An Error Occurd while completing lead! Please try again")
     } finally {
       setLeadToUpdate(null);
       handleAllSync()
     }
 
   };
-  return { updateStatLastCont, leadToUpdate, setLeadToUpdate, showToast };
+  return { errorToastDisplay, errorToastMessage , updateStatLastCont, leadToUpdate, setLeadToUpdate, showToast };
 }
