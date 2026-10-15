@@ -4,17 +4,19 @@ import { useScript } from "../context/ScriptContext";
 import useAddScript from "../hooks/useAddScript";
 import type { BCategory } from "../types/planStageCateg";
 import { useAuth } from "../context/AuthContext";
-import { CheckCircleIcon, UserPlus } from "lucide-react";
+import { AlertTriangle, CheckCircleIcon, UserPlus } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 import useToast from "../hooks/useToast";
 
-// import { scriptData } from "../ScriptData";
+
 export default function MyScripts() {
   const { copyText, scriptCopied } = useCopyToClipboard();
   const { scripts } = useScript();
   const { showToast, hideToast, toastOn } = useToast();
   const { syncLoading } = useTheme();
   const {
+    display, 
+    toastMessage,
     modalOpen,
     setModalOpen,
     addScript,
@@ -228,6 +230,16 @@ export default function MyScripts() {
           </p>
         </div>
       }
+
+       <div
+              className={`dark:bg-slate-100 bg-slate-950 z-50 fixed shadow-md shadow-slate-700  transition-all duration-400 ${display ? "top-0" : "-top-100"}  m-5 rounded-lg py-5 px-4  text-slate-100 dark:text-slate-950`}
+            >
+              <p className="flex items-center gap-2">
+                <AlertTriangle className="dark:text-red-800 text-red-600" />
+                <span className="font-light  md:text-lg">{toastMessage}</span>
+              </p>
+            </div>
+      
     </div>
   );
 }

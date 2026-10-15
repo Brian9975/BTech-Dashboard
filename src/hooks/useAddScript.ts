@@ -3,6 +3,7 @@ import React, {useState} from "react"
 import { useAuth } from "../context/AuthContext"
 import { useScript } from "../context/ScriptContext"
 import useSyncData from "./useSyncData"
+import useHandleToast from "./useHandleToast"
 export default function useAddScript() {
     const {user} = useAuth()
     const {setScripts} = useScript()
@@ -11,6 +12,7 @@ export default function useAddScript() {
     const [niche, setNiche] = useState("")
     const [scriptMessage, setScriptMessage] = useState("")
     const {handleAllSync} = useSyncData()
+    const {display, handleToast, toastMessage} = useHandleToast()
     const addScript = async (e: React.SubmitEvent) => {
         e.preventDefault()
         try {
@@ -32,7 +34,7 @@ export default function useAddScript() {
             setNiche("")
             setScriptMessage("")
         } catch( err) {
-            console.log("An Error occured whilst Adding script! Please try again")
+            handleToast("An Error occured whilst Adding script! Please try again")
 
         } finally {
 
@@ -45,5 +47,5 @@ export default function useAddScript() {
       
       
     }
-  return {addScript, scriptTitle, niche, scriptMessage, modalOpen, setModalOpen, setScriptTitle, setNiche, setScriptMessage}
+  return {display, toastMessage, addScript, scriptTitle, niche, scriptMessage, modalOpen, setModalOpen, setScriptTitle, setNiche, setScriptMessage}
 }
