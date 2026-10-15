@@ -2,10 +2,16 @@ import { useState } from "react"
 import { useLead } from "../context/LeadContext"
 import { dbPromise } from "../config/indexedDB-config"
 import useSyncData from "./useSyncData"
+import useHandleToast from "./useHandleToast"
 
 export default function useUpdateEarningsFromLead() {
 const [leadToUpdateEarnings, setLeadToUpdateEarnings] = useState<string | null>(null)
 const [amount, setAmount] = useState(0)
+const [earningErrorToastDisplay, earningErrorToastMessage, handleToast] = useHandleToast() as [
+      boolean, 
+      string,
+      (message: string) => void,
+    ]
 const {leads, setLeads} = useLead()
 const {handleAllSync} = useSyncData()
     const updateEarningsFromLead = async () => {
@@ -29,7 +35,7 @@ setLeads(leads.map(l => l.id == leadToUpdateEarnings ? {
 earningsFromLead: l.earningsFromLead  + amount
 } : l))
   } catch (err) {
-    console.log("An Error Occured while updating lead's Earnings! Please try again")
+    handleToast("An Error Occured while updating lead's Earnings! Please try again")
   } finally {
     setLeadToUpdateEarnings(null)
     setAmount(0)
@@ -37,5 +43,5 @@ earningsFromLead: l.earningsFromLead  + amount
   }
 
     }
-  return {updateEarningsFromLead, leadToUpdateEarnings, setLeadToUpdateEarnings, amount, setAmount}
+  return {earningErrorToastDisplay, earningErrorToastMessage ,updateEarningsFromLead, leadToUpdateEarnings, setLeadToUpdateEarnings, amount, setAmount}
 }
