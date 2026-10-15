@@ -12,7 +12,7 @@ import useToast from "../hooks/useToast";
 export default function MyScripts() {
   const { copyText, scriptCopied } = useCopyToClipboard();
   const { scripts } = useScript();
-  const {showToast, hideToast, toastOn} = useToast()
+  const { showToast, hideToast, toastOn } = useToast();
   const { syncLoading } = useTheme();
   const {
     modalOpen,
@@ -86,11 +86,11 @@ export default function MyScripts() {
       >
         <form
           onSubmit={(e) => {
-            addScript(e)
-            showToast()
-          setTimeout(() => {
-           hideToast() 
-          }, 3000)
+            addScript(e);
+            showToast();
+            setTimeout(() => {
+              hideToast();
+            }, 3000);
           }}
           onClick={(e) => e.stopPropagation()}
           className="dark:bg-slate-900 bg-slate-50 rounded-2xl p-8 md:w-md"
@@ -174,30 +174,26 @@ export default function MyScripts() {
       </div>
 
       {/* Render Scripts */}
-      {
-
-syncLoading && activeScripts.length === 0 ? (
-          <div>
+      {syncLoading && activeScripts.length === 0 ? (
+        <div>
+          <div
+            className={`text-3xl  font-bold text-center h-screen flex justify-center items-center dark:bg-slate-950  dark:text-slate-100 text-slate-950  bg-slate-100`}
+          >
             <div
-              className={`text-3xl  font-bold text-center h-screen flex justify-center items-center dark:bg-slate-950  dark:text-slate-100 text-slate-950  bg-slate-100`}
-            >
-              <div
-                className={`h-20 w-20 animate-spin rounded-full border-8    border-t-transparent`}
-              ></div>
-            </div>
+              className={`h-20 w-20 animate-spin rounded-full border-8    border-t-transparent`}
+            ></div>
           </div>
-        ) : activeScripts.length === 0 ? (
-          <div className="flex justify-center ">
+        </div>
+      ) : activeScripts.length === 0 ? (
+        <div className="flex justify-center ">
           <div className="dark:bg-slate-900 bg-slate-50 text-[#9CA3AF] rounded-lg py-5 px-10 sm:text-xl flex flex-col items-center justify-center gap-2  shadow-md my-30 shadow-slate-600">
             <UserPlus size={30} />
             <span>No added scripts at the moment!</span>
           </div>
-          </div>
-        ) : 
-      
-      <main className="grid  md:grid-cols-3 p-5  grid-cols-1  justify-items-center  gap-10">
-        {(
-          activeScripts.map((sc) => (
+        </div>
+      ) : (
+        <main className="grid  md:grid-cols-3 p-5  grid-cols-1  justify-items-center  gap-10">
+          {activeScripts.map((sc) => (
             <div key={sc.id}>
               <div className="dark:bg-slate-900 bg-slate-50 shadow-md shadow-slate-600 relative px-3 py-5 rounded-lg max-w-75">
                 <p className="tracking-wider overflow-auto">{sc.message}</p>
@@ -215,25 +211,23 @@ syncLoading && activeScripts.length === 0 ? (
                 </span>
               </div>
             </div>
-          ))
-        )}
-      </main>
-}
+          ))}
+        </main>
+      )}
 
-
-       {/* Toast Notification */}
-            {
-              <div
-                className={`dark:bg-slate-100 bg-slate-950 fixed shadow-md shadow-slate-700 bottom-0 transition-all duration-400 ${toastOn ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-100 dark:text-slate-950`}
-              >
-                <p className="flex items-center gap-2">
-                  <CheckCircleIcon className="text-green-600 dark:text-green-800" />
-                  <span className="font-light text-lg">Script Added Successfully!</span>
-                </p>
-              </div>
-            }
-      
-           
+      {/* Toast Notification */}
+      {
+        <div
+          className={`dark:bg-slate-100 bg-slate-950 fixed shadow-md shadow-slate-700 bottom-0 transition-all duration-400 ${toastOn ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-100 dark:text-slate-950`}
+        >
+          <p className="flex items-center gap-2">
+            <CheckCircleIcon className="text-green-600 dark:text-green-800" />
+            <span className="font-light text-lg">
+              Script Added Successfully!
+            </span>
+          </p>
+        </div>
+      }
     </div>
   );
 }

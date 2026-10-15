@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  AlertTriangle,
   BadgeDollarSign,
   ChartBarIncreasing,
   CheckCircleIcon,
@@ -84,11 +85,12 @@ export default function Leads() {
     setLeadToDelete,
     // isLoading,
   } = useLead();
-  const { addLead, loading } = useAddLead();
+  const { addLead, loading, display, toastMessage } = useAddLead();
   const { updateLead, showUpdateToast, setShowUpdateToast } = useUpdateLead();
   const { removeLead, showDeleteToast } = useRemoveLead();
   const { toastOn, showToast, hideToast } = useToast();
   const {user} = useAuth()
+
   const leadToEditObject = leads.find((l) => l.id === leadToEdit);
   const leadToUpdateLastContactedObject = leads.find(
     (l) => l.id == leadLastContactedToUpdate,
@@ -648,6 +650,16 @@ export default function Leads() {
           <span className="font-light text-lg">Lead Deletion Completed!</span>
         </p>
       </div>
+
+      {/* Error Toasts */}
+            <div
+              className={`dark:bg-slate-100 bg-slate-950 z-50 fixed shadow-md shadow-slate-700  transition-all duration-400 ${display ? "top-0" : "-top-100"}  m-5 rounded-lg py-5 px-4  text-slate-100 dark:text-slate-950`}
+            >
+              <p className="flex items-center gap-2">
+                <AlertTriangle className="dark:text-red-800 text-red-600" />
+                <span className="font-light  md:text-lg">{toastMessage}</span>
+              </p>
+            </div>
     </div>
   );
 }

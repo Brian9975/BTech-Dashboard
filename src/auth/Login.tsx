@@ -1,4 +1,4 @@
-import { Eye, EyeOff, Moon, SunIcon, X } from "lucide-react";
+import { AlertTriangle, Eye, EyeOff, Moon, SunIcon } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 import GoogleLogo from "../assets/GoogleLogo.jpeg";
 import useLogin from "../hooks/useLogin";
@@ -25,7 +25,6 @@ export default function Login() {
     loginWithEmailPassword,
   } = useLogin();
 
-  console.log(display)
   useEffect(() => {
     if (user && !authLoading) {
       navigate("/mydash");
@@ -172,11 +171,11 @@ export default function Login() {
       </main>
 
       <div
-        className={`dark:bg-slate-100 bg-slate-950 z-50 fixed shadow-md shadow-slate-700  transition-all duration-400 ${display ? "top-0" : "-top-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-100 dark:text-slate-950`}
+        className={`dark:bg-slate-100 bg-slate-950 z-50 fixed shadow-md shadow-slate-700  transition-all duration-400 ${display ? "top-0" : "-top-100"}  m-5 rounded-lg py-5 px-4  text-slate-100 dark:text-slate-950`}
       >
         <p className="flex items-center gap-2">
-          <X className="dark:text-green-800 text-green-600" />
-          <span className="font-light text-lg">{toastMessage}</span>
+          <AlertTriangle className="dark:text-red-800 text-red-600" />
+          <span className="font-light  md:text-lg">{toastMessage}</span>
         </p>
       </div>
     </div>

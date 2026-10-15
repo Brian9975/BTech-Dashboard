@@ -5,12 +5,14 @@ import useModal from "./useModal";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import useSyncData from "./useSyncData";
+import useHandleToast from "./useHandleToast";
 
 
 export default function useAddLead() {
   const [loading, setLoading] = useState(false)
   const {user} = useAuth()
   const {setLeads} = useLead()
+  const {handleToast, display, toastMessage} = useHandleToast()
   const {
     businessName,
     setBusinessName,
@@ -54,7 +56,7 @@ if (!user) return
    
    setLeads((prev) => [...prev, leadInfo]);
   } catch (err) {
-    console.log("An error occured while adding lead! Please try again")
+    handleToast("An error occured while adding lead! Please try again")
   } finally {
     setLoading(false)
     closeDialog();
@@ -69,5 +71,5 @@ if (!user) return
 
   };
 
-  return { addLead, loading };
+  return { addLead, loading, display, toastMessage };
 }
