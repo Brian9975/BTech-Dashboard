@@ -4,13 +4,11 @@ import { useLead } from "../context/LeadContext";
 import { ArrowRight } from "lucide-react";
 import useDateFormater from "../hooks/useDateFormater";
 import { dbPromise } from "../config/indexedDB-config";
-// import type { LeadsInterface } from "../types/LeadsInterface";
+
 export default function Lead() {
   const { id } = useParams();
    const [hasLoaded, setHasLoaded] = useState(false);
-  // const [leadToUpdateData, setLeadToUpdateData] = useState<LeadsInterface | {}>(
-  //   {},
-  // );
+  
   const { leads } = useLead();
   const leadData = leads.find((l) => l.id == id);
   const [notesValue, setNotesValue] = useState(""
@@ -33,24 +31,18 @@ export default function Lead() {
     data.notes = notesValue;
     await db.put("leads", data);
 
-    // setLeadToUpdateData(data);
-
-    //  setLeads(leads.map(l => l.id == id ? {
-    //   ...l,
-    //   notes: notesValue
-    //  } : l))
   };
   useEffect(() => {
 
     getLead();
-    // console.log(leadToUpdateData?.notes);
+   
   }, [id]);
 
 
   useEffect(() => {
     
     updateNotes();
-    // saveToStorage()
+    
   }, [notesValue])
 
   return (
