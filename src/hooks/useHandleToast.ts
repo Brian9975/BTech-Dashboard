@@ -5,7 +5,7 @@ export default function useHandleToast() {
     const [toastMessage, setToastMessage] = useState("")
 
 
-     const handleErrorToast = (message: string) => {
+     const handleToast = (message: string) => {
         setDisplay(true)
         setTimeout(() => {
           setDisplay(false)
@@ -13,5 +13,5 @@ export default function useHandleToast() {
       setToastMessage(message)
     }
  
-  return {display, toastMessage, handleErrorToast}
+  return {display, toastMessage, handleToast}
 }

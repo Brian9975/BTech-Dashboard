@@ -12,19 +12,17 @@ export default function useLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // const [display, setDisplay] = useState(false);
-  // const [errorMessage, setErrorMessage] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [signedUser, setSignedUser] = useState(true);
   const navigate = useNavigate();
- const {display, toastMessage, handleErrorToast} = useHandleToast()
+ const {display, toastMessage, handleToast} = useHandleToast()
   const loginWithGoogle = async () => {
     try {
       await signInWithPopup(auth, provider);
 
       navigate("/mydash");
     } catch (err) {
-      console.log(
+      handleToast(
         "An error occured while signing in, please check your internet connection and try again",
       );
     }
@@ -47,15 +45,15 @@ export default function useLogin() {
       navigate("/mydash");
     } catch (err: any) {
       if (err.code.includes("auth/invalid-credential")) {
-        handleErrorToast("Wrong credentials, please sign up to be logged in");
+        handleToast("Wrong credentials, please sign up to be logged in");
         
       } else if (err.code.includes("auth/network-request-failed")) {
-        handleErrorToast(
+        handleToast(
           "Failed to login, please check your internet connection and try again",
         );
         
       } else
-        handleErrorToast(
+        handleToast(
           "Oops, something went wrong while logging in, please try again",
         );
         
