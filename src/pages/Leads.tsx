@@ -44,7 +44,7 @@ export default function Leads() {
     leadLastContactedToUpdate,
     setLeadLastContactedToUpdate,
   } = useUpdateLastContacted();
-  const { updatePlan, leadToUpdatePlan, setLeadToUpdatePlan } = useUpdatePlan();
+  const { updatePlan, leadToUpdatePlan, setLeadToUpdatePlan, planErrorToastDisplay, planErrorToastMessage } = useUpdatePlan();
   const {
     earningErrorToastDisplay, 
     earningErrorToastMessage,
@@ -695,6 +695,14 @@ export default function Leads() {
               <p className="flex items-center gap-2">
                 <AlertTriangle className="dark:text-red-800 text-red-600" />
                 <span className="font-light  md:text-lg">{updateLeadErrorToastMessage}</span>
+              </p>
+            </div>
+            <div
+              className={`dark:bg-slate-100 right-1/2 translate-x-1/2 bg-slate-950 z-50 fixed shadow-md shadow-slate-700  transition-all duration-400 ${planErrorToastDisplay ? "top-0" : "-top-100"}  m-5 rounded-lg py-5 px-4  text-slate-100 dark:text-slate-950`}
+            >
+              <p className="flex items-center gap-2">
+                <AlertTriangle className="dark:text-red-800 text-red-600" />
+                <span className="font-light  md:text-lg">{planErrorToastMessage}</span>
               </p>
             </div>
     </div>

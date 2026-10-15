@@ -3,12 +3,18 @@ import { useLead } from '../context/LeadContext'
 import { dbPromise } from '../config/indexedDB-config'
 import { useAuth } from '../context/AuthContext'
 import useSyncData from './useSyncData'
+import useHandleToast from './useHandleToast'
 
 export default function useUpdatePlan() {
 const [leadToUpdatePlan, setLeadToUpdatePlan] = useState<string | null>(null)
 const {leads, setLeads} = useLead()
 const {user} = useAuth()
 const {handleAllSync} = useSyncData()
+const [planErrorToastDisplay, planErrorToastMessage, handleToast] = useHandleToast() as [
+      boolean, 
+      string,
+      (message: string) => void,
+    ]
 const activeLeads = leads.filter(l => l.userId === user!.uid)
     const updatePlan = async (value: string) => {
      const db = await dbPromise
@@ -25,11 +31,11 @@ const activeLeads = leads.filter(l => l.userId === user!.uid)
        } : l))
      } catch (err) {
 
-      console.log("An error occured while updating plan! Please try agin")
+      handleToast("An error occured while updating plan! Please try agin")
      } finally {
         setLeadToUpdatePlan(null)
         handleAllSync()
      }
     }
-  return {updatePlan, leadToUpdatePlan, setLeadToUpdatePlan}
+  return {planErrorToastDisplay, planErrorToastMessage ,updatePlan, leadToUpdatePlan, setLeadToUpdatePlan}
 }
