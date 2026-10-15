@@ -15,11 +15,25 @@ export default function useLogin() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [signedUser, setSignedUser] = useState(true);
   const navigate = useNavigate();
- const [display, toastMessage, handleToast] = useHandleToast() as [
-     boolean, 
-     string,
-     (message: string) => void,
-   ]
+  const [display, toastMessage, handleToast] = useHandleToast() as [
+    boolean,
+    string,
+    (message: string) => void,
+  ];
+
+  const getValidationError = () => {
+    if (!email) return "Email is required.";
+
+    if (!email.includes("@")) return "Please enter a valid email address.";
+
+    if (!password) return "Password is required.";
+    if (!signedUser && password.length < 6) return "Password must be at least 6 characters.";
+    
+    return ""; // No errors found!
+  };
+
+  const currentError = getValidationError();
+
   const loginWithGoogle = async () => {
     try {
       await signInWithPopup(auth, provider);
@@ -34,12 +48,17 @@ export default function useLogin() {
 
   const loginWithEmailPassword = async (e: React.SubmitEvent) => {
     e.preventDefault();
+
     try {
       if (signedUser) {
         await signInWithEmailAndPassword(auth, email, password);
       } else {
+        if (currentError) {
+          handleToast(currentError);
+          return;
+        }
         if (password !== confirmPassword) {
-          alert("Passwords do not match");
+          handleToast("Passwords do not match");
           return;
         }
 
@@ -50,21 +69,19 @@ export default function useLogin() {
     } catch (err: any) {
       if (err.code.includes("auth/invalid-credential")) {
         handleToast("Wrong credentials, please sign up to be logged in");
-        
       } else if (err.code.includes("auth/network-request-failed")) {
         handleToast(
           "Failed to login, please check your internet connection and try again",
         );
-        
       } else
         handleToast(
           "Oops, something went wrong while logging in, please try again",
         );
-        
     }
   };
   return {
-    toastMessage, 
+    currentError,
+    toastMessage,
     display,
     loginWithGoogle,
     signedUser,

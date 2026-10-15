@@ -1,4 +1,4 @@
-import { AlertTriangle, Eye, EyeOff, Moon, SunIcon } from "lucide-react";
+import { AlertTriangle, CircleAlert, Eye, EyeOff, Moon, SunIcon } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 import GoogleLogo from "../assets/GoogleLogo.jpeg";
 import useLogin from "../hooks/useLogin";
@@ -11,6 +11,7 @@ export default function Login() {
   const { authLoading, user } = useAuth();
   const navigate = useNavigate();
   const {
+    currentError,
     display,
     toastMessage,
     loginWithGoogle,
@@ -66,6 +67,13 @@ export default function Login() {
           <h1 className="text-center text-lg font-bold text-blue-600 pb-8">
             {signedUser ? "Login" : "Sign Up"}
           </h1>
+
+              {currentError && (
+        <div className="pb-5 flex text-red-600 items-center gap-2 text-sm" >
+          <CircleAlert size={16} />
+          <span>{currentError}</span>
+        </div>
+      )}
           <div className="pb-5">
             <label htmlFor="email">Email:</label>
             <div>
@@ -73,8 +81,9 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 id="email"
-                className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
+                className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-600 rounded-lg"
                 type="email"
+                placeholder={`${signedUser ? "Enter your email" : "name@example.com"}`}
                 required
               />
             </div>
@@ -90,8 +99,9 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 id="pass"
-                className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
+                className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-600 rounded-lg"
                 type={showPassword ? "text" : "password"}
+                placeholder={`${signedUser ? "Enter your password" : "Create a password (min. 6 characters)"}`}
                 required
               />
               <button
@@ -116,8 +126,9 @@ export default function Login() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   id="newPassConfirm"
-                  className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
+                  className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-600 rounded-lg"
                   type={showPassword ? "text" : "password"}
+                  placeholder="Repeat your password"
                   required
                 />
                 <button
@@ -136,8 +147,10 @@ export default function Login() {
           )}
           <div className="flex justify-center  py-5">
             <button
+
+              disabled={Boolean(currentError)}
               type="submit"
-              className="bg-slate-950 dark:bg-slate-100 text-slate-100 dark:text-slate-950 py-1.5 cursor-pointer px-2 rounded-lg w-full text-lg"
+              className="bg-slate-950 enabled:hover:scale-105 transition-all disabled:cursor-not-allowed disabled:opacity-30 dark:bg-slate-100 text-slate-100 dark:text-slate-950 py-1.5 cursor-pointer px-2 rounded-lg w-full text-lg"
             >
               Continue
             </button>
