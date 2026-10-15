@@ -3,6 +3,7 @@ import { dbPromise } from "../config/indexedDB-config";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import useSyncData from "./useSyncData";
+import useHandleToast from "./useHandleToast";
 export default function useUpdateLead() {
   const [showUpdateToast, setShowUpdateToast] = useState(false)
   const {
@@ -18,6 +19,11 @@ export default function useUpdateLead() {
     setLeads,
   } = useLead();
   const {handleAllSync} = useSyncData()
+  const [updateLeadErrorToastDisplay,updateLeadErrorToastMessage, handleToast] = useHandleToast() as [
+            boolean, 
+            string,
+            (message: string) => void,
+          ]
   const {user} = useAuth()
 const activeLeads = leads.filter(l => l.userId === user!.uid && !l.isDeleted )
   const updateLead = async (e: React.SubmitEvent) => {
@@ -52,7 +58,7 @@ try {
         setShowUpdateToast(false)
       }, 3000)
 } catch (err) {
-  console.log("An Error Occured while editing lead! Please try again")
+  handleToast("An Error Occured while editing lead! Please try again")
 } finally {
 
   setLeadToEdit(null);
@@ -60,5 +66,5 @@ try {
   handleAllSync()
 } 
   };
-  return { updateLead, showUpdateToast, setShowUpdateToast };
+  return {updateLeadErrorToastDisplay, updateLeadErrorToastMessage, updateLead, showUpdateToast, setShowUpdateToast };
 }
