@@ -3,11 +3,17 @@ import { useLead } from "../context/LeadContext"
 import {dbPromise} from "../config/indexedDB-config"
 import { useAuth } from "../context/AuthContext"
 import useSyncData from "./useSyncData"
+import useHandleToast from "./useHandleToast"
 
 export default function useUpdateStage() {
 const {leads, setLeads} = useLead()
 const [leadToUpdateStage, setLeadToUpdateStage] = useState<string | null>(null)
 const {user} = useAuth()
+const [stageErrorToastDisplay, stageErrorToastMessage, handleToast] = useHandleToast() as [
+      boolean, 
+      string,
+      (message: string) => void,
+    ]
 const {handleAllSync} = useSyncData()
 const activeLeads = leads.filter(l => l.userId === user!.uid)
     const updateStage = async (value: string) => {
@@ -24,12 +30,12 @@ const activeLeads = leads.filter(l => l.userId === user!.uid)
           stage: value
         } : l))
      } catch (err) {
-       console.log("An error occured while updating stage! Please try again")
+       handleToast("An error occured while updating stage! Please try again")
     } finally {
       setLeadToUpdateStage(null)
       handleAllSync()
     }
 
     }
-  return {updateStage, leadToUpdateStage, setLeadToUpdateStage}
+  return {stageErrorToastDisplay, stageErrorToastMessage ,updateStage, leadToUpdateStage, setLeadToUpdateStage}
 }
