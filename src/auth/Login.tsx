@@ -12,7 +12,7 @@ export default function Login() {
   const navigate = useNavigate();
   const {
     display,
-    errorMessage, 
+    toastMessage,
     loginWithGoogle,
     email,
     signedUser,
@@ -176,7 +176,7 @@ export default function Login() {
       >
         <p className="flex items-center gap-2">
           <X className="dark:text-green-800 text-green-600" />
-          <span className="font-light text-lg">{errorMessage}</span>
+          <span className="font-light text-lg">{toastMessage}</span>
         </p>
       </div>
     </div>

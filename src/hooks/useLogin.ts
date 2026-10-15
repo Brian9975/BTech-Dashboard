@@ -6,24 +6,18 @@ import {
 import { auth, provider } from "../config/firebase-config";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useHandleToast from "./useHandleToast";
 
 export default function useLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [display, setDisplay] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  // const [display, setDisplay] = useState(false);
+  // const [errorMessage, setErrorMessage] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [signedUser, setSignedUser] = useState(true);
   const navigate = useNavigate();
-
-  const handleErrorToast = (message: string) => {
-        setDisplay(true)
-        setTimeout(() => {
-          setDisplay(false)
-        }, 6000)
-      setErrorMessage(message)
-    }
+ const {display, toastMessage, handleErrorToast} = useHandleToast()
   const loginWithGoogle = async () => {
     try {
       await signInWithPopup(auth, provider);
@@ -54,21 +48,21 @@ export default function useLogin() {
     } catch (err: any) {
       if (err.code.includes("auth/invalid-credential")) {
         handleErrorToast("Wrong credentials, please sign up to be logged in");
-        // alert("Wrong credentials, please sign up to be logged in")
+        
       } else if (err.code.includes("auth/network-request-failed")) {
         handleErrorToast(
           "Failed to login, please check your internet connection and try again",
         );
-        // alert("Failed to login, please check your internet connection and try again")
+        
       } else
         handleErrorToast(
           "Oops, something went wrong while logging in, please try again",
         );
-        // alert("Oops, something went wrong while logging in, please try again")
+        
     }
   };
   return {
-    errorMessage, 
+    toastMessage, 
     display,
     loginWithGoogle,
     signedUser,
