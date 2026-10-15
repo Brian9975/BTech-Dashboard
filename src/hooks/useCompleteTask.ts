@@ -3,10 +3,12 @@ import { useTask } from "../context/TaskContext";
 import { dbPromise } from "../config/indexedDB-config";
 import { useAuth } from "../context/AuthContext";
 import useSyncData from "./useSyncData";
+import useHandleToast from "./useHandleToast";
 
 export default function useCompleteTask() {
   const {tasks, setTasks} = useTask();
   const {user} = useAuth()
+  const {display, handleToast, toastMessage} = useHandleToast()
   const activeTasks = tasks.filter(t => t.userId === user!.uid)
   const {handleAllSync} = useSyncData()
   const completeTask = async (id: string) => {
@@ -34,10 +36,10 @@ export default function useCompleteTask() {
      );
    } catch (err) {
 
-    console.log("An error occured while completing task! Please try again")
+    handleToast("An error occured while completing task! Please try again")
    } finally {
     handleAllSync()
    }
   };
-  return { completeTask };
+  return [ display, toastMessage, completeTask ];
 }

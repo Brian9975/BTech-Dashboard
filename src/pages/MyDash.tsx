@@ -43,7 +43,7 @@ export default function MyDash() {
     taskText,
     showAddToast,
     display,
-    toastMessage
+    toastMessage,
   } = useAddTask();
   const {
     editTask,
@@ -88,7 +88,8 @@ export default function MyDash() {
   } = useStatCount();
   const { deleteTask, taskToDelete, setTaskToDelete, showDelToast } =
     useDeleteTask();
-  const { completeTask } = useCompleteTask();
+  const [completeDisplay, completeToastMessage, finishTask] =
+    useCompleteTask() as [boolean, string, (id: string) => Promise<void>];
   const { taskDeadlineInfo } = useTaskDeadlineInfo();
   const { user } = useAuth();
   const { syncLoading } = useTheme();
@@ -365,7 +366,7 @@ export default function MyDash() {
                       className="dark:bg-slate-950 bg-slate-100 shadow-md shadow-slate-600 p-2 rounded-lg"
                     >
                       <li
-                        onClick={() => completeTask(t.id)}
+                        onClick={() => finishTask(t.id)}
                         className={`flex gap-2 ${t.isCompleted && "text-slate-600 line-through"}  cursor-pointer  hover:scale-95 transition-all items-start text-lg`}
                       >
                         <CheckCircle2 className="hidden md:block" size={25} />{" "}
@@ -527,15 +528,23 @@ export default function MyDash() {
         </p>
       </div>
 
-       <div
-              className={`dark:bg-slate-100 bg-slate-950 z-50 fixed shadow-md shadow-slate-700  transition-all duration-400 ${display ? "top-0" : "-top-100"}  m-5 rounded-lg py-5 px-4  text-slate-100 dark:text-slate-950`}
-            >
-              <p className="flex items-center gap-2">
-                <AlertTriangle className="dark:text-red-800 text-red-600" />
-                <span className="font-light  md:text-lg">{toastMessage}</span>
-              </p>
-            </div>
-      
+      <div
+        className={`dark:bg-slate-100 bg-slate-950 z-50 fixed shadow-md shadow-slate-700  transition-all duration-400 ${display ? "top-0" : "-top-100"}  m-5 rounded-lg py-5 px-4  text-slate-100 dark:text-slate-950`}
+      >
+        <p className="flex items-center gap-2">
+          <AlertTriangle className="dark:text-red-800 text-red-600" />
+          <span className="font-light  md:text-lg">{toastMessage}</span>
+        </p>
+      </div>
+
+      <div
+        className={`dark:bg-slate-100 bg-slate-950 z-50 fixed shadow-md shadow-slate-700  transition-all duration-400 ${completeDisplay ? "top-0" : "-top-100"}  m-5 rounded-lg py-5 px-4  text-slate-100 dark:text-slate-950`}
+      >
+        <p className="flex items-center gap-2">
+          <AlertTriangle className="dark:text-red-800 text-red-600" />
+          <span className="font-light  md:text-lg">{completeToastMessage}</span>
+        </p>
+      </div>
     </div>
   );
 }
