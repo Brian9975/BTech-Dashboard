@@ -5,6 +5,7 @@ import { dbPromise } from "../config/indexedDB-config";
 import { useAuth } from "../context/AuthContext";
 import { useTask } from "../context/TaskContext";
 import useSyncData from "./useSyncData";
+import useHandleToast from "./useHandleToast";
 
 export default function useAddTask() {
   const [taskText, setTaskText] = useState("");
@@ -14,7 +15,7 @@ export default function useAddTask() {
   const { closeDialog } = useModal();
   const {user} = useAuth()
   const {setTasks} = useTask()
-
+  const {handleToast, display, toastMessage} = useHandleToast()
   const addTask = async (e: React.SubmitEvent) => {
     e.preventDefault();
     const taskObject = {
@@ -42,7 +43,7 @@ export default function useAddTask() {
      
      
     }catch (err) {
-     console.log("An Error Occured while adding task! Please try again")
+     handleToast("An Error Occured while adding task! Please try again")
      
     } finally {
       
@@ -52,5 +53,5 @@ export default function useAddTask() {
       handleAllSync()
     }
   };
-  return { addTask, setTaskText, setDeadline, deadline, taskText, showAddToast };
+  return {display, toastMessage, addTask, setTaskText, setDeadline, deadline, taskText, showAddToast };
 }
