@@ -3,12 +3,19 @@ import { dbPromise } from "../config/indexedDB-config";
 import { useTask } from "../context/TaskContext";
 import { useAuth } from "../context/AuthContext";
 import useSyncData from "./useSyncData";
+import useHandleToast from "./useHandleToast";
 export default function useEditTask() {
   const [showEditToast, setShowEditToast] = useState(false)
   const [taskToUpdate, setTaskToUpdate] = useState<string | null>(null);
   const [taskEdit, setTaskEdit] = useState("");
   const [deadlineEdit, setDeadlineEdit] = useState<Date | string>("");
   const {tasks, setTasks} = useTask()
+ const [editErrorToastDisplay, editErrorToastMessage, handleToast] = useHandleToast() as [
+       boolean, 
+       string,
+       (message: string) => void,
+     ]
+ 
   const {user} = useAuth()
   const {handleAllSync} = useSyncData()
   const activeTasks = tasks.filter(l => l.userId === user!.uid)
@@ -36,7 +43,7 @@ export default function useEditTask() {
       setShowEditToast(false)
       }, 3000)
     } catch(err) {
-      console.log("An error Occured while editing task!Please try again")
+     handleToast("An error Occured while editing task!Please try again")
     } finally {
 
       setTaskToUpdate(null);
@@ -44,6 +51,8 @@ export default function useEditTask() {
     }
   };
   return {
+    editErrorToastDisplay,
+    editErrorToastMessage,
     editTask,
     taskToUpdate,
     setTaskToUpdate,
