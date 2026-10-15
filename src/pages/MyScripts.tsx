@@ -8,14 +8,19 @@ import { AlertTriangle, CheckCircleIcon, UserPlus } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 import useToast from "../hooks/useToast";
 
-
 export default function MyScripts() {
-  const { copyText, scriptCopied } = useCopyToClipboard();
+  const [copyToastDisplay, copyToastMessage, copyText, scriptCopied] =
+    useCopyToClipboard() as [
+      boolean,
+      string,
+      (val: string, id: string) => Promise<void>,
+      string | null,
+    ];
   const { scripts } = useScript();
   const { showToast, hideToast, toastOn } = useToast();
   const { syncLoading } = useTheme();
   const {
-    display, 
+    display,
     toastMessage,
     modalOpen,
     setModalOpen,
@@ -231,15 +236,23 @@ export default function MyScripts() {
         </div>
       }
 
-       <div
-              className={`dark:bg-slate-100 bg-slate-950 z-50 fixed shadow-md shadow-slate-700  transition-all duration-400 ${display ? "top-0" : "-top-100"}  m-5 rounded-lg py-5 px-4  text-slate-100 dark:text-slate-950`}
-            >
-              <p className="flex items-center gap-2">
-                <AlertTriangle className="dark:text-red-800 text-red-600" />
-                <span className="font-light  md:text-lg">{toastMessage}</span>
-              </p>
-            </div>
-      
+      <div
+        className={`dark:bg-slate-100 bg-slate-950 z-50 fixed shadow-md shadow-slate-700  transition-all duration-400 ${display ? "top-0" : "-top-100"}  m-5 rounded-lg py-5 px-4  text-slate-100 dark:text-slate-950`}
+      >
+        <p className="flex items-center gap-2">
+          <AlertTriangle className="dark:text-red-800 text-red-600" />
+          <span className="font-light  md:text-lg">{toastMessage}</span>
+        </p>
+      </div>
+
+      <div
+        className={`dark:bg-slate-100 bg-slate-950 z-50 fixed shadow-md shadow-slate-700  transition-all duration-400 ${copyToastDisplay ? "top-0" : "-top-100"}  m-5 rounded-lg py-5 px-4  text-slate-100 dark:text-slate-950`}
+      >
+        <p className="flex items-center gap-2">
+          <AlertTriangle className="dark:text-red-800 text-red-600" />
+          <span className="font-light  md:text-lg">{copyToastMessage}</span>
+        </p>
+      </div>
     </div>
   );
 }
