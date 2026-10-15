@@ -15,7 +15,11 @@ export default function useLogin() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [signedUser, setSignedUser] = useState(true);
   const navigate = useNavigate();
- const {display, toastMessage, handleToast} = useHandleToast()
+ const [display, toastMessage, handleToast] = useHandleToast() as [
+     boolean, 
+     string,
+     (message: string) => void,
+   ]
   const loginWithGoogle = async () => {
     try {
       await signInWithPopup(auth, provider);

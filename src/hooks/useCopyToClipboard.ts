@@ -3,7 +3,11 @@ import useHandleToast from './useHandleToast'
 
 export default function useCopyToClipboard() {
  const [scriptCopied, setScriptCopied] = useState<string | null>(null)
- const {handleToast, toastMessage, display} = useHandleToast()
+ const [display, toastMessage, handleToast] = useHandleToast() as [
+     boolean, 
+     string,
+     (message: string) => void,
+   ]
  const copyText = async (val: string, id: string) => {
   try{
   await navigator.clipboard.writeText(val)

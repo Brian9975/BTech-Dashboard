@@ -12,7 +12,11 @@ export default function useAddLead() {
   const [loading, setLoading] = useState(false)
   const {user} = useAuth()
   const {setLeads} = useLead()
-  const {handleToast, display, toastMessage} = useHandleToast()
+  const [display, toastMessage, handleToast] = useHandleToast() as [
+    boolean, 
+    string,
+    (message: string) => void,
+  ]
   const {
     businessName,
     setBusinessName,

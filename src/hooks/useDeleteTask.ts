@@ -3,12 +3,18 @@ import { dbPromise } from "../config/indexedDB-config";
 import { useTask } from "../context/TaskContext";
 import { useAuth } from "../context/AuthContext";
 import useSyncData from "./useSyncData";
+import useHandleToast from "./useHandleToast";
 
 export default function useDeleteTask() {
   const [showDelToast, setShowDelToast] = useState(false)
   const [taskToDelete, setTaskToDelete] = useState<string | null>(null);
   const { tasks, setTasks } = useTask();
   const {user} = useAuth()
+  const [deleteToastDisplay, deleteToastMessage, handleToast] = useHandleToast() as [
+      boolean, 
+      string,
+      (message: string) => void,
+    ]
   const {handleAllSync} = useSyncData()
   const activeTasks = tasks.filter(l => l.userId === user!.uid)
   const deleteTask = async () => {
@@ -27,11 +33,11 @@ export default function useDeleteTask() {
          setShowDelToast(false)
        }, 3000)
     } catch (err) {
-       console.log("An error occured while deleting task! Please try again")
+       handleToast("An error occured while deleting task! Please try again")
     } finally {
     setTaskToDelete(null);
     handleAllSync()
     }
   };
-  return { deleteTask, taskToDelete, setTaskToDelete, showDelToast };
+  return {deleteToastDisplay, deleteToastMessage, deleteTask, taskToDelete, setTaskToDelete, showDelToast };
 }

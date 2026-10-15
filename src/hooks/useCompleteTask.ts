@@ -8,7 +8,11 @@ import useHandleToast from "./useHandleToast";
 export default function useCompleteTask() {
   const {tasks, setTasks} = useTask();
   const {user} = useAuth()
-  const {display, handleToast, toastMessage} = useHandleToast()
+  const [display, toastMessage, handleToast] = useHandleToast() as [
+      boolean, 
+      string,
+      (message: string) => void,
+    ]
   const activeTasks = tasks.filter(t => t.userId === user!.uid)
   const {handleAllSync} = useSyncData()
   const completeTask = async (id: string) => {

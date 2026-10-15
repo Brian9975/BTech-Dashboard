@@ -15,7 +15,11 @@ export default function useAddTask() {
   const { closeDialog } = useModal();
   const {user} = useAuth()
   const {setTasks} = useTask()
-  const {handleToast, display, toastMessage} = useHandleToast()
+  const [display, toastMessage, handleToast] = useHandleToast() as [
+      boolean, 
+      string,
+      (message: string) => void,
+    ]
   const addTask = async (e: React.SubmitEvent) => {
     e.preventDefault();
     const taskObject = {

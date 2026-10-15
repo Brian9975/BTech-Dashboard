@@ -12,7 +12,11 @@ export default function useAddScript() {
     const [niche, setNiche] = useState("")
     const [scriptMessage, setScriptMessage] = useState("")
     const {handleAllSync} = useSyncData()
-    const {display, handleToast, toastMessage} = useHandleToast()
+    const [display, toastMessage, handleToast] = useHandleToast() as [
+        boolean, 
+        string,
+        (message: string) => void,
+      ]
     const addScript = async (e: React.SubmitEvent) => {
         e.preventDefault()
         try {

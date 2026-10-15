@@ -13,5 +13,5 @@ export default function useHandleToast() {
       setToastMessage(message)
     }
  
-  return {display, toastMessage, handleToast}
+  return [display, toastMessage, handleToast]
 }
