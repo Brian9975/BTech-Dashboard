@@ -175,9 +175,9 @@ export default function Login() {
         <div>
           <button
             onClick={() => loginWithGoogle()}
-            className="flex justify-center gap-2 bg-slate-950 text-slate-100 dark:bg-slate-100 dark:text-slate-950 w-full font-bold text-lg cursor-pointer rounded-lg  py-1.5 px-2"
+            className="flex items-center shadow-md shadow-slate-600 dark:shadow-none justify-center gap-1  bg-slate-100 text-slate-950 w-full font-bold text-lg cursor-pointer rounded-lg  py-1.5 px-2"
           >
-            <img className="w-20" src={GoogleLogo} />{" "}
+            <img className="w-15" src={GoogleLogo} />{" "}
             <span>Continue With Google</span>
           </button>
         </div>
