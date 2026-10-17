@@ -1,6 +1,7 @@
 import { onAuthStateChanged, type User, signOut } from 'firebase/auth'
 import React, {createContext, useEffect, useState, useContext} from 'react'
 import { auth } from '../config/firebase-config'
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -13,10 +14,11 @@ const AuthContext = createContext<AuthContextType | null>(null)
 export default function AuthContextProvider({children}: {children: React.ReactNode}) {
 const [user, setUser] = useState<User | null>(null)
 const [authLoading, setAuthIsLoading] = useState(true)
-
+const navigate = useNavigate()
 
 const logOut = async () => {
     await signOut(auth)
+    navigate("/login")
 
 }
     const contextValues = {user, authLoading, logOut}
