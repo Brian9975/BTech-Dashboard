@@ -24,7 +24,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (!user && !authLoading) {
+    if (!user && authLoading) {
       navigate("/login")
      
     }
