@@ -129,7 +129,7 @@ if (!navigator.onLine) {
 
       {/* Mobile Sidebar */}
       <div
-        className={`dark:bg-slate-900 bg-slate-50 z-80 transition-all fixed md:hidden  ${isOpenMobile ? "w-sm" : "w-0"} border-r border-blue-500 overflow-y-auto h-screen`}
+        className={`dark:bg-slate-900 bg-slate-50 z-80 transition-all fixed md:hidden  ${isOpenMobile ? "w-xs" : "w-0"} border-r border-blue-500 overflow-y-auto h-screen`}
       >
         <Link to="/mydash" onClick={() => setIsOpenMobile(false)}>
           <h1 className="text-3xl">
