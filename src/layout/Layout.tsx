@@ -176,7 +176,7 @@ if (!navigator.onLine) {
           </Link>
         </div>
 
-        <div className="flex absolute bottom-10 w-full justify-center">
+        <div className="flex absolute bottom-20 w-full justify-center">
          <div className="w-xxs flex items-center gap-10 justify-between dark:bg-slate-950 bg-slate-200 text-slate-100 p-3 rounded-lg">
             <div className="h-10 w-10 bg-slate-600 rounded-full items-center flex justify-center font-bold text-lg"><div>{user!.email![0].toUpperCase()}</div></div>
             <div><button onClick={logOut} className="text-slate-950 dark:text-slate-100 items-center gap-1 hover:scale-95 hover:text-slate-600 transition-all flex rounded-lg p-1 cursor-pointer text-lg"><LogOut/><span>Logout</span></button></div>
