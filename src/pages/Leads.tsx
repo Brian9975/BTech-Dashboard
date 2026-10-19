@@ -543,7 +543,7 @@ export default function Leads() {
         <input
           value={lastContactedValue as any}
           onChange={(e) => setLastContactedValue(e.target.value)}
-          className="md:w-lg w-sm  dark:bg-slate-100  text-lg dark:text-slate-950   border-slate-600 p-2 outline-0  rounded-lg border"
+          className="md:w-lg sm:w-sm w-xs  dark:bg-slate-100  text-lg dark:text-slate-950   border-slate-600 p-2 outline-0  rounded-lg border"
           type="date"
         />
         <button
@@ -607,7 +607,7 @@ export default function Leads() {
           <input
             value={amount}
             onChange={(e) => setAmount(Number(e.target.value))}
-            className="md:w-lg w-sm  text-lg text-green-600  border-slate-600 p-2 outline-0  rounded-lg border"
+            className="md:w-lg sm:w-sm w-xs   text-lg text-green-600  border-slate-600 p-2 outline-0  rounded-lg border"
             type="number"
             required
           />
