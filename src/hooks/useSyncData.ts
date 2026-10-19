@@ -223,8 +223,8 @@ export default function useSyncData() {
             if (!localData || serverData.lastModified > localData.lastModified){
 
               await db?.put("scripts", serverData);
+              // console.log("Pulled Script Data Successfully");
             }
-            // console.log("Pulled Script Data Successfully");
           }
           const updatedScripts = await db?.getAll("scripts");
           setScripts(updatedScripts as ScriptData[]);
