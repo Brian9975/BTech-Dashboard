@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { dbPromise } from "../config/indexedDB-config";
+import { getDb } from "../config/indexedDB-config";
 import { useAuth } from "../context/AuthContext";
 import { useLead } from "../context/LeadContext";
 import type { LeadsInterface } from "../types/LeadsInterface";
@@ -22,11 +22,11 @@ export default function useUpdateStatLast() {
 
   const activeLeads = leads.filter(l => l.userId === user!.uid)
   const updateStatLastCont = async () => {
-    const db = await dbPromise;
+    const db = await getDb();
 
     try {
 
-      const data = await db.get(
+      const data = await db?.get(
         "leads",
         leadToUpdate as IDBKeyRange | IDBValidKey,
       );
@@ -59,7 +59,7 @@ export default function useUpdateStatLast() {
         data.lastContacted = new Date();
       }
       data.lastModified = Date.now()
-      await db.put("leads", data);
+      await db?.put("leads", data);
   
    
      setLeads(activeLeads.map((l) => {

@@ -1,6 +1,6 @@
 import { useTask } from "../context/TaskContext";
 
-import { dbPromise } from "../config/indexedDB-config";
+import { getDb } from "../config/indexedDB-config";
 import { useAuth } from "../context/AuthContext";
 import useSyncData from "./useSyncData";
 import useHandleToast from "./useHandleToast";
@@ -19,13 +19,13 @@ export default function useCompleteTask() {
     
    try {
 
-     const db = await dbPromise
+     const db = await getDb()
  
-     const data = await db.get("tasks", id);
+     const data = await db?.get("tasks", id);
  
      data.isCompleted = !data.isCompleted
  
-     await db.put("tasks", data)
+     await db?.put("tasks", data)
  
  
      setTasks(

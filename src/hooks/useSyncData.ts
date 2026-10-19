@@ -1,5 +1,5 @@
 import { useAuth } from "../context/AuthContext";
-import { dbPromise } from "../config/indexedDB-config";
+import { getDb } from "../config/indexedDB-config";
 import { firestoreDb } from "../config/firebase-config";
 import {
   collection,
@@ -9,10 +9,13 @@ import {
   getDocs,
   setDoc,
 } from "firebase/firestore";
+import type { TaskInterface } from "../types/TasksInterface";
 import { useTask } from "../context/TaskContext";
 import { useLead } from "../context/LeadContext";
 import { useScript } from "../context/ScriptContext";
 import { useTheme } from "../context/ThemeContext";
+import type { LeadsInterface } from "../types/LeadsInterface";
+import type { ScriptData } from "../types/ScriptInterface";
 
 export default function useSyncData() {
   const {setSyncLoading} = useTheme()
@@ -27,10 +30,10 @@ export default function useSyncData() {
       return;
     }
 
-    const db = await dbPromise;
-    const allTasks = await db.getAll("tasks");
+    const db = await getDb();
+    const allTasks = await db?.getAll("tasks");
 
-    for (const item of allTasks) {
+    for (const item of allTasks as TaskInterface[]) {
       if (user) {
         if (item.userId === user.uid) {
           const docRef = doc(firestoreDb, "users", user.uid, "tasks", item.id);
@@ -38,7 +41,7 @@ export default function useSyncData() {
           try {
             if (item.isDeleted) {
               await deleteDoc(docRef);
-              await db.delete("tasks", item.id);
+              await db?.delete("tasks", item.id);
               continue;
             }
 
@@ -48,7 +51,7 @@ export default function useSyncData() {
               const docData = docSnap.data();
 
               if (docData.lastModified > item.lastModified) {
-                await db.put("tasks", docData);
+                await db?.put("tasks", docData);
                 // console.log("Server data was newer : Conflict resolved");
                 continue;
               }
@@ -73,11 +76,11 @@ export default function useSyncData() {
         for (const docSnap of querySnapShot.docs) {
           const serverData = docSnap.data();
           if (serverData.userId === user.uid) {
-            await db.put("tasks", serverData);
+            await db?.put("tasks", serverData);
             // console.log("Pulled Task Data Successfully");
           }
-          const pulledTasks = await db.getAll("tasks");
-          setTasks(pulledTasks);
+          const pulledTasks = await db?.getAll("tasks");
+          setTasks(pulledTasks as TaskInterface[]);
         }
       }
     } catch (err) {
@@ -91,10 +94,10 @@ export default function useSyncData() {
       return;
     }
 
-    const db = await dbPromise;
-    const allLeads = await db.getAll("leads");
+    const db = await getDb();
+    const allLeads = await db?.getAll("leads");
 
-    for (const item of allLeads) {
+    for (const item of allLeads as LeadsInterface[]) {
       if (user) {
         if (item.userId === user.uid) {
           const docRef = doc(firestoreDb, "users", user.uid, "leads", item.id);
@@ -102,7 +105,7 @@ export default function useSyncData() {
           try {
             if (item.isDeleted) {
               await deleteDoc(docRef);
-              await db.delete("leads", item.id);
+              await db?.delete("leads", item.id);
               continue;
             }
 
@@ -112,7 +115,7 @@ export default function useSyncData() {
               const docData = docSnap.data();
 
               if (docData.lastModified > item.lastModified) {
-                await db.put("leads", docData);
+                await db?.put("leads", docData);
                 // console.log("Server data was newer : Conflict resolved");
                 continue;
               }
@@ -135,11 +138,11 @@ export default function useSyncData() {
         for (const docSnap of querySnapShot.docs) {
           const serverData = docSnap.data();
           if (serverData.userId === user.uid) {
-            await db.put("leads", serverData);
+            await db?.put("leads", serverData);
             // console.log("Pulled Lead Data Successfully");
           }
-          const updatedLeads = await db.getAll("leads");
-          setLeads(updatedLeads);
+          const updatedLeads = await db?.getAll("leads");
+          setLeads(updatedLeads as LeadsInterface[]);
         }
       }
     } catch (err) {
@@ -155,10 +158,10 @@ export default function useSyncData() {
       return;
     }
 
-    const db = await dbPromise;
-    const allScripts = await db.getAll("scripts");
+    const db = await getDb();
+    const allScripts = await db?.getAll("scripts");
 
-    for (const item of allScripts) {
+    for (const item of allScripts as ScriptData[]) {
       // if (user) {
         if (item.userId === user.uid) {
           const docRef = doc(
@@ -172,7 +175,7 @@ export default function useSyncData() {
           try {
             if (item.isDeleted) {
               await deleteDoc(docRef);
-              await db.delete("scripts", item.id);
+              await db?.delete("scripts", item.id);
               continue;
             }
 
@@ -182,7 +185,7 @@ export default function useSyncData() {
               const docData = docSnap.data();
 
               if (docData.lastModified > item.lastModified) {
-                await db.put("scripts", docData);
+                await db?.put("scripts", docData);
                 // console.log("Server data was newer : Conflict resolved");
                 continue;
               }
@@ -205,11 +208,11 @@ export default function useSyncData() {
         for (const docSnap of querySnapShot.docs) {
           const serverData = docSnap.data();
           if (serverData.userId === user.uid) {
-            await db.put("scripts", serverData);
+            await db?.put("scripts", serverData);
             // console.log("Pulled Script Data Successfully");
           }
-          const updatedScripts = await db.getAll("scripts");
-          setScripts(updatedScripts);
+          const updatedScripts = await db?.getAll("scripts");
+          setScripts(updatedScripts as ScriptData[]);
         }
       }
     } catch (err) {

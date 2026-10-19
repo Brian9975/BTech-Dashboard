@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import type { TaskContextType } from "../types/TaskContextType";
 import type { TaskInterface } from "../types/TasksInterface";
-import { dbPromise } from "../config/indexedDB-config";
+import { getDb } from "../config/indexedDB-config";
 
 const TaskContext = createContext<TaskContextType | null>(null);
 export default function TaskContextProvider({
@@ -17,10 +17,10 @@ export default function TaskContextProvider({
 
 
   const getAllTasks = async () => {
-    const db = await dbPromise;
-    const data = await db.getAll("tasks")
+    const db = await getDb();
+    const data = await db?.getAll("tasks")
 
-    setTasks(data)
+    setTasks(data as TaskInterface[])
     setTaskLoading(false)
   }
 

@@ -1,6 +1,6 @@
 import  { useState } from 'react'
 import { useLead } from '../context/LeadContext'
-import { dbPromise } from '../config/indexedDB-config'
+import { getDb } from '../config/indexedDB-config'
 import { useAuth } from '../context/AuthContext'
 import useSyncData from './useSyncData'
 import useHandleToast from './useHandleToast'
@@ -17,13 +17,13 @@ const [planErrorToastDisplay, planErrorToastMessage, handleToast] = useHandleToa
     ]
 const activeLeads = leads.filter(l => l.userId === user!.uid)
     const updatePlan = async (value: string) => {
-     const db = await dbPromise
+     const db = await getDb()
      try {
-       const data = await db.get("leads", leadToUpdatePlan as IDBKeyRange | IDBValidKey)
+       const data = await db?.get("leads", leadToUpdatePlan as IDBKeyRange | IDBValidKey)
        data.plan = value
        data.lastModified = Date.now()
      
-     await db.put("leads", data)
+     await db?.put("leads", data)
        
        setLeads(activeLeads.map(l => l.id == leadToUpdatePlan ? {
          ...l,

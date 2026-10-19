@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import useModal from "./useModal";
-import { dbPromise } from "../config/indexedDB-config";
+import { getDb } from "../config/indexedDB-config";
 import { useAuth } from "../context/AuthContext";
 import { useTask } from "../context/TaskContext";
 import useSyncData from "./useSyncData";
@@ -34,8 +34,8 @@ export default function useAddTask() {
     };
     try {
 
-      const db = await dbPromise;
-      await db.add("tasks", taskObject)
+      const db = await getDb();
+      await db?.add("tasks", taskObject)
      
        setTasks(prev => ([...prev, taskObject])) 
      

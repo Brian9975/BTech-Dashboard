@@ -1,6 +1,6 @@
 import type React from "react";
 import { useLead } from "../context/LeadContext";
-import { dbPromise } from "../config/indexedDB-config";
+import { getDb } from "../config/indexedDB-config";
 import useModal from "./useModal";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
@@ -55,8 +55,8 @@ if (!user) return
       lastModified: Date.now(),
       isDeleted: false,
     };
-   const db = await dbPromise
-   await db.add("leads", leadInfo)
+   const db = await getDb()
+   await db?.add("leads", leadInfo)
    
    setLeads((prev) => [...prev, leadInfo]);
   } catch (err) {

@@ -1,4 +1,4 @@
-import { dbPromise } from "../config/indexedDB-config"
+import { getDb } from "../config/indexedDB-config"
 import React, {useState} from "react"
 import { useAuth } from "../context/AuthContext"
 import { useScript } from "../context/ScriptContext"
@@ -21,7 +21,7 @@ export default function useAddScript() {
         e.preventDefault()
         try {
 
-          const db = await dbPromise
+          const db = await getDb()
           const scriptObject = {
             id: Date.now().toString(),
             title: scriptTitle,
@@ -31,7 +31,7 @@ export default function useAddScript() {
             lastModified: Date.now(),
             isDeleted: false,
           }   
-            await db.add("scripts", scriptObject)
+            await db?.add("scripts", scriptObject)
             setScripts(prev => ([...prev, scriptObject]))
 
             setScriptTitle("")

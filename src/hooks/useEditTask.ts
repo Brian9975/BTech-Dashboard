@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { dbPromise } from "../config/indexedDB-config";
+import {  getDb } from "../config/indexedDB-config";
 import { useTask } from "../context/TaskContext";
 import { useAuth } from "../context/AuthContext";
 import useSyncData from "./useSyncData";
@@ -25,13 +25,13 @@ export default function useEditTask() {
 
     try{
 
-      const db = await dbPromise;
-      const data = await db.get("tasks", taskToUpdate as IDBKeyRange | IDBValidKey)
+      const db = await getDb();
+      const data = await db?.get("tasks", taskToUpdate as IDBKeyRange | IDBValidKey)
   
       data.task = taskEdit,
       data.deadline = deadlineEdit,
       data.lastModified = Date.now()
-      await db.put("tasks", data)
+      await db?.put("tasks", data)
   
      setTasks(activeTasks.map(t => t.id === taskToUpdate ? {
       ...t,

@@ -1,5 +1,5 @@
 import { useLead } from "../context/LeadContext";
-import { dbPromise } from "../config/indexedDB-config";
+import { getDb } from "../config/indexedDB-config";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import useSyncData from "./useSyncData";
@@ -30,8 +30,8 @@ const activeLeads = leads.filter(l => l.userId === user!.uid && !l.isDeleted )
     e.preventDefault();
 
 
-const db = await dbPromise;
-const leadObject = await db.get("leads", leadToEdit as IDBKeyRange | IDBValidKey)
+const db = await getDb();
+const leadObject = await db?.get("leads", leadToEdit as IDBKeyRange | IDBValidKey)
 leadObject.name = editBusinessName
 leadObject.category = editBusinessCategory
 leadObject.contact = editContactNo
@@ -41,7 +41,7 @@ leadObject.lastContacted = editLastContacted
 leadObject.lastModified = Date.now()
 try {
 
-  await db.put("leads", leadObject)
+  await db?.put("leads", leadObject)
   
       setLeads(activeLeads.map(l => l.id == leadToEdit ? ({
         ...l,

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useLead } from "../context/LeadContext"
-import { dbPromise } from "../config/indexedDB-config"
+import { getDb } from "../config/indexedDB-config"
 import useSyncData from "./useSyncData"
 import useHandleToast from "./useHandleToast"
 
@@ -21,15 +21,15 @@ const {handleAllSync} = useSyncData()
           return     
         }
 
-  const db = await dbPromise
+  const db = await getDb()
        
   try {
 
-    const data = await db.get("leads", leadToUpdateEarnings as IDBKeyRange | IDBValidKey)
+    const data = await db?.get("leads", leadToUpdateEarnings as IDBKeyRange | IDBValidKey)
     data.earningsFromLead = data.earningsFromLead + amount
     data.lastModified = Date.now()
 
-    await db.put("leads", data)
+    await db?.put("leads", data)
 setLeads(leads.map(l => l.id == leadToUpdateEarnings ? {
 ...l,
 earningsFromLead: l.earningsFromLead  + amount

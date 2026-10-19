@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import type { LeadsInterface } from "../types/LeadsInterface";
 import type { LeadContextType } from "../types/LeadsContextType";
-import { dbPromise } from "../config/indexedDB-config";
+import { getDb } from "../config/indexedDB-config";
 import useAutoCheckLead from "../hooks/useAutoCheckLead";
 import useGetFlaggedAction from "../hooks/useGetFlaggedAction";
 
@@ -45,8 +45,7 @@ export default function LeadContextProvider({
   };
 
 
-  const flaggedLeads = leads
-    .map((l) => ({ lead: l, action: getFlaggedAction(l, checkDaysPassed) }))
+  const flaggedLeads = leads?.map((l) => ({ lead: l, action: getFlaggedAction(l, checkDaysPassed) }))
     .filter((l) => l.action !== null);
   const contextValues = {
     flaggedLeads,
@@ -89,9 +88,9 @@ export default function LeadContextProvider({
 
   
       const getAllLeads = async () => {
-        const db = await dbPromise;
-        const data = await db.getAll("leads")
-        setLeads(data)
+        const db = await getDb()
+        const data = await db?.getAll("leads")
+        setLeads(data as LeadsInterface[])
         setIsLoading(false)
       }
  useEffect(() => {

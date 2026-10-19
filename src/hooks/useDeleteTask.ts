@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { dbPromise } from "../config/indexedDB-config";
+import { getDb } from "../config/indexedDB-config";
 import { useTask } from "../context/TaskContext";
 import { useAuth } from "../context/AuthContext";
 import useSyncData from "./useSyncData";
@@ -18,15 +18,15 @@ export default function useDeleteTask() {
   const {handleAllSync} = useSyncData()
   const activeTasks = tasks.filter(l => l.userId === user!.uid)
   const deleteTask = async () => {
-    const db = await dbPromise;
+    const db = await getDb();
     
     try {
 
-      const taskData = await db.get("tasks", taskToDelete as IDBKeyRange | IDBValidKey)
+      const taskData = await db?.get("tasks", taskToDelete as IDBKeyRange | IDBValidKey)
       
       taskData.isDeleted = true
       taskData.lastModified = Date.now()
-      db.put("tasks", taskData)
+      db?.put("tasks", taskData)
       setTasks(activeTasks.filter(t => t.id !== taskToDelete))
        setShowDelToast(true)
        setTimeout(() => {

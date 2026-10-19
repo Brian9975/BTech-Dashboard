@@ -1,5 +1,5 @@
 import { useLead } from "../context/LeadContext"
-import { dbPromise } from "../config/indexedDB-config"
+import { getDb } from "../config/indexedDB-config"
 import { useState } from "react"
 import { useAuth } from "../context/AuthContext"
 import useSyncData from "./useSyncData"
@@ -18,13 +18,13 @@ const {handleAllSync} = useSyncData()
 const activeLeads = leads.filter(l => l.userId === user!.uid)
 
     const removeLead = async () => {
-const db = await dbPromise
+const db = await getDb();
 try{
 
-  const leadData = await db.get("leads", leadToDelete as IDBKeyRange | IDBValidKey)
+  const leadData = await db?.get("leads", leadToDelete as IDBKeyRange | IDBValidKey)
    leadData.isDeleted = true
    leadData.lastModified = Date.now()
-   db.put("leads", leadData)
+   db?.put("leads", leadData)
 
      setLeads(activeLeads.filter(l => l.id != leadToDelete))
     setShowDeleteToast(true)

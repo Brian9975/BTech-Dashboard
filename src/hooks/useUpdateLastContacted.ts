@@ -1,6 +1,6 @@
 import  { useState } from 'react'
 import { useLead } from '../context/LeadContext'
-import { dbPromise } from '../config/indexedDB-config'
+import { getDb } from '../config/indexedDB-config'
 import { useAuth } from '../context/AuthContext'
 import useSyncData from './useSyncData'
 import useHandleToast from './useHandleToast'
@@ -17,14 +17,14 @@ export default function useUpdateLastContacted(){
         ]
     const activeLeads = leads.filter(l => l.userId === user!.uid)
     const updateLastContacted = async () => {
-             const db = await dbPromise
+             const db = await getDb()
              try {
 
 
-                 const data = await db.get("leads", leadLastContactedToUpdate as IDBKeyRange | IDBValidKey)
+                 const data = await db?.get("leads", leadLastContactedToUpdate as IDBKeyRange | IDBValidKey)
                  data.lastContacted = lastContactedValue
                  data.lastModified = Date.now()
-                 await db.put("leads", data)
+                 await db?.put("leads", data)
                   
             
     
