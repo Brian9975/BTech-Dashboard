@@ -36,7 +36,7 @@ export default function useDeleteTask() {
        handleToast("An error occured while deleting task! Please try again")
     } finally {
     setTaskToDelete(null);
-    handleAllSync()
+    await handleAllSync()
     }
   };
   return {deleteToastDisplay, deleteToastMessage, deleteTask, taskToDelete, setTaskToDelete, showDelToast };

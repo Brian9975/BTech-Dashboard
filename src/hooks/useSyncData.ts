@@ -75,9 +75,13 @@ export default function useSyncData() {
 
         for (const docSnap of querySnapShot.docs) {
           const serverData = docSnap.data();
+          const localData = await db?.get("tasks", serverData.id)
           if (serverData.userId === user.uid) {
-            await db?.put("tasks", serverData);
-            // console.log("Pulled Task Data Successfully");
+            if (!localData || serverData.lastModified > localData.lastModified) {
+
+              await db?.put("tasks", serverData);
+              // console.log("Pulled Task Data Successfully");
+            }
           }
           const pulledTasks = await db?.getAll("tasks");
           setTasks(pulledTasks as TaskInterface[]);
@@ -137,9 +141,14 @@ export default function useSyncData() {
 
         for (const docSnap of querySnapShot.docs) {
           const serverData = docSnap.data();
+          const localData = await db?.get("leads", serverData.id)
           if (serverData.userId === user.uid) {
-            await db?.put("leads", serverData);
-            // console.log("Pulled Lead Data Successfully");
+
+              if (!localData || serverData.lastModified > localData.lastModified) {
+
+                await db?.put("leads", serverData);
+                // console.log("Pulled Lead Data Successfully");
+              }
           }
           const updatedLeads = await db?.getAll("leads");
           setLeads(updatedLeads as LeadsInterface[]);
@@ -207,8 +216,14 @@ export default function useSyncData() {
 
         for (const docSnap of querySnapShot.docs) {
           const serverData = docSnap.data();
+          const localData = await db?.get("scripts", serverData.id)
+          
           if (serverData.userId === user.uid) {
-            await db?.put("scripts", serverData);
+             
+            if (!localData || serverData.lastModified > localData.lastModified){
+
+              await db?.put("scripts", serverData);
+            }
             // console.log("Pulled Script Data Successfully");
           }
           const updatedScripts = await db?.getAll("scripts");

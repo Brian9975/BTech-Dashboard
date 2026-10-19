@@ -91,7 +91,7 @@ export default function MyDash() {
   } = useStatCount();
   const {deleteToastDisplay, deleteToastMessage ,deleteTask, taskToDelete, setTaskToDelete, showDelToast } =
     useDeleteTask();
-  const [completeDisplay, completeToastMessage, finishTask] =
+  const [completeDisplay, completeToastMessage, completeTask] =
     useCompleteTask() as [boolean, string, (id: string) => Promise<void>];
   const { taskDeadlineInfo } = useTaskDeadlineInfo();
   const { user } = useAuth();
@@ -369,7 +369,7 @@ export default function MyDash() {
                       className="dark:bg-slate-950 bg-slate-100 shadow-md shadow-slate-600 p-2 rounded-lg"
                     >
                       <li
-                        onClick={() => finishTask(t.id)}
+                        onClick={() => completeTask(t.id)}
                         className={`flex gap-2 ${t.isCompleted && "text-slate-600 line-through"}  cursor-pointer  hover:scale-95 transition-all items-start text-lg`}
                       >
                         <CheckCircle2 className="hidden md:block" size={25} />{" "}

@@ -5,9 +5,11 @@ import { useAuth } from "../context/AuthContext";
 import useSyncData from "./useSyncData";
 import useHandleToast from "./useHandleToast";
 
+
 export default function useCompleteTask() {
   const {tasks, setTasks} = useTask();
   const {user} = useAuth()
+ 
   const [display, toastMessage, handleToast] = useHandleToast() as [
       boolean, 
       string,
@@ -27,7 +29,7 @@ export default function useCompleteTask() {
  
      await db?.put("tasks", data)
  
- 
+ console.log(data.isCompleted)
      setTasks(
        activeTasks.map((t) =>
          t.id === id
@@ -38,11 +40,14 @@ export default function useCompleteTask() {
            : t,
        ),
      );
+     
    } catch (err) {
 
     handleToast("An error occured while completing task! Please try again")
    } finally {
-    handleAllSync()
+
+     handleAllSync()
+    
    }
   };
   return [ display, toastMessage, completeTask ];
