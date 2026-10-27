@@ -27,7 +27,7 @@ Managing freelancing leads through WhatsApp conversations made it difficult and 
 - **Task Attention Indicators:** Flag tasks that need attention, are due soon, are due today, or have passed their deadlines.
 - **Scripts Library:** Save reusable scripts and copy them to the clipboard.
 - **Offline-First Functionality:** Continue working without an internet connection using IndexedDB.
-- **Automatic Data Syncing:** Synchronize data between IndexedDB and Firebase when connectivity returns.
+- **Automatic Data Syncing:** Synchronize data between IndexedDB and Firebase automatically.
 - **Authentication:** Sign in using email and password or Google.
 - **Multi-Device Access:** Access your own synced data across devices.
 - **Dashboard Statistics:** View useful summaries of your data.
