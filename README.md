@@ -24,7 +24,7 @@ Managing freelancing leads through WhatsApp conversations made it difficult and 
 - **Search and Filtering:** Find and filter leads efficiently.
 - **Stage-Based Navigation:** View leads by stage and access individual lead details.
 - **Task Management:** Create, view, update, and delete tasks.
-- **Task Attention Indicators:** Flag tasks that need attention, are due soon, are due today, or have passed their deadlines.
+- **Task Attention Indicators:** Flag tasks that need attention, are due within 3 days, are due today, or have passed their deadlines.
 - **Scripts Library:** Save reusable scripts and copy them to the clipboard.
 - **Offline-First Functionality:** Continue working without an internet connection using IndexedDB.
 - **Automatic Data Syncing:** Synchronize data between IndexedDB and Firebase automatically.
