@@ -89,7 +89,7 @@ export default function Login() {
             </div>
           </div>
 
-          <div className="pb-5">
+          <div className="pb-0">
             {" "}
             <label htmlFor="pass">
               {signedUser ? "Password" : "New Password"}:
@@ -115,6 +115,9 @@ export default function Login() {
                   <EyeOff className="text-gray-600" />
                 )}
               </button>
+            </div>
+            <div className="pt-3">
+            <span  className=" text-sm text-blue-600">Forgot Password</span>
             </div>
           </div>
 
