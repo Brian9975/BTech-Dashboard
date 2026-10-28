@@ -194,6 +194,14 @@ export default function Login() {
           <span className="font-light  md:text-lg">{toastMessage}</span>
         </p>
       </div>
+
+      {/* Forgot password prompt overlay */}
+      <div className="fixed inset-0 bg-black/50 flex justify-center items-center">
+         <div className="bg-slate-950 w-sm py-10 px-5 shadow-sm shadow-slate-600 flex items-center flex-col gap-7 rounded-lg">
+            <input className="border w-full border-slate-600 p-2 text-lg outline-0 placeholder-slate-600 rounded-lg"/>
+            <button  className="bg-slate-950 hover:scale-105 w-40 transition-all  disabled:opacity-30 dark:bg-slate-100 text-slate-100 dark:text-slate-950 py-1.5 cursor-pointer px-2 rounded-lg  text-lg">Send Reset Email</button>
+         </div>
+      </div>
     </div>
   );
 }
