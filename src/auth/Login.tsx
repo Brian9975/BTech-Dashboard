@@ -1,10 +1,11 @@
-import { AlertTriangle, CircleAlert, Eye, EyeOff, Moon, SunIcon } from "lucide-react";
+import { AlertTriangle, CheckCircle, CircleAlert, Eye, EyeOff, Moon, SunIcon } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 import GoogleLogo from "../assets/GoogleLogo.jpeg";
 import useLogin from "../hooks/useLogin";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useSendResetEmail from "../hooks/useSendResetEmail";
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const { theme, setTheme } = useTheme();
@@ -25,6 +26,7 @@ export default function Login() {
     setConfirmPassword,
     loginWithEmailPassword,
   } = useLogin();
+  const {sendResetEmail, successDisplay, successMessage, setResetEmail, showResetModal, setShowResetModal} = useSendResetEmail()
 
   useEffect(() => {
     if (user && !authLoading) {
@@ -117,7 +119,7 @@ export default function Login() {
               </button>
             </div>
             <div className="pt-3">
-            <span  className=" text-sm text-blue-600">Forgot Password</span>
+            {signedUser &&<span  className="cursor-pointer text-sm text-blue-600" onClick={() => setShowResetModal(true)}>Forgot Password</span>}
             </div>
           </div>
 
@@ -195,13 +197,24 @@ export default function Login() {
         </p>
       </div>
 
-      {/* Forgot password prompt overlay */}
-      <div className="fixed inset-0 bg-black/50 flex justify-center items-center">
-         <div className="bg-slate-950 w-sm py-10 px-5 shadow-sm shadow-slate-600 flex items-center flex-col gap-7 rounded-lg">
-            <input className="border w-full border-slate-600 p-2 text-lg outline-0 placeholder-slate-600 rounded-lg"/>
-            <button  className="bg-slate-950 hover:scale-105 w-40 transition-all  disabled:opacity-30 dark:bg-slate-100 text-slate-100 dark:text-slate-950 py-1.5 cursor-pointer px-2 rounded-lg  text-lg">Send Reset Email</button>
-         </div>
+      <div
+        className={`dark:bg-slate-100 bg-slate-950 z-50 fixed shadow-md shadow-slate-700  transition-all duration-400 ${successDisplay ? "top-0" : "-top-100"}  m-5 rounded-lg py-5 px-4  text-slate-100 dark:text-slate-950`}
+      >
+        <p className="flex items-center gap-2">
+          <CheckCircle className="text-green-600" />
+          <span className="font-light  md:text-lg">{successMessage}</span>
+        </p>
       </div>
+      {/* Forgot password prompt overlay */}
+      { showResetModal && <div className="fixed inset-0 bg-black/50 flex justify-center items-center">
+         <div className="dark:bg-slate-950 bg-slate-100 w-sm py-10 px-5 shadow-sm shadow-slate-600 flex items-center flex-col gap-7 rounded-lg">
+            <input onChange={e => setResetEmail(e.target.value)} type="email" className="border w-full border-slate-600 p-2 text-lg outline-0 placeholder-slate-600 rounded-lg" placeholder="Enter email to send password reset link..."  required/>
+            <div className="flex gap-15">
+          <button onClick={() => setShowResetModal(false)} className="bg-slate-900 text-slate-50 px-2 py-1.5 hover:scale-105 transition-all rounded-lg cursor-pointer text-lg">Cancel</button>
+        <button onClick={sendResetEmail}  className="bg-slate-950 hover:scale-105  transition-all   dark:bg-slate-100 text-slate-100 dark:text-slate-950 py-1.5 cursor-pointer px-2 rounded-lg  text-lg">Send Reset Email</button>
+            </div>
+         </div>
+      </div>}
     </div>
   );
 }
