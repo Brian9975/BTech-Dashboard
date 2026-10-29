@@ -39,10 +39,14 @@ export default function useLogin() {
       await signInWithPopup(auth, provider);
 
       navigate("/mydash");
-    } catch (err) {
-      handleToast(
-        "An error occured while signing in, please check your internet connection and try again",
-      );
+    } catch (err: any) {
+      if (err.code.includes("auth/internal-error")){
+
+        handleToast(
+          "Please try again or check your internet connection",
+        );
+      }
+      
     }
   };
 
