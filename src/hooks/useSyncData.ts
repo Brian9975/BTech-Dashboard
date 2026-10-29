@@ -242,10 +242,12 @@ export default function useSyncData() {
       await handleLeadSyncing();
       await handleTaskSyncing();
       await handleScriptSyncing();
-      setSyncLoading(false)
+      
       console.log("Sync complete");
     } catch (err: any) {
-      console.log(`An error occured while syncing data!`)
+      console.log(`An error occured while syncing data!`, err)
+    } finally {
+      setSyncLoading(false)
     }
       
   };
