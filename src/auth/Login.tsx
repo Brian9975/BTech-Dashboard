@@ -231,25 +231,25 @@ export default function Login() {
       {/* Forgot password prompt overlay */}
       {showResetModal && (
         <div className="fixed inset-0 bg-black/50 flex justify-center items-center">
-          <div className="dark:bg-slate-950 bg-slate-100 w-sm py-10 px-5 shadow-sm shadow-slate-600 flex items-center flex-col gap-7 rounded-lg">
+          <div className="dark:bg-slate-950 bg-slate-100 md:w-sm py-7 px-5 shadow-sm shadow-slate-600 flex items-center flex-col gap-7 rounded-lg">
             <input
               onChange={(e) => setResetEmail(e.target.value)}
               type="email"
               value={resetEmail}
-              className="border w-full border-slate-600 p-2 text-lg outline-0 placeholder-slate-600 rounded-lg"
+              className="border w-full border-slate-600 sm:p-2 p-1 text-lg outline-0 placeholder-slate-600 rounded-lg"
               placeholder="Enter email to send password reset link..."
               required
             />
             <div className="flex gap-15">
               <button
                 onClick={() => setShowResetModal(false)}
-                className="bg-slate-900 text-slate-50 px-2 py-1.5 hover:scale-105 transition-all rounded-lg cursor-pointer text-lg"
+                className="bg-slate-900 text-slate-50  px-2 py-1.5 hover:scale-105 transition-all  rounded-lg cursor-pointer sm:text-lg"
               >
                 Cancel
               </button>
               <button
                 onClick={sendResetEmail}
-                className="bg-slate-950 hover:scale-105  transition-all   dark:bg-slate-100 text-slate-100 dark:text-slate-950 py-1.5 cursor-pointer px-2 rounded-lg  text-lg"
+                className="bg-slate-950 hover:scale-105  transition-all   dark:bg-slate-100 text-slate-100 dark:text-slate-950 py-1.5 cursor-pointer px-2 rounded-lg  sm:text-lg"
               >
                 Send Reset Email
               </button>
