@@ -68,7 +68,7 @@ export default function useLogin() {
       navigate("/mydash");
     } catch (err: any) {
       if (err.code.includes("auth/invalid-credential")) {
-        handleToast("Wrong credentials, please sign up to be logged in");
+        handleToast("Invalid credentials");
       } else if (err.code.includes("auth/network-request-failed")) {
         handleToast(
           "Failed to login, please check your internet connection and try again",

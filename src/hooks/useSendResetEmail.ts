@@ -33,6 +33,9 @@ export default function useSendResetEmail() {
     } catch (err: any) {
       if (err.code.includes("auth/invalid-email")) {
         handleToast("Please enter a valid email address");
+      } 
+      if (err.code.includes("auth/network-request-failed")) {
+        handleToast("Please check your internet connection and try again")
       }
     }
   };
