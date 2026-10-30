@@ -199,11 +199,11 @@ export default function MyScripts() {
           </div>
         </div>
       ) : (
-        <main className="grid  md:grid-cols-3 p-5  grid-cols-1  justify-items-center  gap-10">
+        <main className="grid  md:grid-cols-3 p-5  grid-cols-1  justify-items-center pt-10  gap-10">
           {activeScripts.map((sc) => (
             <div key={sc.id}>
-              <div className="dark:bg-slate-900 bg-slate-50 shadow-md shadow-slate-600 relative px-3 py-5 rounded-lg max-w-75">
-                <p className="tracking-wider overflow-auto">{sc.message}</p>
+              <div className="dark:bg-slate-900 bg-slate-50 shadow-md shadow-slate-600 relative px-3 py-5 rounded-lg w-xs">
+                <p className="tracking-wider line-clamp-10 overflow-auto " >{sc.message}</p>
 
                 <div className="flex justify-end pt-4">
                   <button
@@ -213,9 +213,9 @@ export default function MyScripts() {
                     {scriptCopied === sc.id ? "Copied ✓" : "Copy"}
                   </button>
                 </div>
-                <span className="border-blue-600 border left-1/2 top-0 -translate-y-1/2 -translate-x-1/2  absolute py-1 px-2 rounded-lg text-sm text-ellipsis font-bold">
+                <p className="border-blue-600 border left-1/2  top-0 -translate-y-1/2 -translate-x-1/2  absolute py-1 px-2 rounded-lg text-sm truncate   max-w-full   font-bold">
                   {sc.title}
-                </span>
+                </p>
               </div>
             </div>
           ))}
