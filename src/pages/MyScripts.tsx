@@ -4,7 +4,7 @@ import { useScript } from "../context/ScriptContext";
 import useAddScript from "../hooks/useAddScript";
 import type { BCategory } from "../types/planStageCateg";
 import { useAuth } from "../context/AuthContext";
-import { AlertTriangle, CheckCircleIcon, UserPlus } from "lucide-react";
+import { AlertTriangle, CheckCircleIcon, Edit, UserPlus } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 import useToast from "../hooks/useToast";
 
@@ -205,10 +205,13 @@ export default function MyScripts() {
               <div className="dark:bg-slate-900 bg-slate-50 shadow-md shadow-slate-600 relative px-3 py-5 rounded-lg w-xs">
                 <p className="tracking-wider line-clamp-10 overflow-auto " >{sc.message}</p>
 
-                <div className="flex justify-end pt-4">
+                <div className="flex justify-between items-center pt-4">
+
+
+                  <button className="cursor-pointer hover:scale-105 transition-all"><Edit/></button>
                   <button
                     onClick={() => copyText(sc.message, sc.id)}
-                    className="bg-slate-600 text-slate-100 px-4 py-1 rounded-lg cursor-pointer hover:scale-102 transition-all"
+                    className="bg-slate-600 text-slate-100 px-4 py-1 rounded-lg cursor-pointer hover:scale-105 transition-all"
                   >
                     {scriptCopied === sc.id ? "Copied ✓" : "Copy"}
                   </button>
