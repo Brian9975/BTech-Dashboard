@@ -225,6 +225,104 @@ export default function MyScripts() {
         </main>
       )}
 
+
+      {/* Edit Script Modal */}
+      <div
+        onClick={() => {
+          setModalOpen(false);
+        }}
+        className={`fixed flex  justify-center items-center inset-0 bg-black/50 z-50`}
+      >
+        <form
+          onSubmit={(e) => {
+            addScript(e);
+            showToast();
+            setTimeout(() => {
+              hideToast();
+            }, 3000);
+          }}
+          onClick={(e) => e.stopPropagation()}
+          className="dark:bg-slate-900 bg-slate-50 rounded-2xl p-8 md:w-md"
+        >
+          <h3 className="text-center text-lg font-bold text-blue-600 pb-8">
+            Edit Script Details
+          </h3>
+          <div>
+            <label>Script Title:</label>
+            <div>
+              <select
+                value={scriptTitle}
+                onChange={(e) => setScriptTitle(e.target.value)}
+                className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
+                required
+              >
+                <option
+                  value=""
+                  className="dark:bg-slate-950 bg-slate-100"
+                  disabled
+                >
+                  Select Title
+                </option>
+                {scriptTitleOption.map((t) => (
+                  <option
+                    key={t}
+                    className={`dark:bg-slate-950 bg-slate-100`}
+                    value={t}
+                  >
+                    {t}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className="pt-5">
+            <label>Niche:</label>
+            <div>
+              <select
+                value={niche}
+                onChange={(e) => setNiche(e.target.value)}
+                className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
+                required
+              >
+                <option
+                  value=""
+                  className="dark:bg-slate-950 bg-slate-100"
+                  disabled
+                >
+                  Select Niche
+                </option>
+                {bCategoryOption.map((c) => (
+                  <option
+                    className={`dark:bg-slate-950 bg-slate-100`}
+                    value={c.name}
+                  >
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className="py-5">
+            <label>Message:</label>
+            <div>
+              <textarea
+                value={scriptMessage}
+                onChange={(e) => setScriptMessage(e.target.value)}
+                className="max-h-30 resize-none border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
+                required
+              />
+            </div>
+          </div>
+
+          <div>
+            <button className="bg-slate-950 transition-all hover:opacity-80 hover:scale-95 text-slate-100 dark:bg-slate-100 dark:text-slate-950 px-3 py-1.5 rounded-lg cursor-pointer  text-lg font-bold w-full">
+              Continue
+            </button>
+          </div>
+        </form>
+      </div>
+
+
       {/* Toast Notification */}
       {
         <div
