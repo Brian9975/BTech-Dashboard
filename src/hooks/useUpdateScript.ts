@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { getDb } from "../config/indexedDB-config"
 import type { ScriptData } from "../types/ScriptInterface"
 import { useScript } from "../context/ScriptContext"
+import useHandleToast from "./useHandleToast"
 
 
 export default function useUpdateScript() {
@@ -9,7 +10,14 @@ export default function useUpdateScript() {
     const [editTitle, setEditTitle] = useState("")
     const [editNiche, setEditNiche] = useState("")
     const [editMessage, setEditMessage] = useState("")
+    const [showEditToast, setShowEditToast] = useState(false)
     const {setScripts} = useScript()
+    const [editErrDisplay, editErrMessage, handleToast] = useHandleToast() as [
+        boolean, 
+        string,
+        (message: string) => void,
+    ]
+
     const closeModal = () => {
         setScriptToEdit(null)
     }
@@ -33,11 +41,15 @@ export default function useUpdateScript() {
 
          } : sc))
 
-         
-
+         setShowEditToast(true)
+         setTimeout(() => {
+           setShowEditToast(false)
+         }, 3000)
       }catch (err) {
-
+        handleToast("An error occured while editing script, please try again!")
+      } finally {
+        closeModal()
       }
-    }
-  return {editTitle, setEditTitle, editNiche, setEditNiche, editMessage, setEditMessage, updateScript, scriptToEdit, closeModal, setScriptToEdit}
+  return {editErrDisplay, editErrMessage , editTitle, setEditTitle, editNiche, setEditNiche, editMessage, setEditMessage, updateScript, scriptToEdit, closeModal, setScriptToEdit, showEditToast}
+}
 }
