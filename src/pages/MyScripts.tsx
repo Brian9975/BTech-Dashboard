@@ -7,6 +7,8 @@ import { useAuth } from "../context/AuthContext";
 import { AlertTriangle, CheckCircleIcon, Edit, UserPlus } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 import useToast from "../hooks/useToast";
+import useUpdateScript from "../hooks/useUpdateScript";
+import { useEffect } from "react";
 
 export default function MyScripts() {
   const [copyToastDisplay, copyToastMessage, copyText, scriptCopied] =
@@ -19,6 +21,21 @@ export default function MyScripts() {
   const { scripts } = useScript();
   const { showToast, hideToast, toastOn } = useToast();
   const { syncLoading } = useTheme();
+  const {
+      editErrDisplay,
+      editErrMessage,
+      editTitle,
+      setEditTitle,
+      editNiche,
+      setEditNiche,
+      editMessage,
+      setEditMessage,
+      updateScript,
+      scriptToEdit,
+      closeModal,
+      setScriptToEdit,
+      showEditToast
+  } = useUpdateScript()
   const {
     display,
     toastMessage,
@@ -73,6 +90,16 @@ export default function MyScripts() {
     },
   ];
 
+
+  const scriptToEditObject = activeScripts.find(sc => sc.id === scriptToEdit)
+
+  useEffect(() => {
+    if (scriptToEditObject) {
+      setEditTitle(scriptToEditObject.title)
+      setEditMessage(scriptToEditObject.message)
+      setEditNiche(scriptToEditObject.niche)
+    }
+  }, [scriptToEdit])
   return (
     <div className="">
       <div className="flex justify-end">
@@ -208,7 +235,7 @@ export default function MyScripts() {
                 <div className="flex justify-between items-center pt-4">
 
 
-                  <button className="cursor-pointer hover:scale-105 transition-all"><Edit/></button>
+                  <button onClick={() => setScriptToEdit(sc.id)} className="cursor-pointer hover:scale-105 transition-all"><Edit/></button>
                   <button
                     onClick={() => copyText(sc.message, sc.id)}
                     className="bg-slate-600 text-slate-100 px-4 py-1 rounded-lg cursor-pointer hover:scale-105 transition-all"
@@ -229,18 +256,12 @@ export default function MyScripts() {
       {/* Edit Script Modal */}
       <div
         onClick={() => {
-          setModalOpen(false);
+          closeModal()
         }}
-        className={`fixed flex  justify-center items-center inset-0 bg-black/50 z-50`}
+        className={`fixed   justify-center items-center inset-0 bg-black/50 z-50 ${scriptToEdit ? "flex" : "hidden"}`}
       >
         <form
-          onSubmit={(e) => {
-            addScript(e);
-            showToast();
-            setTimeout(() => {
-              hideToast();
-            }, 3000);
-          }}
+          onSubmit={updateScript}
           onClick={(e) => e.stopPropagation()}
           className="dark:bg-slate-900 bg-slate-50 rounded-2xl p-8 md:w-md"
         >
@@ -251,8 +272,8 @@ export default function MyScripts() {
             <label>Script Title:</label>
             <div>
               <select
-                value={scriptTitle}
-                onChange={(e) => setScriptTitle(e.target.value)}
+                value={editTitle}
+                onChange={(e) => setEditTitle(e.target.value)}
                 className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
                 required
               >
@@ -279,8 +300,8 @@ export default function MyScripts() {
             <label>Niche:</label>
             <div>
               <select
-                value={niche}
-                onChange={(e) => setNiche(e.target.value)}
+                value={editNiche}
+                onChange={(e) => setEditNiche(e.target.value)}
                 className="border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
                 required
               >
@@ -306,8 +327,8 @@ export default function MyScripts() {
             <label>Message:</label>
             <div>
               <textarea
-                value={scriptMessage}
-                onChange={(e) => setScriptMessage(e.target.value)}
+                value={editMessage}
+                onChange={(e) => setEditMessage(e.target.value)}
                 className="max-h-30 resize-none border w-full border-slate-600 p-2 outline-0 placeholder-slate-700 rounded-lg"
                 required
               />
