@@ -358,6 +358,16 @@ export default function MyScripts() {
         </div>
       }
 
+<div
+          className={`dark:bg-slate-100 bg-slate-950 fixed shadow-md shadow-slate-700 bottom-0 transition-all duration-400 ${showEditToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-100 dark:text-slate-950`}
+        >
+          <p className="flex items-center gap-2">
+            <CheckCircleIcon className="text-green-600 dark:text-green-800" />
+            <span className="font-light text-lg">
+              Script Updated Successfully!
+            </span>
+          </p>
+        </div>
       <div
         className={`dark:bg-slate-100 bg-slate-950 z-50 fixed shadow-md shadow-slate-700  transition-all duration-400 ${display ? "top-0" : "-top-100"}  m-5 rounded-lg py-5 px-4  text-slate-100 dark:text-slate-950`}
       >
