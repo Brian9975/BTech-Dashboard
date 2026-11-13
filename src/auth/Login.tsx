@@ -229,9 +229,9 @@ export default function Login() {
       </div>
 
       {/* Forgot password prompt overlay */}
-      {showResetModal && (
-        <div className="fixed inset-0 bg-black/50 flex justify-center items-center">
-          <div className="dark:bg-slate-950 bg-slate-100 md:w-sm py-7 px-5 shadow-sm shadow-slate-600 flex items-center flex-col gap-7 rounded-lg">
+      {(
+        <div className={`fixed inset-0 bg-black/50 flex justify-center items-center transition-opacity duration-200 ${showResetModal ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
+          <div className={`dark:bg-slate-950 bg-slate-100 ${showResetModal ? "" : ""} md:w-sm py-7 px-5 shadow-sm shadow-slate-600 flex items-center flex-col gap-7 rounded-l`}>
             <input
               onChange={(e) => setResetEmail(e.target.value)}
               type="email"

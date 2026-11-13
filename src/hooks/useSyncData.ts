@@ -72,7 +72,7 @@ export default function useSyncData() {
       if (user) {
         const serverRef = collection(firestoreDb, "users", user.uid, "tasks");
         const querySnapShot = await getDocs(serverRef);
-
+        let changed = false
         for (const docSnap of querySnapShot.docs) {
           const serverData = docSnap.data();
           const localData = await db?.get("tasks", serverData.id)
@@ -80,9 +80,15 @@ export default function useSyncData() {
             if (!localData || serverData.lastModified > localData.lastModified) {
 
               await db?.put("tasks", serverData);
+              changed = true
               // console.log("Pulled Task Data Successfully");
             }
           }
+          const pulledTasks = await db?.getAll("tasks");
+          setTasks(pulledTasks as TaskInterface[]);
+        }
+
+        if (changed) {
           const pulledTasks = await db?.getAll("tasks");
           setTasks(pulledTasks as TaskInterface[]);
         }
@@ -138,7 +144,7 @@ export default function useSyncData() {
       if (user) {
         const serverRef = collection(firestoreDb, "users", user.uid, "leads");
         const querySnapShot = await getDocs(serverRef);
-
+        let changed = false
         for (const docSnap of querySnapShot.docs) {
           const serverData = docSnap.data();
           const localData = await db?.get("leads", serverData.id)
@@ -147,10 +153,16 @@ export default function useSyncData() {
               if (!localData || serverData.lastModified > localData.lastModified) {
 
                 await db?.put("leads", serverData);
+
+                changed = true
                 // console.log("Pulled Lead Data Successfully");
               }
           }
-          const updatedLeads = await db?.getAll("leads");
+         
+        }
+
+        if (changed) {
+           const updatedLeads = await db?.getAll("leads");
           setLeads(updatedLeads as LeadsInterface[]);
         }
       }
@@ -213,7 +225,7 @@ export default function useSyncData() {
       if (user) {
         const serverRef = collection(firestoreDb, "users", user.uid, "scripts");
         const querySnapShot = await getDocs(serverRef);
-
+        let changed = false
         for (const docSnap of querySnapShot.docs) {
           const serverData = docSnap.data();
           const localData = await db?.get("scripts", serverData.id)
@@ -223,9 +235,14 @@ export default function useSyncData() {
             if (!localData || serverData.lastModified > localData.lastModified){
 
               await db?.put("scripts", serverData);
+              changed = true
               // console.log("Pulled Script Data Successfully");
             }
           }
+         
+        }
+
+        if (changed) {
           const updatedScripts = await db?.getAll("scripts");
           setScripts(updatedScripts as ScriptData[]);
         }
