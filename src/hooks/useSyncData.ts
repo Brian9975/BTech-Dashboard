@@ -81,12 +81,10 @@ export default function useSyncData() {
 
               await db?.put("tasks", serverData);
               changed = true
-              // console.log("Pulled Task Data Successfully");
+              // console.log("Pulled Task Data Successfully", serverData.id);
             }
           }
-          const pulledTasks = await db?.getAll("tasks");
-          setTasks(pulledTasks as TaskInterface[]);
-        }
+                 }
 
         if (changed) {
           const pulledTasks = await db?.getAll("tasks");
