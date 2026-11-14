@@ -116,7 +116,7 @@ export default function MyScripts() {
         onClick={() => {
           setModalOpen(false);
         }}
-        className={`fixed ${modalOpen ? "flex" : "hidden"}  justify-center items-center inset-0 bg-black/50 z-50`}
+        className={`fixed flex ${modalOpen ? "opacity-100 pointer-events-auto " : "opacity-0 pointer-events-none"} transition-opacity duration-200 justify-center items-center inset-0 bg-black/50 z-50`}
       >
         <form
           onSubmit={(e) => {
@@ -127,7 +127,7 @@ export default function MyScripts() {
             }, 3000);
           }}
           onClick={(e) => e.stopPropagation()}
-          className="dark:bg-slate-900 bg-slate-50 rounded-2xl p-8 md:w-md"
+          className={`dark:bg-slate-900 transition-transform duration-200 ${modalOpen ? "scale-100 translate-y-0" : "scale-95 translate-y-4"} bg-slate-50 rounded-2xl p-8 md:w-md`}
         >
           <h3 className="text-center text-lg font-bold text-blue-600 pb-8">
             Enter Script Details
@@ -258,12 +258,12 @@ export default function MyScripts() {
         onClick={() => {
           closeModal()
         }}
-        className={`fixed   justify-center items-center inset-0 bg-black/50 z-50 ${scriptToEdit ? "flex" : "hidden"}`}
+        className={`fixed   justify-center items-center inset-0 bg-black/50 z-50 transition-opacity duration-200 flex ${scriptToEdit ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
       >
         <form
           onSubmit={updateScript}
           onClick={(e) => e.stopPropagation()}
-          className="dark:bg-slate-900 bg-slate-50 rounded-2xl p-8 md:w-md"
+          className={`dark:bg-slate-900 transition-transform duration-200 ${scriptToEdit ? "scale-100 translate-y-0" : "scale-95 translate-y-4"} bg-slate-50 rounded-2xl p-8 md:w-md`}
         >
           <h3 className="text-center text-lg font-bold text-blue-600 pb-8">
             Edit Script Details
