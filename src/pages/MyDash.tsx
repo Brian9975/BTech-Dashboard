@@ -505,7 +505,7 @@ export default function MyDash() {
 
       {/* Add Task Toast */}
       <div
-        className={`dark:bg-slate-100 bg-slate-950 z-50 fixed shadow-md shadow-slate-700 top-0 transition-all duration-400 ${showAddToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-100 dark:text-slate-950`}
+        className={`dark:bg-slate-100 bg-slate-950 z-50 fixed shadow-md shadow-slate-700 top-0 transition-all duration-200 ${showAddToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-100 dark:text-slate-950`}
       >
         <p className="flex items-center gap-2">
           <CheckCircleIcon className="dark:text-green-800 text-green-600" />
@@ -514,7 +514,7 @@ export default function MyDash() {
       </div>
       {/*Edit Task Toast */}
       <div
-        className={`dark:bg-slate-100 bg-slate-950 z-50 fixed shadow-md shadow-slate-700 top-0 transition-all duration-400 ${showEditToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-100 dark:text-slate-950`}
+        className={`dark:bg-slate-100 bg-slate-950 z-50 fixed shadow-md shadow-slate-700 top-0 transition-all duration-200 ${showEditToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-100 dark:text-slate-950`}
       >
         <p className="flex items-center gap-2">
           <CheckCircleIcon className="dark:text-green-800 text-green-600" />
@@ -523,7 +523,7 @@ export default function MyDash() {
       </div>
       {/*Delete Task Toast */}
       <div
-        className={`dark:bg-slate-100 bg-slate-950 z-50 fixed shadow-md shadow-slate-700 top-0 transition-all duration-400 ${showDelToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-100 dark:text-slate-950`}
+        className={`dark:bg-slate-100 bg-slate-950 z-50 fixed shadow-md shadow-slate-700 top-0 transition-all duration-200 ${showDelToast ? "right-0" : "-right-100"}  m-5 rounded-lg py-5 px-4 text-center text-slate-100 dark:text-slate-950`}
       >
         <p className="flex items-center gap-2">
           <CheckCircleIcon className="dark:text-green-800 text-green-600" />
@@ -532,7 +532,7 @@ export default function MyDash() {
       </div>
 
       <div
-        className={`dark:bg-slate-100 right-1/2 translate-x-1/2 bg-slate-950 z-50 fixed shadow-md shadow-slate-700  transition-all duration-400 ${display ? "top-0" : "-top-100"}  m-5 rounded-lg py-5 px-4  text-slate-100 dark:text-slate-950`}
+        className={`dark:bg-slate-100 right-1/2 translate-x-1/2 bg-slate-950 z-50 fixed shadow-md shadow-slate-700  transition-all duration-200 ${display ? "top-0" : "-top-100"}  m-5 rounded-lg py-5 px-4  text-slate-100 dark:text-slate-950`}
       >
         <p className="flex items-center gap-2">
           <AlertTriangle className="dark:text-red-800 text-red-600" />
@@ -541,7 +541,7 @@ export default function MyDash() {
       </div>
 
       <div
-        className={`dark:bg-slate-100 right-1/2 translate-x-1/2 bg-slate-950 z-50 fixed shadow-md shadow-slate-700  transition-all duration-400 ${completeDisplay ? "top-0" : "-top-100"}  m-5 rounded-lg py-5 px-4  text-slate-100 dark:text-slate-950`}
+        className={`dark:bg-slate-100 right-1/2 translate-x-1/2 bg-slate-950 z-50 fixed shadow-md shadow-slate-700  transition-all duration-200 ${completeDisplay ? "top-0" : "-top-100"}  m-5 rounded-lg py-5 px-4  text-slate-100 dark:text-slate-950`}
       >
         <p className="flex items-center gap-2">
           <AlertTriangle className="dark:text-red-800 text-red-600" />
@@ -549,7 +549,7 @@ export default function MyDash() {
         </p>
       </div>
       <div
-        className={`dark:bg-slate-100 right-1/2 translate-x-1/2 bg-slate-950 z-50 fixed shadow-md shadow-slate-700  transition-all duration-400 ${deleteToastDisplay ? "top-0" : "-top-100"}  m-5 rounded-lg py-5 px-4  text-slate-100 dark:text-slate-950`}
+        className={`dark:bg-slate-100 right-1/2 translate-x-1/2 bg-slate-950 z-50 fixed shadow-md shadow-slate-700  transition-all duration-200 ${deleteToastDisplay ? "top-0" : "-top-100"}  m-5 rounded-lg py-5 px-4  text-slate-100 dark:text-slate-950`}
       >
         <p className="flex items-center gap-2">
           <AlertTriangle className="dark:text-red-800 text-red-600" />
@@ -557,7 +557,7 @@ export default function MyDash() {
         </p>
       </div>
       <div
-        className={`dark:bg-slate-100 right-1/2 translate-x-1/2 bg-slate-950 z-50 fixed shadow-md shadow-slate-700  transition-all duration-400 ${editErrorToastDisplay ? "top-0" : "-top-100"}  m-5 rounded-lg py-5 px-4  text-slate-100 dark:text-slate-950`}
+        className={`dark:bg-slate-100 right-1/2 translate-x-1/2 bg-slate-950 z-50 fixed shadow-md shadow-slate-700  transition-all duration-200 ${editErrorToastDisplay ? "top-0" : "-top-100"}  m-5 rounded-lg py-5 px-4  text-slate-100 dark:text-slate-950`}
       >
         <p className="flex items-center gap-2">
           <AlertTriangle className="dark:text-red-800 text-red-600" />
