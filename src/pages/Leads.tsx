@@ -184,8 +184,9 @@ export default function Leads() {
       )}
 
       {/* Add lead modal */}
-      {modalIsOpen && (
+      {(
         <AddLeadForm
+          modalIsOpen={modalIsOpen}
           closeDialog={closeDialog}
           addLead={addLead}
           businessName={businessName}
@@ -324,15 +325,15 @@ export default function Leads() {
       </main>
 
       {/* Edit lead modal */}
-      {leadToEdit && (
+      {(
         <div
           onClick={() => setLeadToEdit(null)}
-          className="fixed flex justify-center items-center bg-black/50 inset-0 z-50"
+          className={`fixed flex transition-opacity duration-200 ${leadToEdit ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"} justify-center items-center bg-black/50 inset-0 z-50`}
         >
           <form
             onSubmit={updateLead}
             onClick={(e) => e.stopPropagation()}
-            className="dark:bg-slate-950 bg-slate-100 rounded-2xl p-8 md:w-md"
+            className={`dark:bg-slate-950 transition-transform duration-200 ${leadToEdit ? "scale-100 translate-y-0" : "scale-95 translate-y-4"} bg-slate-100 rounded-2xl p-8 md:w-md`}
           >
             <h3 className="text-center text-lg font-bold text-blue-600 pb-8">
               Update Lead's Information
@@ -478,9 +479,9 @@ export default function Leads() {
       )}
 
       {/* Delete Modal */}
-      {leadToDelete && (
-        <div className="inset-0 z-50  flex justify-center items-center fixed bg-black/50">
-          <div className="dark:bg-slate-950 bg-slate-100 md:w-lg shadow-md shadow-slate-700 px-10 py-8 rounded-lg text-center">
+      {(
+        <div className={`inset-0 z-50 transition-opacity duration-200 ${leadToDelete ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}  flex justify-center items-center fixed bg-black/50`}>
+          <div className={`dark:bg-slate-950 bg-slate-100 md:w-lg shadow-md transition-transform duration-200 ${leadToDelete ? "scale-100 translate-y-0" : "scale-95 translate-y-4"} shadow-slate-700 px-10 py-8 rounded-lg text-center`}>
             <p className="text-lg md:text-xl mb-5 font-bold text-blue-600">
               Complete Deletion!
             </p>
@@ -510,7 +511,7 @@ export default function Leads() {
         {" "}
       </div>
       <div
-        className={`fixed  duration-300 z-50 bg-slate-100 dark:bg-slate-950 py-5 overflow-y-auto  h-100  shadow-md shadow-slate-700   rounded-b-4xl transition-all  ${leadToUpdateStage ? "top-0" : "-top-350"} left-0  right-0`}
+        className={`fixed  duration-200 z-50 bg-slate-100 dark:bg-slate-950 py-5 overflow-y-auto  h-100  shadow-md shadow-slate-700   rounded-b-4xl transition-all  ${leadToUpdateStage ? "top-0" : "-top-350"} left-0  right-0`}
       >
         {leadStage.map((s) => (
           <div
@@ -538,7 +539,7 @@ export default function Leads() {
         {" "}
       </div>
       <div
-        className={`fixed  w-full flex-col gap-10 flex justify-center items-center duration-300 z-50 bg-slate-100 dark:bg-slate-950 py-5 overflow-y-auto  h-50  shadow-md shadow-slate-700  ${leadLastContactedToUpdate ? "top-0" : "-top-350"}   rounded-b-4xl transition-all left-0  right-0`}
+        className={`fixed  w-full flex-col gap-10 flex justify-center items-center duration-200 z-50 bg-slate-100 dark:bg-slate-950 py-5 overflow-y-auto  h-50  shadow-md shadow-slate-700  ${leadLastContactedToUpdate ? "top-0" : "-top-350"}   rounded-b-4xl transition-all left-0  right-0`}
       >
         <input
           value={lastContactedValue as any}
@@ -568,7 +569,7 @@ export default function Leads() {
         {" "}
       </div>
       <div
-        className={`fixed ${leadToUpdatePlan ? "top-0" : "-top-350"} w-full duration-300 z-50 bg-slate-100 dark:bg-slate-950 py-5 overflow-y-auto  shadow-md shadow-slate-700   rounded-b-4xl transition-all  left-0  right-0`}
+        className={`fixed ${leadToUpdatePlan ? "top-0" : "-top-350"} w-full duration-200 z-50 bg-slate-100 dark:bg-slate-950 py-5 overflow-y-auto  shadow-md shadow-slate-700   rounded-b-4xl transition-all  left-0  right-0`}
       >
         {plan.map((p) => (
           <div
@@ -598,7 +599,7 @@ export default function Leads() {
         {" "}
       </div>
       <div
-        className={`fixed ${leadToUpdateEarnings ? "top-0" : "-top-350"} flex flex-col justify-center items-center gap-10  w-full duration-300 z-50 bg-slate-100 dark:bg-slate-950 py-5 overflow-y-auto  shadow-md shadow-slate-700   rounded-b-4xl transition-all  left-0  right-0`}
+        className={`fixed ${leadToUpdateEarnings ? "top-0" : "-top-350"} flex flex-col justify-center items-center gap-10  w-full duration-200 z-50 bg-slate-100 dark:bg-slate-950 py-5 overflow-y-auto  shadow-md shadow-slate-700   rounded-b-4xl transition-all  left-0  right-0`}
       >
         <div>
           <div>

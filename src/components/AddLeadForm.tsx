@@ -1,6 +1,7 @@
 import React from "react"
 import type { LeadStageInterface, PlanInterface, BCategory } from "../types/planStageCateg";
 interface AddLeadFormProps {
+    modalIsOpen: boolean;
     closeDialog: () => void;
     addLead: (e: React.SubmitEvent<Element>) => void;
     businessName: string;
@@ -20,14 +21,14 @@ interface AddLeadFormProps {
     showToast: () => void;
     hideToast: () => void;
 }
-export default function AddLeadForm({closeDialog,showToast, hideToast, addLead, businessName, setBusinessName, 
+export default function AddLeadForm({modalIsOpen, closeDialog, showToast, hideToast, addLead, businessName, setBusinessName, 
     businessCategory, setBusinessCategory, bCategoryOption,
      contactNo, setContactNo, stage, setStage, leadStage, 
      plan, clientPlan, setClientPlan, setLastContacted}: AddLeadFormProps) {
   return (
     <div
           onClick={closeDialog}
-          className="fixed flex justify-center items-center bg-black/50 inset-0 z-50"
+          className={`fixed flex transition-opacity duration-200 ${modalIsOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"} justify-center items-center bg-black/50 inset-0 z-50`}
         >
           <form
             onSubmit={(e) => {
@@ -38,7 +39,7 @@ export default function AddLeadForm({closeDialog,showToast, hideToast, addLead, 
               }, 3000)
             }}
             onClick={(e) => e.stopPropagation()}
-            className="dark:bg-slate-900 bg-slate-50 rounded-2xl p-8 md:w-md"
+            className={`dark:bg-slate-900 transition-transform duration-200 ${modalIsOpen ? "scale-100 translate-y-0" : "scale-95 translate-y-4"} bg-slate-50 rounded-2xl p-8 md:w-md`}
           >
             <h3 className="text-center text-lg font-bold text-blue-600 pb-8">
               Enter Lead's Information
