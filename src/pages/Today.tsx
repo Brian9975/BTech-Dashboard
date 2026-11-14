@@ -42,7 +42,7 @@ export default function Today() {
               className={`text-3xl  font-bold text-center h-screen flex justify-center items-center dark:bg-slate-950  dark:text-slate-100 text-slate-950  bg-slate-100`}
             >
               <div
-                className={`h-20 w-20 animate-spin rounded-full border-8    border-t-transparent`}
+                className={`h-20 w-20 animate-spin rounded-full border-8 border-t-transparent`}
               ></div>
             </div>
           </div>
@@ -78,9 +78,9 @@ export default function Today() {
         )}
       </div>
       {/* Confirmation To Update Modal */}
-      {leadToUpdate && (
-        <div className="inset-0 bg-black/50 z-50 fixed flex justify-center items-center">
-          <div className="dark:bg-slate-950 bg-slate-100 shadow-md shadow-slate-600 py-5 px-10 rounded-lg">
+      {(
+        <div className={`inset-0 bg-black/50 transition-opacity duration-200  ${leadToUpdate ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"} z-50 fixed flex justify-center items-center`}>
+          <div className={`dark:bg-slate-950 transition-transform duration-200 ${leadToUpdate ? "scale-100 translate-y-0" : "scale-95 translate-y-4"} bg-slate-100 shadow-md shadow-slate-600 py-5 px-10 rounded-lg`}>
             <h1 className="sm:text-lg  font-bold">
               Do you want to continue updating lead?
             </h1>
